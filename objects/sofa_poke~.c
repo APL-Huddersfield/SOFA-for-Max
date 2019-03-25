@@ -26,7 +26,6 @@ typedef struct _sofa_poke {
     bool buffSet;
 
     void* outlet_dump;
-    void* outlet_bang;
 }t_sofa_poke;
 
 typedef enum _sofa_poke_outlets {
@@ -41,16 +40,8 @@ void sofa_poke_setSofa(t_sofa_poke* x, t_symbol* s);
 void sofa_poke_setBuffer(t_sofa_poke* x, t_symbol* s);
 bool sofa_poke_registerBuffer(t_sofa_poke* x, t_symbol *s);
 
-void sofa_poke_getBlock(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv);
-void sofa_poke_getMR(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv);
-void sofa_poke_get(t_sofa_poke* x, t_symbol* s, long block, t_symbol* bufferName, long channel);
-
-void sofa_poke_getSize(t_sofa_poke* x);
-void sofa_poke_getSizeSamps(t_sofa_poke* x);
-
 void sofa_poke_write(t_sofa_poke* x, t_symbol* s);
 
-bool sofa_poke_isSofaValid(t_sofa_poke* x, t_symbol* s);
 t_max_err sofa_poke_notify(t_sofa_poke* x, t_symbol* s, t_symbol* msg, void* sender, void* data);
 t_max_err sofa_poke_attrSetSofa(t_sofa_poke* x, t_object* attr, long argc, t_atom* argv);
 t_max_err sofa_poke_attrGetSofa(t_sofa_poke* x, t_object* attr, long* argc, t_atom** argv);
@@ -65,13 +56,8 @@ void ext_main(void *r) {
 
 	c = class_new("sofa.poke~", (method)sofa_poke_new, (method)sofa_poke_free, (long)sizeof(t_sofa_poke), 0L, A_GIMME, 0);
 
-    class_addmethod(c, (method)sofa_poke_getSize,       "getsize",      A_NOTHING,  0);
-    class_addmethod(c, (method)sofa_poke_getSizeSamps,  "getsizesamps", A_NOTHING,  0);
-
     class_addmethod(c, (method)sofa_poke_setSofa,       "set",          A_SYM,      0);
     class_addmethod(c, (method)sofa_poke_setBuffer,     "setbuffer",    A_SYM,      0);
-    class_addmethod(c, (method)sofa_poke_getBlock,      "getblock",     A_GIMME,    0);
-    class_addmethod(c, (method)sofa_poke_getMR,         "get",          A_GIMME,    0);
     
     class_addmethod(c, (method)sofa_poke_write,         "write",        A_SYM,      0);
 
@@ -119,26 +105,6 @@ bool sofa_poke_registerBuffer(t_sofa_poke* x, t_symbol* s) {
     return true;
 }
 
-void sofa_poke_getSize(t_sofa_poke* x) {
-    if(x->sofa_ob) {
-        if(x->sofa_ob->sofa->N) {
-            t_atom argv;
-            atom_setfloat(&argv, x->sofa_ob->sofa->N / sys_getsr() * 1000.f);
-            outlet_anything(x->outlet_dump, gensym("size"), 1, &argv);
-        }
-    }
-}
-
-void sofa_poke_getSizeSamps(t_sofa_poke* x) {
-    if(x->sofa_ob) {
-        if(x->sofa_ob->sofa->N) {
-            t_atom argv;
-            atom_setlong(&argv, x->sofa_ob->sofa->N);
-            outlet_anything(x->outlet_dump, gensym("sizesamps"), 1, &argv);
-        }
-    }
-}
-
 void sofa_poke_assist(t_sofa_poke *x, void *b, long m, long a, char *s) {
 	if (m == ASSIST_INLET) {
         switch(a) {
@@ -149,231 +115,11 @@ void sofa_poke_assist(t_sofa_poke *x, void *b, long m, long a, char *s) {
 	}
 	else {
         switch(a) {
-            case BANG_OUTLET:
-                sprintf(s, "(bang) Extraction successful");
-                break;
             case DUMP_OUTLET:
                 sprintf(s, "(anything) Dump outlet");
                 break;
         }
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// HRTF Extraction
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void sofa_poke_getBlock(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv) {
-    long block = 0;
-    t_symbol* bufferName = NULL;
-    long bufferChannel = -1;
-    
-    if(argc < 1) {
-        object_error((t_object*)x, "%s: not enough arguments, expecting at least 1", s->s_name);
-        return;
-    }
-    if(!sofa_poke_isSofaValid(x, s)) {
-        return;
-    }
-    
-    if(!atomIsANumber(argv)) {
-        object_error((t_object*)x, "%s: first argument should be a number", s->s_name);
-        return;
-    }
-    block = atom_getlong(argv);
-    argv++;
-    
-    if(block < 0 || block > x->sofa_ob->sofa->numBlocks - 1) {
-        return;
-    }
-    
-    if(argc > 1) {
-        if(!atomIsASymbol(argv)) {
-            object_error((t_object*)x, "%s: second argument should be a symbol", s->s_name);
-            return;
-        }
-        bufferName = atom_getsym(argv);
-        argv++;
-    }
-    
-    if(argc > 2) {
-        if(!atomIsANumber(argv)) {
-            object_error((t_object*)x, "%s: third argument should be a number", s->s_name);
-            return;
-        }
-        bufferChannel = atom_getlong(argv);
-        argv++;
-    }
-    
-    if(argc > 3) {
-        object_warn((t_object*)x, "extra arguments for message \"%s\"", s->s_name);
-    }
-    
-    sofa_poke_get(x, s, block, bufferName, bufferChannel);
-}
-
-void sofa_poke_getMR(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv) {
-    long m = 0;
-    long r = 0;
-    long block = 0;
-    t_symbol* bufferName = NULL;
-    long bufferChannel = -1;
-    
-    if(argc < 2) {
-        object_error((t_object*)x, "%s: not enough arguments, expecting at least 2", s->s_name);
-        return;
-    }
-    if(!sofa_poke_isSofaValid(x, s)) {
-        return;
-    }
-    
-    if(!atomIsANumber(argv)) {
-        object_error((t_object*)x, "%s: first argument should be a number", s->s_name);
-        return;
-    }
-    m = atom_getlong(argv);
-    argv++;
-    
-    if(m < 0 || m > x->sofa_ob->sofa->M - 1) {
-        return;
-    }
-    
-    if(!atomIsANumber(argv)) {
-        object_error((t_object*)x, "%s: second argument should be a number", s->s_name);
-        return;
-    }
-    r = atom_getlong(argv);
-    argv++;
-    
-    if(r < 0 || r > x->sofa_ob->sofa->R - 1) {
-        return;
-    }
-    
-    block = m * x->sofa_ob->sofa->R + r;
-    
-    if(argc > 2) {
-        if(!atomIsASymbol(argv)) {
-            object_error((t_object*)x, "%s: third argument should be a symbol", s->s_name);
-            return;
-        }
-        bufferName = atom_getsym(argv);
-        argv++;
-    }
-    
-    
-    if(argc > 3) {
-        if(!atomIsANumber(argv)) {
-            object_error((t_object*)x, "%s: fourth argument should be a number", s->s_name);
-            return;
-        }
-        bufferChannel = atom_getlong(argv);
-        argv++;
-    }
-    
-    if(argc > 4) {
-        object_warn((t_object*)x, "extra arguments for message \"%s\"", s->s_name);
-    }
-    
-    sofa_poke_get(x, s, block, bufferName, bufferChannel);
-}
-
-void sofa_poke_get(t_sofa_poke* x, t_symbol* s, long block, t_symbol* bufferName, long channel) {
-    // Buffer Operations
-    
-    t_buffer_ref* buffRef = x->buffRef;
-    t_buffer_obj* buffObj;
-    bool optionalBufferIsGiven = bufferName != NULL ? true : false;
-
-    if(optionalBufferIsGiven) {
-        buffRef = buffer_ref_new((t_object*)x, bufferName);
-        if(buffer_ref_exists(buffRef) == 0) {
-            object_error((t_object*)x, "%s: destination buffer \"%s\" does not exist", s->s_name, bufferName->s_name);
-            object_free(buffRef);
-            return;
-        }
-    }
-    /*else if(buffRef == NULL) {
-         object_error((t_object*)x, "%s: no destination buffer has been set", s->s_name);
-         return;
-     }*/
-    else {
-        if(!x->buffSet) {
-            x->buffSet = sofa_poke_registerBuffer(x, x->buffName);
-            if(!x->buffSet) {
-                object_error((t_object*)x, "%s: no destination buffer has been set", s->s_name);
-                return;
-            }
-        }
-        buffRef = x->buffRef;
-    }
-
-    buffObj = buffer_ref_getobject(buffRef);
-
-    long numBuffChans = buffer_getchannelcount(buffObj);
-    long numBuffFrames = buffer_getframecount(buffObj);
-    long buffChanOffset = 0;
-
-    if(channel > -1) {
-        if(channel > (numBuffChans - 1)) {
-            if(optionalBufferIsGiven && buffRef) {
-                object_free(buffRef);
-            }
-            return;
-        }
-        buffChanOffset = channel;
-    }
-
-    if(numBuffFrames < x->sofa_ob->sofa->N) {
-        object_error((t_object*)x, "%s: destination buffer is too short", s->s_name);
-        if(optionalBufferIsGiven && buffRef) {
-            object_free(buffRef);
-        }
-        return;
-    }
-
-    // Do extraction
-    double* d = csofa_getDataIR(x->sofa_ob->sofa, block);
-    if(d == NULL) {
-        object_error((t_object*)x, "%s: data extraction was unsuccesful", s->s_name);
-        if(optionalBufferIsGiven && buffRef) {
-                object_free(buffRef);
-        }
-        return;
-    }
-
-    float* buffData = buffer_locksamples(buffObj);
-    long buffIndex = 0;
-    long N = x->sofa_ob->sofa->N;
-    if(buffData) {
-        for(long i = 0; i < N; ++i) {
-            buffIndex = (i * numBuffChans) + buffChanOffset;
-            buffData[buffIndex] = d[i];
-        }
-        buffer_unlocksamples(buffObj);
-        buffer_setdirty(buffObj);
-    }
-    else {
-        buffer_unlocksamples(buffObj);
-    }
-
-    if(optionalBufferIsGiven && buffRef) {
-        object_free(buffRef);
-    }
-}
-
-bool sofa_poke_isSofaValid(t_sofa_poke* x, t_symbol* mess) {
-    if(!x->isBoundToSofa) {
-        object_error((t_object*)x, "%s: no sofa~ object set", mess->s_name);
-        return false;
-    }
-    if(!isSofaFileOpen((t_object*)x, x->sofa_ob, mess)) {
-        return false;
-    }
-    if(x->sofa_ob->sofa->convention != SOFA_GENERAL_FIR) {
-        object_error((t_object*)x, "%s: incompatible convention. sofa.poke~ expects a GeneralFIR", mess->s_name);
-        return false;
-    }
-    return true;
 }
 
 t_max_err sofa_poke_notify(t_sofa_poke *x, t_symbol *s, t_symbol *msg, void *sender, void *data) {
@@ -492,7 +238,6 @@ void *sofa_poke_new(t_symbol *s, long argc, t_atom *argv) {
             x->buffSet = sofa_poke_registerBuffer(x, buff_name);
         }
         x->outlet_dump = outlet_new((t_object*)x, NULL);
-        x->outlet_bang = bangout((t_object*)x);
     }
     return x;
 }
