@@ -8,6 +8,10 @@ You can either download a ready built version of the object collection from the 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
+### Compatibility
+
+The current version of the code and its associated release is currently only compatible with macOS 10.11 and above. A Windows version is in development and will be available very soon.
+
 ### Prerequisites
 
 This project requires a build of the **[libsofa](https://github.com/sofacoustics/API_Cpp)** library to be placed in the 'libraries' directory of this project, or in your library search path of your development environment.
