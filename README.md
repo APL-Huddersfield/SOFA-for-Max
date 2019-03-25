@@ -21,7 +21,7 @@ This source code can be built using either Xcode or Visual Studio. The resulting
 * **Dale Johnson**
 * **Hyunkook Lee**
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+See also the list of [contributors](https://www.sofaconventions.org/mediawiki/index.php/People_behind_SOFA) who participated to SOFA.
 
 ## License
 
