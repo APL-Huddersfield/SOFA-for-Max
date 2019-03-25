@@ -1,0 +1,1450 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		2DD9B57A2208AD0E0059570C /* All SOFA Externals */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 2DD9B57B2208AD0E0059570C /* Build configuration list for PBXAggregateTarget "All SOFA Externals" */;
+			buildPhases = (
+			);
+			dependencies = (
+				2DD9B57F2208AD150059570C /* PBXTargetDependency */,
+				2D9DA38E22280AD700CE2AFD /* PBXTargetDependency */,
+				2DE61C9C22490A5E0049620B /* PBXTargetDependency */,
+				2D9473BA222975C3004F7983 /* PBXTargetDependency */,
+				2DD9B5A12208B4EC0059570C /* PBXTargetDependency */,
+				2D7ADA562231457E000633F7 /* PBXTargetDependency */,
+				2D846F89223154C400BBB30B /* PBXTargetDependency */,
+			);
+			name = "All SOFA Externals";
+			productName = "All SOFA Externals";
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2D7ADA3B22314548000633F7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D7ADA3C22314548000633F7 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D7ADA3D22314548000633F7 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D7ADA4722314548000633F7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2D7ADA4822314548000633F7 /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2D7ADA4922314548000633F7 /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2D7ADA4A22314548000633F7 /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2D7ADA4B22314548000633F7 /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2D7ADA4C22314548000633F7 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2D7ADA4D22314548000633F7 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2D7ADA5422314562000633F7 /* sofa_genfire~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ADA36223144C4000633F7 /* sofa_genfire~.c */; };
+		2D7ADA5722314608000633F7 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2D7ADA5922314620000633F7 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D7ADA5A22314628000633F7 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D7ADA5B2231462F000633F7 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D846F6D2231544C00BBB30B /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2D846F6E2231544C00BBB30B /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D846F6F2231544C00BBB30B /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D846F702231544C00BBB30B /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D846F742231544C00BBB30B /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2D846F752231544C00BBB30B /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D846F762231544C00BBB30B /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D846F772231544C00BBB30B /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D846F7A2231544C00BBB30B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2D846F7B2231544C00BBB30B /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2D846F7C2231544C00BBB30B /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2D846F7D2231544C00BBB30B /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2D846F7E2231544C00BBB30B /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2D846F7F2231544C00BBB30B /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2D846F802231544C00BBB30B /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2D846F87223154AE00BBB30B /* sofa_srdrir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D846F692231540000BBB30B /* sofa_srdrir~.c */; };
+		2D94739F2229712A004F7983 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2D9473A02229712A004F7983 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D9473A12229712A004F7983 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D9473A62229712A004F7983 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2D9473A72229712A004F7983 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D9473A82229712A004F7983 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D9473A92229712A004F7983 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D9473AC2229712A004F7983 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2D9473AD2229712A004F7983 /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2D9473AE2229712A004F7983 /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2D9473AF2229712A004F7983 /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2D9473B02229712A004F7983 /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2D9473B12229712A004F7983 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2D9473B22229712A004F7983 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2D9473BB222975D3004F7983 /* sofa_fir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D94739B222970CE004F7983 /* sofa_fir~.c */; };
+		2D9473BC222976CF004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D9473BD222976D7004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D9473BE222976DD004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D9DA36C22280A4800CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D9DA36D22280A5700CE2AFD /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D9DA36F22280A6C00CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D9DA37222280AAA00CE2AFD /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2D9DA37322280AAA00CE2AFD /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D9DA37422280AAA00CE2AFD /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D9DA37922280AAA00CE2AFD /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2D9DA37A22280AAA00CE2AFD /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D9DA37B22280AAA00CE2AFD /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D9DA37C22280AAA00CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D9DA37F22280AAA00CE2AFD /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2D9DA38022280AAA00CE2AFD /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2D9DA38122280AAA00CE2AFD /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2D9DA38222280AAA00CE2AFD /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2D9DA38322280AAA00CE2AFD /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2D9DA38422280AAA00CE2AFD /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2D9DA38522280AAA00CE2AFD /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2D9DA38C22280AC300CE2AFD /* sofa_info~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA366222807EF00CE2AFD /* sofa_info~.c */; };
+		2DD9B55622089E190059570C /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2DD9B55722089E190059570C /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2DD9B55822089E190059570C /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2DD9B55922089E190059570C /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2DD9B5872208B4AC0059570C /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2DD9B5882208B4AC0059570C /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2DD9B5892208B4AC0059570C /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2DD9B58D2208B4AC0059570C /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2DD9B58E2208B4AC0059570C /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2DD9B58F2208B4AC0059570C /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2DD9B5922208B4AC0059570C /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2DD9B5932208B4AC0059570C /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2DD9B5942208B4AC0059570C /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2DD9B5952208B4AC0059570C /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2DD9B5962208B4AC0059570C /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2DD9B5972208B4AC0059570C /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2DD9B5982208B4AC0059570C /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2DD9B59F2208B4DE0059570C /* sofa_hrir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B5822208ADA30059570C /* sofa_hrir~.c */; };
+		2DE61C7F224909F90049620B /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2DE61C80224909F90049620B /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2DE61C81224909F90049620B /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2DE61C82224909F90049620B /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2DE61C86224909F90049620B /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2DE61C87224909F90049620B /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2DE61C88224909F90049620B /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2DE61C89224909F90049620B /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2DE61C8C224909F90049620B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2DE61C8D224909F90049620B /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2DE61C8E224909F90049620B /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2DE61C8F224909F90049620B /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2DE61C90224909F90049620B /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2DE61C91224909F90049620B /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2DE61C92224909F90049620B /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2DE61C9D22490AB10049620B /* sofa_poke~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DE61C9922490A4D0049620B /* sofa_poke~.c */; };
+		2DFD6A6A21EDFC2A00A6916E /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2DFD6A6B21EDFC2A00A6916E /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2DFD6A6C21EDFC2A00A6916E /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2DFD6A6D21EDFC2A00A6916E /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2DFD6A6E21EDFC2A00A6916E /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2DFD6A6F21EDFC2A00A6916E /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2DFD6A7021EDFC2A00A6916E /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
+		2DFD6A7621EDFF0800A6916E /* sofa~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7521EDFF0800A6916E /* sofa~.c */; };
+		2DFD6A7E21EDFF8100A6916E /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2DFD6A7F21EDFF8100A6916E /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2D7ADA552231457E000633F7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D7ADA3822314548000633F7;
+			remoteInfo = "sofa.genfir~";
+		};
+		2D846F88223154C400BBB30B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D846F6B2231544C00BBB30B;
+			remoteInfo = "sofa.srdrir~";
+		};
+		2D9473B9222975C3004F7983 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D94739D2229712A004F7983;
+			remoteInfo = "sofa.fir~";
+		};
+		2D9DA38D22280AD700CE2AFD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D9DA37022280AAA00CE2AFD;
+			remoteInfo = "sofa.info~";
+		};
+		2DD9B57E2208AD150059570C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2FBBEAD608F335360078DB84;
+			remoteInfo = "sofa~";
+		};
+		2DD9B5A02208B4EC0059570C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2DD9B5852208B4AC0059570C;
+			remoteInfo = "sofa.read~";
+		};
+		2DE61C9B22490A5E0049620B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2DE61C7D224909F90049620B;
+			remoteInfo = "sofa.poke~";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2D7ADA36223144C4000633F7 /* sofa_genfire~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_genfire~.c"; path = "objects/sofa_genfire~.c"; sourceTree = "<group>"; };
+		2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.genfire~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D846F692231540000BBB30B /* sofa_srdrir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_srdrir~.c"; path = "objects/sofa_srdrir~.c"; sourceTree = "<group>"; };
+		2D846F852231544C00BBB30B /* sofa.srdrir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.srdrir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D94739B222970CE004F7983 /* sofa_fir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_fir~.c"; path = "objects/sofa_fir~.c"; sourceTree = "<group>"; };
+		2D9473B72229712A004F7983 /* sofa.fir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.fir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D9DA366222807EF00CE2AFD /* sofa_info~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_info~.c"; path = "objects/sofa_info~.c"; sourceTree = "<group>"; };
+		2D9DA36B222809B500CE2AFD /* sofa_common.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sofa_common.c; path = dep/sofa_common.c; sourceTree = "<group>"; };
+		2D9DA38A22280AAA00CE2AFD /* sofa.info~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.info~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DD9B55222089E190059570C /* kdtree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = kdtree.c; path = dep/kdtree.c; sourceTree = "<group>"; };
+		2DD9B55322089E190059570C /* kdtree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = kdtree.h; path = dep/kdtree.h; sourceTree = "<group>"; };
+		2DD9B55422089E190059570C /* PointTree.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = PointTree.c; path = dep/PointTree.c; sourceTree = "<group>"; };
+		2DD9B55522089E190059570C /* PointTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PointTree.h; path = dep/PointTree.h; sourceTree = "<group>"; };
+		2DD9B5822208ADA30059570C /* sofa_hrir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_hrir~.c"; path = "objects/sofa_hrir~.c"; sourceTree = "<group>"; };
+		2DD9B59D2208B4AC0059570C /* sofa.hrir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.hrir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DD9B5A22208B5190059570C /* sofa_common.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = sofa_common.h; path = dep/sofa_common.h; sourceTree = "<group>"; };
+		2DE61C97224909F90049620B /* sofa.poke~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.poke~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DE61C9922490A4D0049620B /* sofa_poke~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_poke~.c"; path = "objects/sofa_poke~.c"; sourceTree = "<group>"; };
+		2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = sofamax.xcconfig; sourceTree = "<group>"; };
+		2DFD6A6321EDFC2A00A6916E /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = libraries/libcurl.a; sourceTree = "<group>"; };
+		2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhdf5_hl.a; path = libraries/libhdf5_hl.a; sourceTree = "<group>"; };
+		2DFD6A6521EDFC2A00A6916E /* libhdf5.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libhdf5.a; path = libraries/libhdf5.a; sourceTree = "<group>"; };
+		2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libnetcdf_c++4.a"; path = "libraries/libnetcdf_c++4.a"; sourceTree = "<group>"; };
+		2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libnetcdf.a; path = libraries/libnetcdf.a; sourceTree = "<group>"; };
+		2DFD6A6821EDFC2A00A6916E /* libsofa.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libsofa.a; path = libraries/libsofa.a; sourceTree = "<group>"; };
+		2DFD6A6921EDFC2A00A6916E /* libz.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libz.a; path = libraries/libz.a; sourceTree = "<group>"; };
+		2DFD6A7121EDFE0000A6916E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2DFD6A7521EDFF0800A6916E /* sofa~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa~.c"; path = "objects/sofa~.c"; sourceTree = "<group>"; };
+		2DFD6A7821EDFF8100A6916E /* CSofa.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = CSofa.cpp; path = dep/CSofa.cpp; sourceTree = "<group>"; };
+		2DFD6A7921EDFF8100A6916E /* CSofa.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = CSofa.hpp; path = dep/CSofa.hpp; sourceTree = "<group>"; };
+		2FBBEAE508F335360078DB84 /* sofa~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2D7ADA4622314548000633F7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D7ADA4722314548000633F7 /* libcurl.a in Frameworks */,
+				2D7ADA4822314548000633F7 /* libhdf5_hl.a in Frameworks */,
+				2D7ADA4922314548000633F7 /* libhdf5.a in Frameworks */,
+				2D7ADA4A22314548000633F7 /* libnetcdf_c++4.a in Frameworks */,
+				2D7ADA4B22314548000633F7 /* libnetcdf.a in Frameworks */,
+				2D7ADA4C22314548000633F7 /* libsofa.a in Frameworks */,
+				2D7ADA4D22314548000633F7 /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D846F792231544C00BBB30B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D846F7A2231544C00BBB30B /* libcurl.a in Frameworks */,
+				2D846F7B2231544C00BBB30B /* libhdf5_hl.a in Frameworks */,
+				2D846F7C2231544C00BBB30B /* libhdf5.a in Frameworks */,
+				2D846F7D2231544C00BBB30B /* libnetcdf_c++4.a in Frameworks */,
+				2D846F7E2231544C00BBB30B /* libnetcdf.a in Frameworks */,
+				2D846F7F2231544C00BBB30B /* libsofa.a in Frameworks */,
+				2D846F802231544C00BBB30B /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9473AB2229712A004F7983 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9473AC2229712A004F7983 /* libcurl.a in Frameworks */,
+				2D9473AD2229712A004F7983 /* libhdf5_hl.a in Frameworks */,
+				2D9473AE2229712A004F7983 /* libhdf5.a in Frameworks */,
+				2D9473AF2229712A004F7983 /* libnetcdf_c++4.a in Frameworks */,
+				2D9473B02229712A004F7983 /* libnetcdf.a in Frameworks */,
+				2D9473B12229712A004F7983 /* libsofa.a in Frameworks */,
+				2D9473B22229712A004F7983 /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9DA37E22280AAA00CE2AFD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9DA37F22280AAA00CE2AFD /* libcurl.a in Frameworks */,
+				2D9DA38022280AAA00CE2AFD /* libhdf5_hl.a in Frameworks */,
+				2D9DA38122280AAA00CE2AFD /* libhdf5.a in Frameworks */,
+				2D9DA38222280AAA00CE2AFD /* libnetcdf_c++4.a in Frameworks */,
+				2D9DA38322280AAA00CE2AFD /* libnetcdf.a in Frameworks */,
+				2D9DA38422280AAA00CE2AFD /* libsofa.a in Frameworks */,
+				2D9DA38522280AAA00CE2AFD /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DD9B5912208B4AC0059570C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DD9B5922208B4AC0059570C /* libcurl.a in Frameworks */,
+				2DD9B5932208B4AC0059570C /* libhdf5_hl.a in Frameworks */,
+				2DD9B5942208B4AC0059570C /* libhdf5.a in Frameworks */,
+				2DD9B5952208B4AC0059570C /* libnetcdf_c++4.a in Frameworks */,
+				2DD9B5962208B4AC0059570C /* libnetcdf.a in Frameworks */,
+				2DD9B5972208B4AC0059570C /* libsofa.a in Frameworks */,
+				2DD9B5982208B4AC0059570C /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DE61C8B224909F90049620B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DE61C8C224909F90049620B /* libcurl.a in Frameworks */,
+				2DE61C8D224909F90049620B /* libhdf5_hl.a in Frameworks */,
+				2DE61C8E224909F90049620B /* libhdf5.a in Frameworks */,
+				2DE61C8F224909F90049620B /* libnetcdf_c++4.a in Frameworks */,
+				2DE61C90224909F90049620B /* libnetcdf.a in Frameworks */,
+				2DE61C91224909F90049620B /* libsofa.a in Frameworks */,
+				2DE61C92224909F90049620B /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FBBEADC08F335360078DB84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DFD6A6A21EDFC2A00A6916E /* libcurl.a in Frameworks */,
+				2DFD6A6B21EDFC2A00A6916E /* libhdf5_hl.a in Frameworks */,
+				2DFD6A6C21EDFC2A00A6916E /* libhdf5.a in Frameworks */,
+				2DFD6A6D21EDFC2A00A6916E /* libnetcdf_c++4.a in Frameworks */,
+				2DFD6A6E21EDFC2A00A6916E /* libnetcdf.a in Frameworks */,
+				2DFD6A6F21EDFC2A00A6916E /* libsofa.a in Frameworks */,
+				2DFD6A7021EDFC2A00A6916E /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		089C166AFE841209C02AAC07 /* iterator */ = {
+			isa = PBXGroup;
+			children = (
+				2DFD6A8421EDFF8900A6916E /* Resources */,
+				2DFD6A7721EDFF1100A6916E /* Source */,
+				2DFD6A7121EDFE0000A6916E /* Info.plist */,
+				2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */,
+				19C28FB4FE9D528D11CA2CBB /* Products */,
+				2DE8F0D11F9CB46F00650FB9 /* Frameworks */,
+			);
+			name = iterator;
+			sourceTree = "<group>";
+		};
+		19C28FB4FE9D528D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2FBBEAE508F335360078DB84 /* sofa~.mxo */,
+				2DD9B59D2208B4AC0059570C /* sofa.hrir~.mxo */,
+				2D9DA38A22280AAA00CE2AFD /* sofa.info~.mxo */,
+				2D9473B72229712A004F7983 /* sofa.fir~.mxo */,
+				2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */,
+				2D846F852231544C00BBB30B /* sofa.srdrir~.mxo */,
+				2DE61C97224909F90049620B /* sofa.poke~.mxo */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2DE8F0D11F9CB46F00650FB9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2DFD6A6321EDFC2A00A6916E /* libcurl.a */,
+				2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */,
+				2DFD6A6521EDFC2A00A6916E /* libhdf5.a */,
+				2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */,
+				2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */,
+				2DFD6A6821EDFC2A00A6916E /* libsofa.a */,
+				2DFD6A6921EDFC2A00A6916E /* libz.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2DFD6A7721EDFF1100A6916E /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2DD9B5A22208B5190059570C /* sofa_common.h */,
+				2D9DA36B222809B500CE2AFD /* sofa_common.c */,
+				2DFD6A7521EDFF0800A6916E /* sofa~.c */,
+				2D9DA366222807EF00CE2AFD /* sofa_info~.c */,
+				2DE61C9922490A4D0049620B /* sofa_poke~.c */,
+				2D94739B222970CE004F7983 /* sofa_fir~.c */,
+				2DD9B5822208ADA30059570C /* sofa_hrir~.c */,
+				2D7ADA36223144C4000633F7 /* sofa_genfire~.c */,
+				2D846F692231540000BBB30B /* sofa_srdrir~.c */,
+			);
+			name = Source;
+			sourceTree = "<group>";
+		};
+		2DFD6A8421EDFF8900A6916E /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2DD9B55222089E190059570C /* kdtree.c */,
+				2DD9B55322089E190059570C /* kdtree.h */,
+				2DD9B55422089E190059570C /* PointTree.c */,
+				2DD9B55522089E190059570C /* PointTree.h */,
+				2DFD6A7821EDFF8100A6916E /* CSofa.cpp */,
+				2DFD6A7921EDFF8100A6916E /* CSofa.hpp */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		2D7ADA3922314548000633F7 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */,
+				2D7ADA3B22314548000633F7 /* kdtree.h in Headers */,
+				2D7ADA3C22314548000633F7 /* PointTree.h in Headers */,
+				2D7ADA3D22314548000633F7 /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D846F6C2231544C00BBB30B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D846F6D2231544C00BBB30B /* CSofa.hpp in Headers */,
+				2D846F6E2231544C00BBB30B /* kdtree.h in Headers */,
+				2D846F6F2231544C00BBB30B /* PointTree.h in Headers */,
+				2D846F702231544C00BBB30B /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D94739E2229712A004F7983 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D94739F2229712A004F7983 /* CSofa.hpp in Headers */,
+				2D9473A02229712A004F7983 /* kdtree.h in Headers */,
+				2D9473A12229712A004F7983 /* PointTree.h in Headers */,
+				2D9473BD222976D7004F7983 /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9DA37122280AAA00CE2AFD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9DA37222280AAA00CE2AFD /* CSofa.hpp in Headers */,
+				2D9DA37322280AAA00CE2AFD /* kdtree.h in Headers */,
+				2D9DA37422280AAA00CE2AFD /* PointTree.h in Headers */,
+				2D9473BC222976CF004F7983 /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DD9B5862208B4AC0059570C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DD9B5872208B4AC0059570C /* CSofa.hpp in Headers */,
+				2DD9B5882208B4AC0059570C /* kdtree.h in Headers */,
+				2DD9B5892208B4AC0059570C /* PointTree.h in Headers */,
+				2D9473BE222976DD004F7983 /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DE61C7E224909F90049620B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DE61C7F224909F90049620B /* CSofa.hpp in Headers */,
+				2DE61C80224909F90049620B /* kdtree.h in Headers */,
+				2DE61C81224909F90049620B /* PointTree.h in Headers */,
+				2DE61C82224909F90049620B /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FBBEAD708F335360078DB84 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DFD6A7F21EDFF8100A6916E /* CSofa.hpp in Headers */,
+				2DD9B55722089E190059570C /* kdtree.h in Headers */,
+				2DD9B55922089E190059570C /* PointTree.h in Headers */,
+				2D9DA36D22280A5700CE2AFD /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		2D7ADA3822314548000633F7 /* sofa.genfire~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D7ADA4F22314548000633F7 /* Build configuration list for PBXNativeTarget "sofa.genfire~" */;
+			buildPhases = (
+				2D7ADA3922314548000633F7 /* Headers */,
+				2D7ADA3E22314548000633F7 /* Resources */,
+				2D7ADA4022314548000633F7 /* Sources */,
+				2D7ADA4622314548000633F7 /* Frameworks */,
+				2D7ADA4E22314548000633F7 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.genfire~";
+			productName = iterator;
+			productReference = 2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2D846F6B2231544C00BBB30B /* sofa.srdrir~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D846F822231544C00BBB30B /* Build configuration list for PBXNativeTarget "sofa.srdrir~" */;
+			buildPhases = (
+				2D846F6C2231544C00BBB30B /* Headers */,
+				2D846F712231544C00BBB30B /* Resources */,
+				2D846F732231544C00BBB30B /* Sources */,
+				2D846F792231544C00BBB30B /* Frameworks */,
+				2D846F812231544C00BBB30B /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.srdrir~";
+			productName = iterator;
+			productReference = 2D846F852231544C00BBB30B /* sofa.srdrir~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2D94739D2229712A004F7983 /* sofa.fir~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D9473B42229712A004F7983 /* Build configuration list for PBXNativeTarget "sofa.fir~" */;
+			buildPhases = (
+				2D94739E2229712A004F7983 /* Headers */,
+				2D9473A32229712A004F7983 /* Resources */,
+				2D9473A52229712A004F7983 /* Sources */,
+				2D9473AB2229712A004F7983 /* Frameworks */,
+				2D9473B32229712A004F7983 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.fir~";
+			productName = iterator;
+			productReference = 2D9473B72229712A004F7983 /* sofa.fir~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2D9DA37022280AAA00CE2AFD /* sofa.info~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D9DA38722280AAA00CE2AFD /* Build configuration list for PBXNativeTarget "sofa.info~" */;
+			buildPhases = (
+				2D9DA37122280AAA00CE2AFD /* Headers */,
+				2D9DA37622280AAA00CE2AFD /* Resources */,
+				2D9DA37822280AAA00CE2AFD /* Sources */,
+				2D9DA37E22280AAA00CE2AFD /* Frameworks */,
+				2D9DA38622280AAA00CE2AFD /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.info~";
+			productName = iterator;
+			productReference = 2D9DA38A22280AAA00CE2AFD /* sofa.info~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2DD9B5852208B4AC0059570C /* sofa.hrir~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DD9B59A2208B4AC0059570C /* Build configuration list for PBXNativeTarget "sofa.hrir~" */;
+			buildPhases = (
+				2DD9B5862208B4AC0059570C /* Headers */,
+				2DD9B58A2208B4AC0059570C /* Resources */,
+				2DD9B58C2208B4AC0059570C /* Sources */,
+				2DD9B5912208B4AC0059570C /* Frameworks */,
+				2DD9B5992208B4AC0059570C /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.hrir~";
+			productName = iterator;
+			productReference = 2DD9B59D2208B4AC0059570C /* sofa.hrir~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2DE61C7D224909F90049620B /* sofa.poke~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DE61C94224909F90049620B /* Build configuration list for PBXNativeTarget "sofa.poke~" */;
+			buildPhases = (
+				2DE61C7E224909F90049620B /* Headers */,
+				2DE61C83224909F90049620B /* Resources */,
+				2DE61C85224909F90049620B /* Sources */,
+				2DE61C8B224909F90049620B /* Frameworks */,
+				2DE61C93224909F90049620B /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.poke~";
+			productName = iterator;
+			productReference = 2DE61C97224909F90049620B /* sofa.poke~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+		2FBBEAD608F335360078DB84 /* sofa~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "sofa~" */;
+			buildPhases = (
+				2FBBEAD708F335360078DB84 /* Headers */,
+				2FBBEAD808F335360078DB84 /* Resources */,
+				2FBBEADA08F335360078DB84 /* Sources */,
+				2FBBEADC08F335360078DB84 /* Frameworks */,
+				2FBBEADF08F335360078DB84 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa~";
+			productName = iterator;
+			productReference = 2FBBEAE508F335360078DB84 /* sofa~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		089C1669FE841209C02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					2DD9B57A2208AD0E0059570C = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "SofaMax" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = English;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 089C166AFE841209C02AAC07 /* iterator */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2FBBEAD608F335360078DB84 /* sofa~ */,
+				2D9DA37022280AAA00CE2AFD /* sofa.info~ */,
+				2D94739D2229712A004F7983 /* sofa.fir~ */,
+				2DD9B5852208B4AC0059570C /* sofa.hrir~ */,
+				2D7ADA3822314548000633F7 /* sofa.genfire~ */,
+				2D846F6B2231544C00BBB30B /* sofa.srdrir~ */,
+				2DE61C7D224909F90049620B /* sofa.poke~ */,
+				2DD9B57A2208AD0E0059570C /* All SOFA Externals */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2D7ADA3E22314548000633F7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D846F712231544C00BBB30B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9473A32229712A004F7983 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9DA37622280AAA00CE2AFD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DD9B58A2208B4AC0059570C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DE61C83224909F90049620B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FBBEAD808F335360078DB84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXRezBuildPhase section */
+		2D7ADA4E22314548000633F7 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D846F812231544C00BBB30B /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9473B32229712A004F7983 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9DA38622280AAA00CE2AFD /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DD9B5992208B4AC0059570C /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DE61C93224909F90049620B /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FBBEADF08F335360078DB84 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXRezBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2D7ADA4022314548000633F7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D7ADA5722314608000633F7 /* CSofa.cpp in Sources */,
+				2D7ADA5A22314628000633F7 /* PointTree.c in Sources */,
+				2D7ADA5922314620000633F7 /* kdtree.c in Sources */,
+				2D7ADA5B2231462F000633F7 /* sofa_common.c in Sources */,
+				2D7ADA5422314562000633F7 /* sofa_genfire~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D846F732231544C00BBB30B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D846F742231544C00BBB30B /* CSofa.cpp in Sources */,
+				2D846F752231544C00BBB30B /* PointTree.c in Sources */,
+				2D846F762231544C00BBB30B /* kdtree.c in Sources */,
+				2D846F772231544C00BBB30B /* sofa_common.c in Sources */,
+				2D846F87223154AE00BBB30B /* sofa_srdrir~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9473A52229712A004F7983 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9473A62229712A004F7983 /* CSofa.cpp in Sources */,
+				2D9473A72229712A004F7983 /* PointTree.c in Sources */,
+				2D9473A82229712A004F7983 /* kdtree.c in Sources */,
+				2D9473A92229712A004F7983 /* sofa_common.c in Sources */,
+				2D9473BB222975D3004F7983 /* sofa_fir~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D9DA37822280AAA00CE2AFD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D9DA37922280AAA00CE2AFD /* CSofa.cpp in Sources */,
+				2D9DA37A22280AAA00CE2AFD /* PointTree.c in Sources */,
+				2D9DA37B22280AAA00CE2AFD /* kdtree.c in Sources */,
+				2D9DA37C22280AAA00CE2AFD /* sofa_common.c in Sources */,
+				2D9DA38C22280AC300CE2AFD /* sofa_info~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DD9B58C2208B4AC0059570C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DD9B58D2208B4AC0059570C /* CSofa.cpp in Sources */,
+				2DD9B58E2208B4AC0059570C /* PointTree.c in Sources */,
+				2DD9B58F2208B4AC0059570C /* kdtree.c in Sources */,
+				2D9DA36F22280A6C00CE2AFD /* sofa_common.c in Sources */,
+				2DD9B59F2208B4DE0059570C /* sofa_hrir~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2DE61C85224909F90049620B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DE61C86224909F90049620B /* CSofa.cpp in Sources */,
+				2DE61C87224909F90049620B /* PointTree.c in Sources */,
+				2DE61C88224909F90049620B /* kdtree.c in Sources */,
+				2DE61C89224909F90049620B /* sofa_common.c in Sources */,
+				2DE61C9D22490AB10049620B /* sofa_poke~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FBBEADA08F335360078DB84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DFD6A7E21EDFF8100A6916E /* CSofa.cpp in Sources */,
+				2DD9B55822089E190059570C /* PointTree.c in Sources */,
+				2DD9B55622089E190059570C /* kdtree.c in Sources */,
+				2D9DA36C22280A4800CE2AFD /* sofa_common.c in Sources */,
+				2DFD6A7621EDFF0800A6916E /* sofa~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2D7ADA562231457E000633F7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D7ADA3822314548000633F7 /* sofa.genfire~ */;
+			targetProxy = 2D7ADA552231457E000633F7 /* PBXContainerItemProxy */;
+		};
+		2D846F89223154C400BBB30B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D846F6B2231544C00BBB30B /* sofa.srdrir~ */;
+			targetProxy = 2D846F88223154C400BBB30B /* PBXContainerItemProxy */;
+		};
+		2D9473BA222975C3004F7983 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D94739D2229712A004F7983 /* sofa.fir~ */;
+			targetProxy = 2D9473B9222975C3004F7983 /* PBXContainerItemProxy */;
+		};
+		2D9DA38E22280AD700CE2AFD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D9DA37022280AAA00CE2AFD /* sofa.info~ */;
+			targetProxy = 2D9DA38D22280AD700CE2AFD /* PBXContainerItemProxy */;
+		};
+		2DD9B57F2208AD150059570C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2FBBEAD608F335360078DB84 /* sofa~ */;
+			targetProxy = 2DD9B57E2208AD150059570C /* PBXContainerItemProxy */;
+		};
+		2DD9B5A12208B4EC0059570C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2DD9B5852208B4AC0059570C /* sofa.hrir~ */;
+			targetProxy = 2DD9B5A02208B4EC0059570C /* PBXContainerItemProxy */;
+		};
+		2DE61C9C22490A5E0049620B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2DE61C7D224909F90049620B /* sofa.poke~ */;
+			targetProxy = 2DE61C9B22490A5E0049620B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2D7ADA5022314548000633F7 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2D7ADA5122314548000633F7 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2D846F832231544C00BBB30B /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2D846F842231544C00BBB30B /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2D9473B52229712A004F7983 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2D9473B62229712A004F7983 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2D9DA38822280AAA00CE2AFD /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2D9DA38922280AAA00CE2AFD /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2DD9B57C2208AD0E0059570C /* Development */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Development;
+		};
+		2DD9B57D2208AD0E0059570C /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Deployment;
+		};
+		2DD9B59B2208B4AC0059570C /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2DD9B59C2208B4AC0059570C /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2DE61C95224909F90049620B /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-poke-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2DE61C96224909F90049620B /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-poke-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+		2FBBEAD008F335010078DB84 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				SDKROOT = macosx;
+			};
+			name = Development;
+		};
+		2FBBEAD108F335010078DB84 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				SDKROOT = macosx;
+			};
+			name = Deployment;
+		};
+		2FBBEAE108F335360078DB84 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
+				PRODUCT_NAME = "sofa~";
+				SDKROOT = macosx10.11;
+			};
+			name = Development;
+		};
+		2FBBEAE208F335360078DB84 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
+				PRODUCT_NAME = "sofa~";
+				SDKROOT = macosx10.11;
+			};
+			name = Deployment;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D7ADA4F22314548000633F7 /* Build configuration list for PBXNativeTarget "sofa.genfire~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D7ADA5022314548000633F7 /* Development */,
+				2D7ADA5122314548000633F7 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2D846F822231544C00BBB30B /* Build configuration list for PBXNativeTarget "sofa.srdrir~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D846F832231544C00BBB30B /* Development */,
+				2D846F842231544C00BBB30B /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2D9473B42229712A004F7983 /* Build configuration list for PBXNativeTarget "sofa.fir~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D9473B52229712A004F7983 /* Development */,
+				2D9473B62229712A004F7983 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2D9DA38722280AAA00CE2AFD /* Build configuration list for PBXNativeTarget "sofa.info~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D9DA38822280AAA00CE2AFD /* Development */,
+				2D9DA38922280AAA00CE2AFD /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2DD9B57B2208AD0E0059570C /* Build configuration list for PBXAggregateTarget "All SOFA Externals" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DD9B57C2208AD0E0059570C /* Development */,
+				2DD9B57D2208AD0E0059570C /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2DD9B59A2208B4AC0059570C /* Build configuration list for PBXNativeTarget "sofa.hrir~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DD9B59B2208B4AC0059570C /* Development */,
+				2DD9B59C2208B4AC0059570C /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2DE61C94224909F90049620B /* Build configuration list for PBXNativeTarget "sofa.poke~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DE61C95224909F90049620B /* Development */,
+				2DE61C96224909F90049620B /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "SofaMax" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FBBEAD008F335010078DB84 /* Development */,
+				2FBBEAD108F335010078DB84 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+		2FBBEAE008F335360078DB84 /* Build configuration list for PBXNativeTarget "sofa~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2FBBEAE108F335360078DB84 /* Development */,
+				2FBBEAE208F335360078DB84 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 089C1669FE841209C02AAC07 /* Project object */;
+}

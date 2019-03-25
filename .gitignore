@@ -1,0 +1,9 @@
+.DS_Store
+Build/*
+externals/*
+
+*.a
+*.vcxproj
+
+dep/SOFA/src/*
+!dep/SOFA/src/Sofa.h
