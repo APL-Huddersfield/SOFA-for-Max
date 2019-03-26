@@ -100,8 +100,12 @@ extern "C"
     uint64_t csofa_getMaxAttributeNameSize(t_sofa* s);
     uint64_t csofa_getMaxAttributeSize(t_sofa* s);
 
-    t_sofaAttributes csofa_getAttributes(t_sofa* s);
+    void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a);
     void csofa_clearAttributes(t_sofaAttributes* a);
+    
+////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+    void csofa_setDataIR(t_sofa* s, uint64_t i, double* data);
 
 
 #ifdef __cplusplus

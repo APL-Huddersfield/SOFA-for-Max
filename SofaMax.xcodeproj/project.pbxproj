@@ -27,6 +27,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2D5116C7224975D300625783 /* SOFA in Resources */ = {isa = PBXBuildFile; fileRef = 2D5116C6224975D300625783 /* SOFA */; };
 		2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D7ADA3B22314548000633F7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
 		2D7ADA3C22314548000633F7 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
@@ -194,6 +195,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D5116C6224975D300625783 /* SOFA */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SOFA; path = dep/SOFA; sourceTree = "<group>"; };
 		2D7ADA36223144C4000633F7 /* sofa_genfire~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_genfire~.c"; path = "objects/sofa_genfire~.c"; sourceTree = "<group>"; };
 		2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.genfire~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D846F692231540000BBB30B /* sofa_srdrir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_srdrir~.c"; path = "objects/sofa_srdrir~.c"; sourceTree = "<group>"; };
@@ -389,6 +391,7 @@
 		2DFD6A8421EDFF8900A6916E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				2D5116C6224975D300625783 /* SOFA */,
 				2DD9B55222089E190059570C /* kdtree.c */,
 				2DD9B55322089E190059570C /* kdtree.h */,
 				2DD9B55422089E190059570C /* PointTree.c */,
@@ -699,6 +702,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D5116C7224975D300625783 /* SOFA in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
