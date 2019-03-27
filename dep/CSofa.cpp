@@ -159,6 +159,14 @@ t_sofa csofa_openFile(char* filename) {
             sofa.dataIR = new double[dataIRSize];
             memcpy(sofa.dataIR, dataIR.data(), sizeof(double) * dataIRSize);
             break;
+        case SOFA_MULTISPEAKER_BRIR:
+            C_SOFA_MULTISPEAKER_BRIR(&file)->GetDataIR(dataIR);
+            sofa.numBlocks = sofa.M * sofa.R * sofa.E;
+            C_SOFA_MULTISPEAKER_BRIR(&file)->GetSamplingRate(sofa.sampleRate);
+            dataIRSize = sofa.numBlocks * sofa.N;
+            sofa.dataIR = new double[dataIRSize];
+            memcpy(sofa.dataIR, dataIR.data(), sizeof(double) * dataIRSize);
+            break;
         default:
             sofa.dataIR = nullptr;
     }

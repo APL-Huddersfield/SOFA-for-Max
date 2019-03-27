@@ -19,6 +19,7 @@ extern "C"
 #define C_SOFA_SIMPLE_FF_HRIR reinterpret_cast<sofa::SimpleFreeFieldHRIR*>
 #define C_SOFA_GENERAL_FIRE reinterpret_cast<sofa::GeneralFIRE*>
 #define C_SOFA_SINGLE_ROOM_DRIR reinterpret_cast<sofa::SingleRoomDRIR*>
+#define C_SOFA_MULTISPEAKER_BRIR reinterpret_cast<sofa::MultiSpeakerBRIR*>
 
 #include <stdint.h>
 #include <stdio.h>
