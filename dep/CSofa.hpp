@@ -57,7 +57,6 @@ extern "C"
 
     typedef struct _sofa {
         t_sofaConvention convention;
-        void* pSofa;
         uint64_t I, M, R, E, N, S, C;
 
         t_point* listenerPoints;
@@ -79,8 +78,6 @@ extern "C"
         t_sofaAttributes attr;
     }t_sofa;
 
-    t_sofaConvention csofa_getConvention(t_sofa* sofa);
-
     t_sofa csofa_openFile(char* filename);
     void csofa_destroySofa(t_sofa* sofa);
 
@@ -95,12 +92,12 @@ extern "C"
     double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
+    /*void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a);
     uint64_t csofa_getNumAttributes(t_sofa* s);
     uint64_t csofa_getMaxAttributeNameSize(t_sofa* s);
-    uint64_t csofa_getMaxAttributeSize(t_sofa* s);
+    uint64_t csofa_getMaxAttributeSize(t_sofa* s);*/
 
-    void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a);
+    
     void csofa_clearAttributes(t_sofaAttributes* a);
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////
