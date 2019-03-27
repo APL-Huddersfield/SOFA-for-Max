@@ -10,7 +10,7 @@ You can either download a ready built version of the object collection from the 
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-## Warning
+### Warning
 
 The shared sofa~ object functionality is currently disabled. Only one instance of a named sofa~ file may currently exist. This feature will be fixed in future releases.
 
