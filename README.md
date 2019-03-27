@@ -4,6 +4,12 @@ An object collection for using and creating Spatially Oriented Format for Acoust
 
 By Dale Johnson and Hyunkook Lee, Applied Psychoacoustics Laboratory, The University of Huddersfield.
 
+## TODO
+
+* Add sofa.poke~
+* Fix shared object functionality
+
+
 ## Getting Started
 
 You can either download a ready built version of the object collection from the releases page, or build this repository from source.
