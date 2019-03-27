@@ -11,8 +11,8 @@
 #include <iostream>
 #include <vector>
 
-t_sofaConvention csofa_getConvention(t_sofa* sofa) {
-    std::string strConvention = C_SOFA_FILE(sofa->pSofa)->GetSOFAConventions();
+t_sofaConvention csofa_getConvention(sofa::File& sofa) {
+    std::string strConvention = sofa.GetSOFAConventions();
 
     if(strConvention == "GeneralFIR") {
         return SOFA_GENERAL_FIR;
@@ -32,6 +32,80 @@ t_sofaConvention csofa_getConvention(t_sofa* sofa) {
     return SOFA_UNKNOWN_TYPE;
 }
 
+uint64_t csofa_getNumAttributes(const sofa::File& sofa) {
+    std::vector<std::string> attributeNames;
+    sofa.GetAllAttributesNames(attributeNames);
+    return attributeNames.size();
+}
+
+uint64_t csofa_getMaxAttributeNameSize(const sofa::File& sofa) {
+    uint64_t l = 0;
+    std::vector<std::string> attributeNames;
+    std::vector<std::string>::iterator iter;
+    
+    sofa.GetAllAttributesNames(attributeNames);
+    /*iter = std::max_element(attributeNames.begin(), attributeNames.end());
+    auto i = std::distance(attributeNames.begin(), iter);
+    return attributeNames[i].size();*/
+    for(auto i = 0; i < attributeNames.size(); ++i) {
+        l = attributeNames[i].size() > l ? attributeNames[i].size() : l;
+    }
+    return l;
+}
+
+uint64_t csofa_getMaxAttributeSize(const sofa::File& sofa) {
+    std::vector<std::string> attributeNames;
+    std::string attribute;
+    sofa.GetAllAttributesNames(attributeNames);
+    uint64_t maxSize = 0;
+    
+    for(auto i = 0; i < attributeNames.size(); ++i) {
+        attribute = sofa.GetAttributeValueAsString(attributeNames[i]);
+        maxSize = attribute.size() > maxSize ? attribute.size() : maxSize;
+    }
+    
+    return maxSize;
+}
+
+void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa) {
+    
+    uint64_t numAttributes = csofa_getNumAttributes(sofa);
+    uint64_t maxAttributeNameLength = csofa_getMaxAttributeNameSize(sofa);
+    uint64_t maxAttributeSize = csofa_getMaxAttributeSize(sofa);
+    
+    a->names = (char**)malloc(sizeof(char*) * numAttributes);
+    a->values = (char**)malloc(sizeof(char*) * numAttributes);
+    a->nameSizes = (uint64_t*)malloc(sizeof(uint64_t) * numAttributes);
+    a->valueSizes = (uint64_t*)malloc(sizeof(uint64_t) * numAttributes);
+    a->numAttributes = numAttributes;
+    a->maxAttributeNameSize= maxAttributeNameLength;
+    a->maxAttributeSize = maxAttributeSize;
+    
+    for(uint64_t i = 0; i < numAttributes; ++i) {
+        a->names[i] = (char*)malloc(sizeof(char) * (maxAttributeNameLength + 1)); // +1 allows for null-termination
+        a->values[i] = (char*)malloc(sizeof(char) * (maxAttributeSize + 1));
+    }
+    
+    std::vector<std::string> attributeNames;
+    std::string attribute;
+    sofa.GetAllAttributesNames(attributeNames);
+    for(auto i = 0; i < attributeNames.size(); ++i) {
+        attribute = sofa.GetAttributeValueAsString(attributeNames[i]);
+        /*for(auto j = 0; j < attributeNames[i].size(); ++j) {
+            a->names[i][j] = attributeNames[i][j];
+        }
+        for(auto j = 0; j < attribute.size(); ++j) {
+            a->values[i][j] = attribute[j];
+        }*/
+        memcpy(a->names[i], attributeNames[i].c_str(), sizeof(char) * attributeNames[i].size());
+        memcpy(a->values[i], attribute.c_str(), sizeof(char) * attribute.size());
+        a->names[i][attributeNames[i].size()] = '\0';
+        a->values[i][attribute.size()] = '\0';
+        a->nameSizes[i] = attributeNames[i].size();
+        a->valueSizes[i] = attribute.size();
+    }
+}
+
 t_sofa csofa_openFile(char* filename) {
     t_sofa sofa;
     std::string strFileName(filename);
@@ -39,8 +113,7 @@ t_sofa csofa_openFile(char* filename) {
 
     sofa::File file(strFileName);
 
-    sofa.pSofa = &file;
-    sofa.convention = csofa_getConvention(&sofa);
+    sofa.convention = csofa_getConvention(file);
     sofa.I = 1;
     sofa.M = C_SOFA_FILE(&file)->GetNumMeasurements();
     sofa.R = C_SOFA_FILE(&file)->GetNumReceivers();
@@ -186,7 +259,7 @@ t_sofa csofa_openFile(char* filename) {
         sofa.emitterViews[i].pos[2] = views[i*3 + 2];
     }
     
-    csofa_getAttributes(&sofa, &sofa.attr);
+    csofa_getAttributes(&sofa, &sofa.attr, file);
 
     return sofa;
 }
@@ -233,78 +306,15 @@ double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-uint64_t csofa_getNumAttributes(t_sofa* s) {
-    std::vector<std::string> attributeNames;
-    C_SOFA_FILE(s->pSofa)->GetAllAttributesNames(attributeNames);
-    return attributeNames.size();
-}
-
-uint64_t csofa_getMaxAttributeNameSize(t_sofa* s) {
-    std::vector<std::string> attributeNames;
-    std::vector<std::string>::iterator iter;
-
-    C_SOFA_FILE(s->pSofa)->GetAllAttributesNames(attributeNames);
-    iter = std::max_element(attributeNames.begin(), attributeNames.end());
-    auto i = std::distance(attributeNames.begin(), iter);
-    return attributeNames[i].size();
-}
-
-uint64_t csofa_getMaxAttributeSize(t_sofa* s) {
-    std::vector<std::string> attributeNames;
-    std::string attribute;
-    C_SOFA_FILE(s->pSofa)->GetAllAttributesNames(attributeNames);
-    uint64_t maxSize = 0;
-
-    for(auto i = 0; i < attributeNames.size(); ++i) {
-        attribute = C_SOFA_FILE(s->pSofa)->GetAttributeValueAsString(attributeNames[i]);
-        maxSize = attribute.size() > maxSize ? attribute.size() : maxSize;
-    }
-
-    return maxSize;
-}
-
-void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a) {
-
-    uint64_t numAttributes = csofa_getNumAttributes(s);
-    uint64_t maxAttributeNameLength = csofa_getMaxAttributeNameSize(s);
-    uint64_t maxAttributeSize = csofa_getMaxAttributeSize(s);
-
-    a->names = new char*[numAttributes];
-    a->values = new char*[numAttributes];
-    a->nameSizes = new uint64_t[numAttributes];
-    a->valueSizes = new uint64_t[numAttributes];
-    a->numAttributes = numAttributes;
-    a->maxAttributeNameSize= maxAttributeNameLength;
-    a->maxAttributeSize = maxAttributeSize;
-
-    for(uint64_t i = 0; i < numAttributes; ++i) {
-        a->names[i] = new char[maxAttributeNameLength + 1]; // +1 allows for null-termination
-        a->values[i] = new char[maxAttributeSize + 1];
-    }
-
-    std::vector<std::string> attributeNames;
-    std::string attribute;
-    C_SOFA_FILE(s->pSofa)->GetAllAttributesNames(attributeNames);
-    for(auto i = 0; i < attributeNames.size(); ++i) {
-        attribute = C_SOFA_FILE(s->pSofa)->GetAttributeValueAsString(attributeNames[i]);
-        memcpy(a->names[i], attributeNames[i].c_str(), sizeof(char) * attributeNames[i].size());
-        memcpy(a->values[i], attribute.c_str(), sizeof(char) * attribute.size());
-        a->names[i][attributeNames[i].size()] = '\0';
-        a->values[i][attribute.size()] = '\0';
-        a->nameSizes[i] = attributeNames[i].size();
-        a->valueSizes[i] = attribute.size();
-    }
-}
-
 void csofa_clearAttributes(t_sofaAttributes* a) {
     for(auto i = 0; i < a->numAttributes; ++i) {
-        delete[] a->names[i];
-        delete[] a->values[i];
+        free(a->names[i]);
+        free(a->values[i]);
     }
-    delete[] a->names;
-    delete[] a->values;
-    delete[] a->nameSizes;
-    delete[] a->valueSizes;
+    free(a->names);
+    free(a->values);
+    free(a->nameSizes);
+    free(a->valueSizes);
 }
 
 void csofa_setDataIR(t_sofa* s, uint64_t i, double* data, long N) {

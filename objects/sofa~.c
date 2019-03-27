@@ -45,7 +45,6 @@ void ext_main(void *r) {
     class_addmethod(c, (method)sofa_max_getName,            "getname",              A_NOTHING, 0);
     class_addmethod(c, (method)sofa_max_get,                "get",                  A_GIMME, 0);
     
-    class_addmethod(c, (method)sofa_max_notify,             "notify",               A_CANT, 0);
 	class_addmethod(c, (method)sofa_max_assist,             "assist",               A_CANT, 0);
 
 	class_register(CLASS_BOX, c);
@@ -98,13 +97,13 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
     path_toabsolutesystempath(path, filename, fullpath);
     if(*x->fileLoaded) {
         csofa_destroySofa(x->sofa);
-        sysmem_freeptr(x->sofa);
         *x->fileLoaded = false;
     }
 
-    x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));
+    critical_enter(0);
     *x->sofa = csofa_openFile(fullpath);
-
+    critical_exit(0);
+    
     *x->fileLoaded = true;
     object_notify((t_object*)x, gensym("sofaread"), 0L);
     outlet_bang(x->outlet_finishedLoading);
@@ -296,11 +295,6 @@ bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s) {
     return true;
 }
 
-void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data) {
-    t_max_err err = MAX_ERR_NONE;
-    printf("%s, %s\n", s->s_name, msg->s_name);
-}
-
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
 	if (m == ASSIST_INLET) {
         switch(a) {
@@ -329,10 +323,10 @@ void sofa_max_free(t_sofa_max *x) {
         if(*x->count < 1) {
              if(*x->fileLoaded) {
                  csofa_destroySofa(x->sofa);
-                 sysmem_freeptr(x->sofa);
                  *x->fileLoaded = false;
              }
-
+            
+            sysmem_freeptr(x->sofa);
             sysmem_freeptr(x->fileLoaded);
             sysmem_freeptr(x->count);
             globalsymbol_unbind((t_object*)x, x->name->s_name, 0);
@@ -347,7 +341,8 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
 
     if((x = (t_sofa_max *)object_alloc(sofa_max_class))) {
         a = symbol_unique();
-
+        
+        x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));
         x->fileLoaded = (bool*)sysmem_newptr(sizeof(bool));
         x->count = (long*)sysmem_newptr(sizeof(long));
         *x->fileLoaded = false;
@@ -358,30 +353,33 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                 a = atom_getsym(argv);
                 t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name, "sofa~");
                 if(ref != NULL) {
-                    /*sysmem_freeptr(x->fileLoaded);
+                    sysmem_freeptr(x->sofa);
+                    sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
 
-                    x->sofa = ref->sofa;
+                    /*x->sofa = ref->sofa;
                     x->fileLoaded = ref->fileLoaded;
 
                     x->count = ref->count;
                     if(x->count) {
                          *x->count += 1;
                     }*/
+                    sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
                     object_error((t_object*)x, "Only 1 sofa~ can currently exist");
                     return NULL;
                 }
                 else {
-                    a->s_thing = (t_object*)x;
+                    //a->s_thing = (t_object*)x;
+                    
                     object_register(APL_SOFA_NAMESPACE, a, x);
                     globalsymbol_bind((t_object*)x, a->s_name, 0);
                 }
             }
         }
         else {
-            a->s_thing = (t_object*)x;
+            //a->s_thing = (t_object*)x;
             object_register(APL_SOFA_NAMESPACE, a, x);
             globalsymbol_bind((t_object*)x, a->s_name, 0);
         }

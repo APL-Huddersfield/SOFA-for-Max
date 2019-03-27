@@ -12,6 +12,7 @@
 #include "ext_common.h"
 #include "ext_globalsymbol.h"
 #include "z_dsp.h"
+#include <stdlib.h>
 
 typedef struct _sofa_hrir {
     t_object ob;
@@ -59,17 +60,18 @@ void ext_main(void *r) {
 	t_class *c;
 
 	c = class_new("sofa.hrir~", (method)sofa_hrir_new, (method)sofa_hrir_free, (long)sizeof(t_sofa_hrir), 0L, A_GIMME, 0);
+    
+    class_addmethod(c, (method)sofa_hrir_getSize,       "getsize",             A_NOTHING, 0);
+    class_addmethod(c, (method)sofa_hrir_getSize,       "getsize",             A_NOTHING, 0);
+    class_addmethod(c, (method)sofa_hrir_getSizeSamps,  "getsizesamps",        A_NOTHING, 0);
 
-    class_addmethod(c, (method)sofa_hrir_getSize,            "getsize",             A_NOTHING, 0);
-    class_addmethod(c, (method)sofa_hrir_getSizeSamps,       "getsizesamps",        A_NOTHING, 0);
+    class_addmethod(c, (method)sofa_hrir_setSofa,       "set",                 A_SYM, 0);
+    class_addmethod(c, (method)sofa_hrir_setBuffer,     "setbuffer",           A_SYM, 0);
+    class_addmethod(c, (method)sofa_hrir_get,           "get",                 A_GIMME, 0);
+    class_addmethod(c, (method)sofa_hrir_getPositions,  "getpositions",        A_SYM, 0);
 
-    class_addmethod(c, (method)sofa_hrir_setSofa,            "set",                 A_SYM, 0);
-    class_addmethod(c, (method)sofa_hrir_setBuffer,          "setbuffer",           A_SYM, 0);
-    class_addmethod(c, (method)sofa_hrir_get,                "get",                 A_GIMME, 0);
-    class_addmethod(c, (method)sofa_hrir_getPositions,       "getpositions",        A_SYM, 0);
-
-    class_addmethod(c, (method)sofa_hrir_notify,             "notify",              A_CANT, 0);
-	class_addmethod(c, (method)sofa_hrir_assist,             "assist",              A_CANT, 0);
+    class_addmethod(c, (method)sofa_hrir_notify,        "notify",              A_CANT, 0);
+	class_addmethod(c, (method)sofa_hrir_assist,        "assist",              A_CANT, 0);
 
     CLASS_ATTR_SYM(c, "sofaobject", 0, t_sofa_hrir, sofa_name);
     CLASS_ATTR_ACCESSORS(c, "sofaobject", sofa_hrir_attrGetSofa, sofa_hrir_attrSetSofa);

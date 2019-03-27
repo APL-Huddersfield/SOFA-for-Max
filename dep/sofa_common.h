@@ -14,6 +14,7 @@
 #include "../dep/CSofa.hpp"
 #include "ext.h"
 #include "ext_buffer.h"
+#include "ext_critical.h"
 
 typedef struct _sofa_max {
     t_object ob;
