@@ -8,7 +8,8 @@ By Dale Johnson and Hyunkook Lee, Applied Psychoacoustics Laboratory, The Univer
 
 * Add sofa.poke~
 * Fix shared object functionality
-
+* Create help files
+* Compile and release a windows version
 
 ## Getting Started
 
