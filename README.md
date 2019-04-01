@@ -17,7 +17,7 @@ https://www.hud.ac.uk/apl/resources
 
 ## Getting Started
 
-You can either download a ready built version of the object collection from the releases page, or build this repository from source.
+You can either download a ready built version of the object collection from the releases [page](https://github.com/APL-Huddersfield/SOFA-for-Max/releases), or build this repository from source.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
