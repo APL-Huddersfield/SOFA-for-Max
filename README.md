@@ -2,13 +2,17 @@
 
 An object collection for using and creating Spatially Oriented Format for Acoustics (SOFA) files within Cycling 74's Max software. This file format enables the distribution of impulse response measurement data in a standardised fashion. More information of this file format can be found [here](https://www.sofaconventions.org/mediawiki/index.php/SOFA_(Spatially_Oriented_Format_for_Acoustics)).
 
+![Workflow](/Users/dale/Dev/Sofa-for-Max/Workflow.png)
+
 By Dale Johnson and Hyunkook Lee, Applied Psychoacoustics Laboratory, The University of Huddersfield.
+
+https://www.hud.ac.uk/apl/resources
 
 ## TODO
 
 * Add sofa.poke~
 * Fix shared object functionality
-* Create help files
+* ~~Create help files~~ Done!
 * Compile and release a windows version
 
 ## Getting Started
