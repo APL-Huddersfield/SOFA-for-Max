@@ -26,7 +26,13 @@ typedef struct _sofa_genfir {
     bool buffSet;
 
     void* outlet_dump;
+    void* out_bang;
 }t_sofa_genfire;
+
+typedef enum _sofa_genfire_outlets {
+    BANG_OUTLET = 0,
+    DUMP_OUTLET
+}t_sofa_genfire_outlets;
 
 void *sofa_genfire_new(t_symbol* s, long argc, t_atom* argv);
 void sofa_genfire_free(t_sofa_genfire* x);
@@ -136,13 +142,16 @@ void sofa_genfire_assist(t_sofa_genfire *x, void *b, long m, long a, char *s) {
                 break;
         }
 	}
-	else {
+    else {
         switch(a) {
-            case 0:
-                sprintf(s, "(aynthing) Message outlet");
+            case BANG_OUTLET:
+                sprintf(s, "(bang) Extraction successful");
+                break;
+            case DUMP_OUTLET:
+                sprintf(s, "(anything) Dump outlet");
                 break;
         }
-	}
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,6 +367,8 @@ void sofa_genfire_get(t_sofa_genfire* x, t_symbol* s, long block, t_symbol* buff
     if(optionalBufferIsGiven && buffRef) {
         object_free(buffRef);
     }
+    
+    outlet_bang(x->out_bang);
 }
 
 bool sofa_genfire_isSofaValid(t_sofa_genfire* x, t_symbol* mess) {
@@ -487,6 +498,7 @@ void *sofa_genfire_new(t_symbol *s, long argc, t_atom *argv) {
             x->buffSet = sofa_genfire_registerBuffer(x, buff_name);
         }
         x->outlet_dump = outlet_new((t_object*)x, NULL);
+        x->out_bang = bangout((t_object*)x);
     }
     return x;
 }

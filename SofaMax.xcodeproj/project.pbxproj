@@ -916,7 +916,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -948,7 +948,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
@@ -980,7 +980,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -1012,7 +1012,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
@@ -1044,7 +1044,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -1076,7 +1076,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
@@ -1108,7 +1108,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -1140,7 +1140,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
@@ -1172,7 +1172,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -1204,13 +1204,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
 		2DD9B57C2208AD0E0059570C /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Development;
@@ -1218,6 +1219,7 @@
 		2DD9B57D2208AD0E0059570C /* Deployment */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				DEAD_CODE_STRIPPING = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Deployment;
@@ -1250,7 +1252,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Development;
 		};
@@ -1282,7 +1284,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
 			};
 			name = Deployment;
 		};
@@ -1330,7 +1332,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
+				STRIP_STYLE = all;
 			};
 			name = Development;
 		};
@@ -1341,7 +1344,8 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				COPY_PHASE_STRIP = YES;
-				GCC_OPTIMIZATION_LEVEL = s;
+				DEAD_CODE_STRIPPING = YES;
+				GCC_OPTIMIZATION_LEVEL = 3;
 				HEADER_SEARCH_PATHS = (
 					"\"$(C74SUPPORT)/max-includes\"",
 					"\"$(C74SUPPORT)/msp-includes\"",
@@ -1362,7 +1366,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx;
+				STRIP_STYLE = all;
 			};
 			name = Deployment;
 		};

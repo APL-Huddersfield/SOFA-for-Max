@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2D846F6B2231544C00BBB30B"
-               BuildableName = "sofa.srdrir~.mxo"
-               BlueprintName = "sofa.srdrir~"
+               BlueprintIdentifier = "2D85FAE6224B0C3B0088B0E7"
+               BuildableName = "sofa.msbrir~.mxo"
+               BlueprintName = "sofa.msbrir~"
                ReferencedContainer = "container:SofaMax.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,7 +33,7 @@
       </AdditionalOptions>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Development"
+      buildConfiguration = "Deployment"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D846F6B2231544C00BBB30B"
-            BuildableName = "sofa.srdrir~.mxo"
-            BlueprintName = "sofa.srdrir~"
+            BlueprintIdentifier = "2D85FAE6224B0C3B0088B0E7"
+            BuildableName = "sofa.msbrir~.mxo"
+            BlueprintName = "sofa.msbrir~"
             ReferencedContainer = "container:SofaMax.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2D846F6B2231544C00BBB30B"
-            BuildableName = "sofa.srdrir~.mxo"
-            BlueprintName = "sofa.srdrir~"
+            BlueprintIdentifier = "2D85FAE6224B0C3B0088B0E7"
+            BuildableName = "sofa.msbrir~.mxo"
+            BlueprintName = "sofa.msbrir~"
             ReferencedContainer = "container:SofaMax.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

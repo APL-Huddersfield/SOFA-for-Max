@@ -26,7 +26,7 @@ typedef struct _sofa_fir {
     bool buffSet;
 
     void* outlet_dump;
-    void* outlet_bang;
+    void* out_bang;
 }t_sofa_fir;
 
 typedef enum _sofa_fir_outlets {
@@ -355,6 +355,8 @@ void sofa_fir_get(t_sofa_fir* x, t_symbol* s, long block, t_symbol* bufferName, 
     if(optionalBufferIsGiven && buffRef) {
         object_free(buffRef);
     }
+    
+    outlet_bang(x->out_bang);
 }
 
 bool sofa_fir_isSofaValid(t_sofa_fir* x, t_symbol* mess) {
@@ -484,7 +486,7 @@ void *sofa_fir_new(t_symbol *s, long argc, t_atom *argv) {
             x->buffSet = sofa_fir_registerBuffer(x, buff_name);
         }
         x->outlet_dump = outlet_new((t_object*)x, NULL);
-        x->outlet_bang = bangout((t_object*)x);
+        x->out_bang = bangout((t_object*)x);
     }
     return x;
 }

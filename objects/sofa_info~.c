@@ -20,6 +20,7 @@ typedef struct _sofa_info{
     bool isBoundToSofa;
 
     void* outlet_dump;
+    void* outlet_convention;
     void* outlet_sampleRate;
     void* outlet_N;
     void* outlet_E;
@@ -33,6 +34,7 @@ typedef enum _sofa_info_outlets {
     SOFA_INFO_E_OUTLET,
     SOFA_INFO_N_OUTLET,
     SOFA_INFO_SAMPLERATE_OUTLET,
+    SOFA_INFO_CONVENTION_OUTLET,
     SOFA_INFO_DUMP_OUTLET
 }t_sofa_info_outlets;
 
@@ -100,6 +102,9 @@ void sofa_info_assist(t_sofa_info *x, void *b, long m, long a, char *s) {
             case SOFA_INFO_SAMPLERATE_OUTLET:
                 sprintf(s, "(float) Sample rate");
                 break;
+            case SOFA_INFO_CONVENTION_OUTLET:
+                sprintf(s, "(symbol) Convention");
+                break;
             case SOFA_INFO_DUMP_OUTLET:
                 sprintf(s, "dumpout");
                 break;
@@ -113,6 +118,7 @@ void sofa_info_output(t_sofa_info* x) {
     }
 
     sofa_info_dumpAttributes(x);
+    outlet_anything(x->outlet_convention, gensym(sofa_getConventionString(x->sofa_ob->sofa->convention)), 0, 0L);
     outlet_float(x->outlet_sampleRate, x->sofa_ob->sofa->sampleRate);
     outlet_int(x->outlet_N, x->sofa_ob->sofa->N);
     outlet_int(x->outlet_E, x->sofa_ob->sofa->E);
@@ -234,6 +240,7 @@ void *sofa_info_new(t_symbol *s, long argc, t_atom *argv) {
         }
 
         x->outlet_dump = outlet_new((t_object*)x, NULL);
+        x->outlet_convention = outlet_new((t_object*)x, NULL);
         x->outlet_sampleRate = floatout((t_object*)x);
         x->outlet_N = intout((t_object*)x);
         x->outlet_E = intout((t_object*)x);

@@ -26,7 +26,13 @@ typedef struct _sofa_srdrir {
     bool buffSet;
 
     void* outlet_dump;
+    void* out_bang;
 }t_sofa_srdrir;
+
+typedef enum _sofa_srdrir_outlets {
+    BANG_OUTLET = 0,
+    DUMP_OUTLET
+}t_sofa_srdrir_outlets;
 
 void *sofa_srdrir_new(t_symbol* s, long argc, t_atom* argv);
 void sofa_srdrir_free(t_sofa_srdrir* x);
@@ -137,13 +143,16 @@ void sofa_srdrir_assist(t_sofa_srdrir *x, void *b, long m, long a, char *s) {
                 break;
         }
 	}
-	else {
+    else {
         switch(a) {
-            case 0:
+            case BANG_OUTLET:
+                sprintf(s, "(bang) Extraction successful");
+                break;
+            case DUMP_OUTLET:
                 sprintf(s, "(anything) Dump outlet");
                 break;
         }
-	}
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -346,6 +355,8 @@ void sofa_srdrir_get(t_sofa_srdrir* x, t_symbol* s, long block, t_symbol* buffer
     if(optionalBufferIsGiven && buffRef) {
         object_free(buffRef);
     }
+    
+    outlet_bang(x->out_bang);
 }
 
 bool sofa_srdrir_isSofaValid(t_sofa_srdrir* x, t_symbol* mess) {
@@ -476,6 +487,7 @@ void *sofa_srdrir_new(t_symbol *s, long argc, t_atom *argv) {
             x->buffSet = sofa_srdrir_registerBuffer(x, buff_name);
         }
         x->outlet_dump = outlet_new((t_object*)x, NULL);
+        x->out_bang = bangout((t_object*)x);
     }
     return x;
 }

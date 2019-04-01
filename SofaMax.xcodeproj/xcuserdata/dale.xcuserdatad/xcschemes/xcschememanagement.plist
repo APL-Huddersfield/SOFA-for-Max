@@ -9,32 +9,32 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
-		<key>sofa.fir~.xcscheme</key>
+		<key>sofa.fir~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>sofa.genfire~.xcscheme</key>
+		<key>sofa.genfire~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>sofa.hrir~.xcscheme</key>
+		<key>sofa.hrir~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>4</integer>
 		</dict>
-		<key>sofa.info~.xcscheme</key>
+		<key>sofa.info~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>2</integer>
 		</dict>
-		<key>sofa.msbrir~.xcscheme</key>
+		<key>sofa.msbrir~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
-		<key>sofa.srdrir~.xcscheme</key>
+		<key>sofa.srdrir~.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>6</integer>
