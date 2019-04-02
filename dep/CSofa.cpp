@@ -73,17 +73,17 @@ void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa)
     uint64_t maxAttributeNameLength = csofa_getMaxAttributeNameSize(sofa);
     uint64_t maxAttributeSize = csofa_getMaxAttributeSize(sofa);
     
-    a->names = (char**)malloc(sizeof(char*) * numAttributes);
-    a->values = (char**)malloc(sizeof(char*) * numAttributes);
-    a->nameSizes = (uint64_t*)malloc(sizeof(uint64_t) * numAttributes);
-    a->valueSizes = (uint64_t*)malloc(sizeof(uint64_t) * numAttributes);
+    a->names = new char*[numAttributes];
+    a->values = new char*[numAttributes];
+    a->nameSizes = new uint64_t[numAttributes];
+    a->valueSizes = new uint64_t[numAttributes];
     a->numAttributes = numAttributes;
     a->maxAttributeNameSize= maxAttributeNameLength;
     a->maxAttributeSize = maxAttributeSize;
     
     for(uint64_t i = 0; i < numAttributes; ++i) {
-        a->names[i] = (char*)malloc(sizeof(char) * (maxAttributeNameLength + 1)); // +1 allows for null-termination
-        a->values[i] = (char*)malloc(sizeof(char) * (maxAttributeSize + 1));
+        a->names[i] = new char[maxAttributeNameLength + 1]; // +1 allows for null-termination
+        a->values[i] = new char[maxAttributeSize + 1];
     }
     
     std::vector<std::string> attributeNames;
@@ -91,12 +91,6 @@ void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa)
     sofa.GetAllAttributesNames(attributeNames);
     for(auto i = 0; i < attributeNames.size(); ++i) {
         attribute = sofa.GetAttributeValueAsString(attributeNames[i]);
-        /*for(auto j = 0; j < attributeNames[i].size(); ++j) {
-            a->names[i][j] = attributeNames[i][j];
-        }
-        for(auto j = 0; j < attribute.size(); ++j) {
-            a->values[i][j] = attribute[j];
-        }*/
         memcpy(a->names[i], attributeNames[i].c_str(), sizeof(char) * attributeNames[i].size());
         memcpy(a->values[i], attribute.c_str(), sizeof(char) * attribute.size());
         a->names[i][attributeNames[i].size()] = '\0';
@@ -316,13 +310,13 @@ double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E)
 
 void csofa_clearAttributes(t_sofaAttributes* a) {
     for(auto i = 0; i < a->numAttributes; ++i) {
-        free(a->names[i]);
-        free(a->values[i]);
+        delete[] a->names[i];
+        delete[] a->values[i];
     }
-    free(a->names);
-    free(a->values);
-    free(a->nameSizes);
-    free(a->valueSizes);
+    delete[] a->names;
+    delete[] a->values;
+    delete[] a->nameSizes;
+    delete[] a->valueSizes;
 }
 
 void csofa_setDataIR(t_sofa* s, uint64_t i, double* data, long N) {

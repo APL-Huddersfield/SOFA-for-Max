@@ -353,11 +353,11 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                 a = atom_getsym(argv);
                 t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name, "sofa~");
                 if(ref != NULL) {
-                    sysmem_freeptr(x->sofa);
+                    /*sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
 
-                    /*x->sofa = ref->sofa;
+                    x->sofa = ref->sofa;
                     x->fileLoaded = ref->fileLoaded;
 
                     x->count = ref->count;
@@ -367,7 +367,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                     sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
-                    object_error((t_object*)x, "Only 1 sofa~ can currently exist");
+                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist", a->s_name);
                     return NULL;
                 }
                 else {
