@@ -6,7 +6,7 @@ release/*
 
 *.pdf
 *.a
-*.vcxproj
+#*.vcxproj
 
 dep/SOFA/src/*
 !dep/SOFA/src/Sofa.h
