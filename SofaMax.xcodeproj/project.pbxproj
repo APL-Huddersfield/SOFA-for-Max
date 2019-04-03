@@ -202,7 +202,6 @@
 		2D846F852231544C00BBB30B /* sofa.srdrir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.srdrir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D85FAE4224B0BD90088B0E7 /* sofa_msbrir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_msbrir~.c"; path = "objects/sofa_msbrir~.c"; sourceTree = "<group>"; };
 		2D85FAFF224B0C3B0088B0E7 /* sofa.msbrir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.msbrir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D85FB00224B0C3B0088B0E7 /* sofa.genfire~ copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "sofa.genfire~ copy-Info.plist"; path = "/Users/dale/Dev/SofaMax ReDone/sofa.genfire~ copy-Info.plist"; sourceTree = "<absolute>"; };
 		2D94739B222970CE004F7983 /* sofa_fir~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_fir~.c"; path = "objects/sofa_fir~.c"; sourceTree = "<group>"; };
 		2D9473B72229712A004F7983 /* sofa.fir~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.fir~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D9DA366222807EF00CE2AFD /* sofa_info~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_info~.c"; path = "objects/sofa_info~.c"; sourceTree = "<group>"; };
@@ -341,7 +340,6 @@
 				2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */,
 				19C28FB4FE9D528D11CA2CBB /* Products */,
 				2DE8F0D11F9CB46F00650FB9 /* Frameworks */,
-				2D85FB00224B0C3B0088B0E7 /* sofa.genfire~ copy-Info.plist */,
 			);
 			name = iterator;
 			sourceTree = "<group>";
@@ -1031,7 +1029,7 @@
 					/usr/local/include,
 					./dep,
 				);
-				INFOPLIST_FILE = "sofa.genfire~ copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1063,7 +1061,7 @@
 					/usr/local/include,
 					./dep,
 				);
-				INFOPLIST_FILE = "sofa.genfire~ copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

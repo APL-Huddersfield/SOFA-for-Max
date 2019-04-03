@@ -9,10 +9,6 @@
 #ifndef CSofa_hpp
 #define CSofa_hpp
 
-#ifdef __cplusplus
-extern "C"
-{
-#endif
 #define C_SOFA_FILE reinterpret_cast<sofa::File*>
 #define C_SOFA_GENERAL_FIR reinterpret_cast<sofa::GeneralFIR*>
 #define C_SOFA_GENERAL_TF reinterpret_cast<sofa::GeneralTF*>
@@ -27,6 +23,9 @@ extern "C"
 #include <stdbool.h>
 #include "PointTree.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
     typedef enum _sofaConvention {
         SOFA_GENERAL_FIR,
         SOFA_SIMPLE_FREE_FIELD_HRIR,
@@ -104,8 +103,6 @@ extern "C"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     
     void csofa_setDataIR(t_sofa* s, uint64_t i, double* data);
-
-
 #ifdef __cplusplus
 }
 #endif

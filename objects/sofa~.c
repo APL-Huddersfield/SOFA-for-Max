@@ -339,7 +339,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
     t_sofa_max *x = NULL;
     t_symbol* a;
 
-    if((x = (t_sofa_max *)object_alloc(sofa_max_class))) {
+    if(x = (t_sofa_max *)object_alloc((t_class*)sofa_max_class)) {
         a = symbol_unique();
         
         x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));

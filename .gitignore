@@ -2,6 +2,7 @@
 Build/*
 externals/*
 release/*
+**/*.lib
 
 *.pdf
 *.a

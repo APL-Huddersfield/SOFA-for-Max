@@ -37,5 +37,5 @@ t_point makeSphericalPoint(uint64_t ID, double azi, double elev) {
 
 t_point* getNearestPoint(struct kdtree* tree, t_point* reqPoint) {
     struct kdres* k = kd_nearest(tree, reqPoint->pos);
-    return kd_res_item_data(k);
+    return (t_point*)kd_res_item_data(k);
 }
