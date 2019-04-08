@@ -30,14 +30,6 @@ typedef struct _sofa_max {
     void* outlet_dump;
 }t_sofa_max;
 
-typedef enum _positionType {
-    UNKNOWN_POSITION = 0,
-    LISTENER_POSITION,
-    RECEIVER_POSITION,
-    SOURCE_POSITION,
-    EMITTER_POSITION
-}t_positionType;
-
 char* sofa_getConventionString(t_sofaConvention convention);
 
 bool isSofaFileOpen(t_object* ob, t_sofa_max* x, t_symbol* s);

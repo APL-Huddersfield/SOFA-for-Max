@@ -18,6 +18,12 @@ void sofa_max_read(t_sofa_max *x, t_symbol *s);
 void sofa_max_doRead(t_sofa_max* x, t_symbol* s);
 void sofa_max_open(t_sofa_max* x, char* filename, short path);
 
+void sofa_max_write(t_sofa_max* x, t_symbol* s);
+void sofa_max_doWrite(t_sofa_max* x, t_symbol* s);
+
+// Data manipulation methods
+void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv);
+
 // Measurement acquisition methods
 t_buffer_ref* sofa_max_getNewBuffer(t_sofa_max* x, t_symbol* bufferName);
 void sofa_max_getPositions(t_sofa_max* x, t_symbol* s);
@@ -38,18 +44,24 @@ void ext_main(void *r) {
 
 	c = class_new("sofa~", (method)sofa_max_new, (method)sofa_max_free, (long)sizeof(t_sofa_max), 0L, A_GIMME, 0);
 
-    class_addmethod(c, (method)sofa_max_read,               "read",                 A_DEFSYM, 0);
-    class_addmethod(c, (method)sofa_max_getPositions,       "getpositions",         A_SYM, 0);
-    class_addmethod(c, (method)sofa_max_getDimension,       "getdimension",         A_GIMME, 0);
-    class_addmethod(c, (method)sofa_max_getSize,            "getsizesamps",         A_NOTHING, 0);
-    class_addmethod(c, (method)sofa_max_getName,            "getname",              A_NOTHING, 0);
-    class_addmethod(c, (method)sofa_max_get,                "get",                  A_GIMME, 0);
+    class_addmethod(c, (method)sofa_max_read,           "read",         A_DEFSYM, 0);
+    class_addmethod(c, (method)sofa_max_write,          "write",        A_DEFSYM, 0);
+    class_addmethod(c, (method)sofa_max_create,         "new",          A_GIMME, 0);
     
-	class_addmethod(c, (method)sofa_max_assist,             "assist",               A_CANT, 0);
+    class_addmethod(c, (method)sofa_max_getPositions,   "getpositions", A_SYM, 0);
+    class_addmethod(c, (method)sofa_max_getDimension,   "getdimension", A_GIMME, 0);
+    class_addmethod(c, (method)sofa_max_getSize,        "getsizesamps", A_NOTHING, 0);
+    class_addmethod(c, (method)sofa_max_getName,        "getname",      A_NOTHING, 0);
+    class_addmethod(c, (method)sofa_max_get,            "get",          A_GIMME, 0);
+    
+	class_addmethod(c, (method)sofa_max_assist,         "assist",       A_CANT, 0);
 
 	class_register(CLASS_BOX, c);
 	sofa_max_class = c;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 void sofa_max_read(t_sofa_max* x, t_symbol* s) {
     defer(x, (method)sofa_max_doRead, s, 0, NULL);
@@ -109,6 +121,88 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
     outlet_bang(x->outlet_finishedLoading);
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void sofa_max_write(t_sofa_max* x, t_symbol* s) {
+    defer(x, (method)sofa_max_doWrite, s, 0, NULL);
+}
+
+void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
+    t_fourcc filetype = 'NULL';
+    t_fourcc outtype;
+    char filename[MAX_PATH_CHARS];
+    char fullpath[MAX_PATH_CHARS];
+    short path;
+    
+    if(s == gensym("")) {
+        if(saveasdialog_extended(filename, &path, &outtype, &filetype, 1)) {
+            return;
+        }
+    }
+    else {
+        strcpy(filename, s->s_name);
+        path = path_getdefault();
+    }
+    path_toabsolutesystempath(path, filename, fullpath);
+    critical_enter(0);
+    csofa_writeFile(x->sofa, fullpath);
+    critical_exit(0);
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
+    
+    return; // feature disabled
+    
+    /*outFile.addDim("C", 3);
+    outFile.addDim("I", 1);
+    outFile.addDim("M", s->M);
+    outFile.addDim("R", s->R);
+    outFile.addDim("E", s->E);
+    outFile.addDim("N", s->N);*/
+    
+    t_sofaConvention convention;
+    long dimensionSize[4] = {0, 0, 0, 0};
+    char dimensionName[4] = {'M', 'R', 'E', 'N'};
+    
+    if(argc < 5) {
+        object_error((t_object*)x, "%s: not enough arguments. Expected 5", s->s_name);
+        return;
+    }
+    
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: convention argument must be an integer", s->s_name);
+        return;
+    }
+    convention = (t_sofaConvention)atom_getlong(argv);
+    argv++;
+    
+    for(long i = 0; i < 4; ++i) {
+        if(!atomIsANumber(argv)) {
+            object_error((t_object*)x, "%s: dimension %s argument must be an integer", s->s_name, dimensionName[i]);
+            return;
+        }
+        dimensionSize[i] = atom_getlong(argv);
+        argv++;
+    }
+    
+    if(*x->fileLoaded) {
+        csofa_destroySofa(x->sofa);
+    }
+    
+    x->sofa->C = 3;
+    x->sofa->I = 1;
+    x->sofa->M = dimensionSize[0];
+    x->sofa->R = dimensionSize[1];
+    x->sofa->E = dimensionSize[2];
+    x->sofa->N = dimensionSize[3];
+    
+    *x->fileLoaded = true;
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 void sofa_max_getPositions(t_sofa_max* x, t_symbol* s) {
     if(sofa_max_isFileLoaded(x, gensym("getpositions"))) {
         sofa_getPositions(x, x->outlet_dump, s);
@@ -118,7 +212,7 @@ void sofa_max_getPositions(t_sofa_max* x, t_symbol* s) {
 void sofa_max_getDimension(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
     long kNumArgs = 1;
     if(argc < kNumArgs) {
-        object_error((t_object*)x, "%s: not enough arguments. Expected %d argument",
+        object_error((t_object*)x, "%s: not enough arguments. Expected %d",
                      s->s_name, kNumArgs);
         return;
     }
@@ -225,7 +319,8 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
     if(optionalBufferIsGiven) {
         buffRef = buffer_ref_new((t_object*)x, optionalBufferName);
         if(buffer_ref_exists(buffRef) == 0) {
-            object_error((t_object*)x, "%s: destination buffer \"%s\" does not exist", s->s_name, optionalBufferName->s_name);
+            object_error((t_object*)x, "%s: destination buffer \"%s\" does not exist", s->s_name,
+                         optionalBufferName->s_name);
             object_free(buffRef);
             return;
         }
@@ -339,7 +434,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
     t_sofa_max *x = NULL;
     t_symbol* a;
 
-    if(x = (t_sofa_max *)object_alloc((t_class*)sofa_max_class)) {
+    if((x = (t_sofa_max *)object_alloc((t_class*)sofa_max_class))) {
         a = symbol_unique();
         
         x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));

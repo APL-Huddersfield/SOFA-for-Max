@@ -27,11 +27,14 @@
 extern "C" {
 #endif
     typedef enum _sofaConvention {
-        SOFA_GENERAL_FIR,
+        SOFA_GENERAL_FIR = 0,
         SOFA_SIMPLE_FREE_FIELD_HRIR,
         SOFA_GENERAL_FIRE,
         SOFA_SINGLE_ROOM_DRIR,
         SOFA_MULTISPEAKER_BRIR,
+        
+        SOFA_NUM_CONVENTIONS,
+        
         SOFA_UNKNOWN_TYPE
     }t_sofaConvention;
 
@@ -43,6 +46,29 @@ extern "C" {
         SOFA_S_DIMENSION,
         SOFA_NUM_DIMENSIONS
     }t_sofaDimension;
+    
+    typedef enum _positionType {
+        UNKNOWN_POSITION = 0,
+        LISTENER_POSITION,
+        RECEIVER_POSITION,
+        SOURCE_POSITION,
+        EMITTER_POSITION
+    }t_positionType;
+    
+    typedef enum _viewType {
+        UNKNOWN_VIEW = 0,
+        LISTENER_VIEW,
+        SOURCE_VIEW,
+        EMITTER_VIEW
+    }t_viewType;
+    
+    typedef enum _upType {
+        UNKNOWN_UP = 0,
+        LISTENER_UP,
+        RECEIVER_UP,
+        SOURCE_UP,
+        EMITTER_UP
+    }t_upType;
 
     typedef struct _sofaAttributes {
         char** names;
@@ -68,8 +94,15 @@ extern "C" {
         t_point* receiverViews;
         t_point* sourceViews;
         t_point* emitterViews;
+        
+        t_point* listenerUps;
+        t_point* receiverUps;
+        t_point* sourceUps;
+        t_point* emitterUps;
 
         uint64_t numListenerPoints, numReceiverPoints, numSourcePoints, numEmitterPoints;
+        uint64_t numListenerViews, numReceiverViews, numSourceViews, numEmitterViews;
+        uint64_t numListenerUps, numReceiverUps, numSourceUps, numEmitterUps;
 
         double* dataIR;
         double sampleRate;
@@ -80,6 +113,14 @@ extern "C" {
 
     t_sofa csofa_openFile(char* filename);
     void csofa_destroySofa(t_sofa* sofa);
+    
+    typedef enum _sofaWriteErr {
+        NO_WRITE_ERROR = 0,
+        MISSING_ATTR_ERROR,
+    }t_sofaWriteErr;
+    
+    t_sofaWriteErr csofa_writeFile(const t_sofa* sofa, const char* filename);
+    bool csofa_hasRequiredAttributes(const t_sofa* s);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,17 +133,40 @@ extern "C" {
     double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-    /*void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a);
-    uint64_t csofa_getNumAttributes(t_sofa* s);
-    uint64_t csofa_getMaxAttributeNameSize(t_sofa* s);
-    uint64_t csofa_getMaxAttributeSize(t_sofa* s);*/
-
     
     void csofa_clearAttributes(t_sofaAttributes* a);
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     
-    void csofa_setDataIR(t_sofa* s, uint64_t i, double* data);
+    typedef enum _sofaSetDataErr {
+        SET_DATA_NO_ERROR = 0,
+        
+        SET_DATA_INPUT_NULL_ERROR,
+        SET_DATA_SOFA_NULL_ERROR,
+        SET_DATA_SOFA_DATA_NULL_ERROR,
+        
+        SET_DATA_INPUT_TOO_BIG_ERROR,
+        SET_DATA_BLOCK_OUT_OF_RANGE_ERROR
+    }t_sofaSetDataErr;
+    
+    t_sofaSetDataErr csofa_setRawDataBlock(t_sofa* s, uint64_t i, double* dataBlock, long N);
+    t_sofaSetDataErr csofa_setMRDataBlock(t_sofa* s, uint64_t M, uint64_t R, double* dataBlock,
+                                          long N);
+    t_sofaSetDataErr csofa_setMREDataBlock(t_sofa* s, uint64_t M, uint64_t R, uint64_t E,
+                                           double* dataBlock, long N);
+    
+    typedef enum _sofaVarType {
+        SOFA_VAR_LISTENER = 0,
+        SOFA_VAR_RECEIVER,
+        SOFA_VAR_SOURCE,
+        SOFA_VAR_EMITTER,
+        SOFA_NUM_VAR_TYPES
+    }t_sofaVarType;
+    
+    bool csofa_setPosition(t_sofa* s, t_sofaVarType varType, uint64_t i, t_point* point);
+    bool csofa_setView(t_sofa* s, t_sofaVarType varType, uint64_t i, t_point* view);
+    bool csofa_setUp(t_sofa* s, t_sofaVarType varType, uint64_t i, t_point* up);
+    
 #ifdef __cplusplus
 }
 #endif
