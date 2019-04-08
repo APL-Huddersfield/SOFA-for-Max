@@ -112,6 +112,7 @@ extern "C" {
     }t_sofa;
 
     t_sofa csofa_openFile(char* filename);
+    t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate) ;
     void csofa_destroySofa(t_sofa* sofa);
     
     typedef enum _sofaWriteErr {
@@ -134,6 +135,7 @@ extern "C" {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     
+    void csofa_newAttributes(t_sofaAttributes* a);
     void csofa_clearAttributes(t_sofaAttributes* a);
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////

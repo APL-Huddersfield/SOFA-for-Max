@@ -327,6 +327,91 @@ t_sofa csofa_openFile(char* filename) {
     return sofa;
 }
 
+t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate) {
+    t_sofa sofa;
+    sofa.convention = convention;
+    sofa.I = 1;
+    sofa.C = 3;
+    sofa.M = M;
+    sofa.R = R;
+    sofa.E = E;
+    sofa.N = N;
+    sofa.S = 0;
+    
+    sofa.numListenerPoints = 0;
+    sofa.numReceiverPoints = 0;
+    sofa.numSourcePoints = 0;
+    sofa.numEmitterPoints = 0;
+    
+    sofa.numListenerViews = 0;
+    sofa.numReceiverViews = 0;
+    sofa.numSourceViews = 0;
+    sofa.numEmitterViews = 0;
+    
+    sofa.numListenerUps = 0;
+    sofa.numReceiverUps = 0;
+    sofa.numSourceUps = 0;
+    sofa.numEmitterUps = 0;
+    
+    long dataIRSize = M * R * E * N;
+    sofa.dataIR = new double[dataIRSize];
+    for(auto i = 0; i < dataIRSize; ++i) {
+        sofa.dataIR[i] = 0.0;
+    }
+    
+    sofa.sampleRate = sampleRate;
+    sofa.numBlocks = M * R * E;
+    
+    return sofa;
+}
+
+void csofa_destroySofa(t_sofa* sofaFile) {
+    if(sofaFile->dataIR) {
+        delete[] (sofaFile->dataIR);
+    }
+    
+    if(sofaFile->listenerPoints) {
+        delete[] sofaFile->listenerPoints;
+    }
+    if(sofaFile->receiverPoints) {
+        delete[] sofaFile->receiverPoints;
+    }
+    if(sofaFile->sourcePoints) {
+        delete[] sofaFile->sourcePoints;
+    }
+    if(sofaFile->emitterPoints) {
+        delete[] sofaFile->emitterPoints;
+    }
+    
+    if(sofaFile->listenerViews) {
+        delete[] sofaFile->listenerViews;
+    }
+    if(sofaFile->receiverViews) {
+        delete[] sofaFile->receiverViews;
+    }
+    if(sofaFile->sourceViews) {
+        delete[] sofaFile->sourceViews;
+    }
+    if(sofaFile->emitterViews) {
+        delete[] sofaFile->emitterViews;
+    }
+    
+    if(sofaFile->listenerUps) {
+        delete[] sofaFile->listenerUps;
+    }
+    if(sofaFile->receiverUps) {
+        delete[] sofaFile->receiverUps;
+    }
+    if(sofaFile->sourceUps) {
+        delete[] sofaFile->sourceUps;
+    }
+    if(sofaFile->emitterUps) {
+        delete[] sofaFile->emitterUps;
+    }
+    
+    csofa_clearAttributes(&sofaFile->attr);
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void csofa_setSampleRate(const t_sofa* sofa, const netCDF::NcFile& file) {
@@ -583,53 +668,6 @@ bool csofa_hasRequiredAttributes(const t_sofa* s) {
     return true;
 }
 
-void csofa_destroySofa(t_sofa* sofaFile) {
-    if(sofaFile->dataIR) {
-        delete[] (sofaFile->dataIR);
-    }
-    
-    if(sofaFile->listenerPoints) {
-        delete[] sofaFile->listenerPoints;
-    }
-    if(sofaFile->receiverPoints) {
-        delete[] sofaFile->receiverPoints;
-    }
-    if(sofaFile->sourcePoints) {
-        delete[] sofaFile->sourcePoints;
-    }
-    if(sofaFile->emitterPoints) {
-        delete[] sofaFile->emitterPoints;
-    }
-    
-    if(sofaFile->listenerViews) {
-        delete[] sofaFile->listenerViews;
-    }
-    if(sofaFile->receiverViews) {
-        delete[] sofaFile->receiverViews;
-    }
-    if(sofaFile->sourceViews) {
-        delete[] sofaFile->sourceViews;
-    }
-    if(sofaFile->emitterViews) {
-        delete[] sofaFile->emitterViews;
-    }
-    
-    if(sofaFile->listenerUps) {
-        delete[] sofaFile->listenerUps;
-    }
-    if(sofaFile->receiverUps) {
-        delete[] sofaFile->receiverUps;
-    }
-    if(sofaFile->sourceUps) {
-        delete[] sofaFile->sourceUps;
-    }
-    if(sofaFile->emitterUps) {
-        delete[] sofaFile->emitterUps;
-    }
-    
-    csofa_clearAttributes(&sofaFile->attr);
-}
-
 double* csofa_getMRDataIR(t_sofa* s, uint64_t M, uint64_t R) {
     if(s->convention == SOFA_GENERAL_FIR || s->convention == SOFA_SIMPLE_FREE_FIELD_HRIR) {
         return (s->dataIR + (M * s->R * s->N) + (R * s->N));
@@ -662,6 +700,44 @@ double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+void csofa_newAttributes(t_sofaAttributes* a) {
+    
+    uint64_t numAttributes = sofa::Attributes::kNumAttributes;
+    const uint64_t kMaxValueLength = 512;
+    
+    std::vector<std::string> names;
+    for(auto i = 0; i < numAttributes; ++i) {
+        const sofa::Attributes::Type attType = static_cast<sofa::Attributes::Type>(i);
+        const std::string name = sofa::Attributes::GetName(attType);
+        names.push_back(name);
+    }
+    
+    a->names = new char*[numAttributes];
+    a->values = new char*[numAttributes];
+    a->nameSizes = new uint64_t[numAttributes];
+    a->valueSizes = new uint64_t[numAttributes];
+    a->numAttributes = numAttributes;
+    a->maxAttributeNameSize = 0;
+    
+    uint64_t nameSize = 0;
+    uint64_t maxNameSize = 0;
+    for(auto i = 0; i < numAttributes; ++i) {
+        nameSize = names[i].size();
+        maxNameSize = nameSize > maxNameSize ? nameSize : maxNameSize;
+        
+        a->names[i] = new char[nameSize + 1];
+        memcpy(a->names, names[i].c_str(), sizeof(char) * nameSize);
+        a->names[i][nameSize] = '\0';
+        a->nameSizes[i] = nameSize;
+        
+        a->values[i] = new char[kMaxValueLength];
+        memset(a->values[i], '\0', kMaxValueLength);
+        a->valueSizes[i] = kMaxValueLength;
+    }
+    a->maxAttributeNameSize = maxNameSize;
+    a->maxAttributeSize = 0; // Set 0 since all characters are null
+}
+
 void csofa_clearAttributes(t_sofaAttributes* a) {
     for(auto i = 0; i < a->numAttributes; ++i) {
         delete[] a->names[i];
@@ -672,6 +748,8 @@ void csofa_clearAttributes(t_sofaAttributes* a) {
     delete[] a->nameSizes;
     delete[] a->valueSizes;
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 t_sofaSetDataErr csofa_setRawDataBlock(t_sofa* s, uint64_t i, double* dataBlock, long N) {
     if(dataBlock == NULL) {

@@ -124,18 +124,22 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sofa_max_write(t_sofa_max* x, t_symbol* s) {
-    defer(x, (method)sofa_max_doWrite, s, 0, NULL);
+    if(*x->fileLoaded) {
+        defer(x, (method)sofa_max_doWrite, s, 0, NULL);
+    }
+    else {
+        object_error((t_object*)x, "No SOFA data to write");
+    }
 }
 
 void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
-    t_fourcc filetype = 'NULL';
-    t_fourcc outtype;
+    t_fourcc type = 0L;
     char filename[MAX_PATH_CHARS];
     char fullpath[MAX_PATH_CHARS];
     short path;
     
     if(s == gensym("")) {
-        if(saveasdialog_extended(filename, &path, &outtype, &filetype, 1)) {
+        if(saveasdialog_extended(filename, &path, &type, &type, 1)) {
             return;
         }
     }
@@ -153,8 +157,6 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
 
 void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
-    return; // feature disabled
-    
     /*outFile.addDim("C", 3);
     outFile.addDim("I", 1);
     outFile.addDim("M", s->M);
@@ -163,11 +165,13 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     outFile.addDim("N", s->N);*/
     
     t_sofaConvention convention;
-    long dimensionSize[4] = {0, 0, 0, 0};
-    char dimensionName[4] = {'M', 'R', 'E', 'N'};
+    long M = 0;
+    long R = 0;
+    long E = 1;
+    long N = 0;
     
-    if(argc < 5) {
-        object_error((t_object*)x, "%s: not enough arguments. Expected 5", s->s_name);
+    if(argc < 4) {
+        object_error((t_object*)x, "%s: not enough arguments. Expected at least 4", s->s_name);
         return;
     }
     
@@ -178,26 +182,60 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     convention = (t_sofaConvention)atom_getlong(argv);
     argv++;
     
-    for(long i = 0; i < 4; ++i) {
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: M dimension argument must be an integer", s->s_name);
+        return;
+    }
+    M = atom_getlong(argv);
+    argv++;
+    
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: R dimension argument must be an integer", s->s_name);
+        return;
+    }
+    R = atom_getlong(argv);
+    argv++;
+    
+    if(argc > 4) {
         if(!atomIsANumber(argv)) {
-            object_error((t_object*)x, "%s: dimension %s argument must be an integer", s->s_name, dimensionName[i]);
+            object_error((t_object*)x, "%s: E dimension argument must be an integer", s->s_name);
             return;
         }
-        dimensionSize[i] = atom_getlong(argv);
+        if(convention != SOFA_GENERAL_FIRE && convention != SOFA_MULTISPEAKER_BRIR) {
+            object_warn((t_object*)x, "%s: E dimension only required for GeneralFIRE or MultiSpeakerBRIR conventions", s->s_name);
+        }
+        else {
+            E = atom_getlong(argv);
+        }
         argv++;
+    }
+    
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: N dimension argument must be an integer", s->s_name);
+        return;
+    }
+    N = atom_getlong(argv);
+    argv++;
+    
+    if(argc > 5) {
+        object_warn((t_object*)x, "extra arguments for message %s", s->s_name);
     }
     
     if(*x->fileLoaded) {
         csofa_destroySofa(x->sofa);
     }
     
-    x->sofa->C = 3;
+    /*x->sofa->C = 3;
     x->sofa->I = 1;
-    x->sofa->M = dimensionSize[0];
-    x->sofa->R = dimensionSize[1];
-    x->sofa->E = dimensionSize[2];
-    x->sofa->N = dimensionSize[3];
+    x->sofa->M = M;
+    x->sofa->R = R;
+    x->sofa->E = E;
+    x->sofa->N = N;
     
+    x->sofa->dataIR = (double*)sysmem_newptr(sizeof(double) * M * R * E * N);
+    */
+    
+    *x->sofa = csofa_newSofa((t_sofaConvention)convention, M, R, E, N, 44100);
     *x->fileLoaded = true;
 }
 
