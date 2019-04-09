@@ -159,10 +159,10 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
 
 void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     t_sofaConvention convention;
-    long M = 0;
-    long R = 0;
+    long M = 1;
+    long R = 1;
     long E = 1;
-    long N = 0;
+    long N = 1;
     
     if(argc < 4) {
         object_error((t_object*)x, "%s: not enough arguments. Expected at least 4", s->s_name);
@@ -231,11 +231,29 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     sprintf(appVersion, "%d.%d.%d", big, mid, small);
     csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE, appVersion, 6);
     
-    
     // Convention
     char* strConvention = sofa_getConventionString(convention);
     csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE, strConvention, 19);
     
+    // Data type
+    csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, "FIR", 3);
+    
+    // Date created
+    t_datetime dateTime;
+    systime_datetime(&dateTime);
+    char strDateTime[20];
+    sprintf(strDateTime, "%04d-%02d-%02d %02d:%02d:%02d",
+            dateTime.year, dateTime.month, dateTime.day,
+            dateTime.hour, dateTime.minute, dateTime.second);
+    csofa_setAttributeValue(&x->sofa->attr, DATE_CREATED_ATTR_TYPE, strDateTime, 20);
+    
+    // Date modified
+    systime_datetime(&dateTime);
+    sprintf(strDateTime, "%04d-%02d-%02d %02d:%02d:%02d",
+            dateTime.year, dateTime.month, dateTime.day,
+            dateTime.hour, dateTime.minute, dateTime.second);
+    csofa_setAttributeValue(&x->sofa->attr, DATE_MODIFIED_ATTR_TYPE, strDateTime, 20);
+
     *x->fileLoaded = true;
 }
 
