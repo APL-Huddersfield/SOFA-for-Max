@@ -173,10 +173,11 @@ t_sofa csofa_openFile(char* filename) {
     std::vector<double> positions;
     
     C_SOFA_FILE(&file)->GetListenerPosition(positions);
+    sofa.listenerPoints = NULL;
     if(positions.size()) {
         sofa.listenerPoints = new t_point[positions.size()];
-        sofa.numListenerPoints = positions.size() / 3;
     }
+    sofa.numListenerPoints = positions.size() / 3;
     for(auto i = 0; i < positions.size() / 3; ++i) {
         sofa.listenerPoints[i].ID = i;
         sofa.listenerPoints[i].pos[0] = positions[i * 3];
@@ -185,10 +186,11 @@ t_sofa csofa_openFile(char* filename) {
     }
 
     C_SOFA_FILE(&file)->GetReceiverPosition(positions);
+    sofa.receiverPoints = NULL;
     if(positions.size()) {
         sofa.receiverPoints = new t_point[positions.size()];
-        sofa.numReceiverPoints = positions.size() / 3;
     }
+    sofa.numReceiverPoints = positions.size() / 3;
     for(auto i = 0; i < positions.size() / 3; ++i) {
         sofa.receiverPoints[i].ID = i;
         sofa.receiverPoints[i].pos[0] = positions[i * 3];
@@ -197,10 +199,11 @@ t_sofa csofa_openFile(char* filename) {
     }
 
     C_SOFA_FILE(&file)->GetSourcePosition(positions);
+    sofa.sourcePoints = NULL;
     if(positions.size()) {
         sofa.sourcePoints = new t_point[positions.size()];
-        sofa.numSourcePoints = positions.size() / 3;
     }
+    sofa.numSourcePoints = positions.size() / 3;
     for(auto i = 0; i < positions.size() / 3; ++i) {
         sofa.sourcePoints[i].ID = i;
         sofa.sourcePoints[i].pos[0] = positions[i * 3];
@@ -209,10 +212,11 @@ t_sofa csofa_openFile(char* filename) {
     }
 
     C_SOFA_FILE(&file)->GetEmitterPosition(positions);
+    sofa.emitterPoints = NULL;
     if(positions.size()) {
         sofa.emitterPoints = new t_point[positions.size()];
-        sofa.numEmitterPoints = positions.size() / 3;
     }
+    sofa.numEmitterPoints = positions.size() / 3;
     for(auto i = 0; i < positions.size() / 3; ++i) {
         sofa.emitterPoints[i].ID = i;
         sofa.emitterPoints[i].pos[0] = positions[i * 3];
@@ -224,10 +228,11 @@ t_sofa csofa_openFile(char* filename) {
     std::vector<double> views;
     
     C_SOFA_FILE(&file)->GetListenerView(views);
+    sofa.listenerViews = NULL;
     if(views.size()) {
         sofa.listenerViews = new t_point[views.size()];
-        sofa.numListenerViews = views.size() / 3;
     }
+    sofa.numListenerViews = views.size() / 3;
     for(auto i = 0; i < views.size() / 3; ++i) {
         sofa.listenerViews[i].ID = i;
         sofa.listenerViews[i].pos[0] = views[i * 3];
@@ -236,10 +241,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetSourceView(views);
+    sofa.sourceViews = NULL;
     if(views.size()) {
         sofa.sourceViews = new t_point[views.size()];
-        sofa.numSourceViews = views.size() / 3;
     }
+    sofa.numSourceViews = views.size() / 3;
     for(auto i = 0; i < views.size() / 3; ++i) {
         sofa.sourceViews[i].ID = i;
         sofa.sourceViews[i].pos[0] = views[i * 3];
@@ -248,10 +254,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetReceiverView(views);
+    sofa.receiverViews = NULL;
     if(views.size()) {
         sofa.receiverViews = new t_point[views.size()];
-        sofa.numReceiverViews = views.size() / 3;
     }
+    sofa.numReceiverViews = views.size() / 3;
     for(auto i = 0; i < views.size() / 3; ++i) {
         sofa.receiverViews[i].ID = i;
         sofa.receiverViews[i].pos[0] = views[i * 3];
@@ -260,10 +267,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetEmitterView(views);
+    sofa.emitterViews = NULL;
     if(views.size()) {
         sofa.emitterViews = new t_point[views.size()];
-        sofa.numEmitterViews = views.size() / 3;
     }
+    sofa.numEmitterViews = views.size() / 3;
     for(auto i = 0; i < views.size() / 3; ++i) {
         sofa.emitterViews[i].ID = i;
         sofa.emitterViews[i].pos[0] = views[i * 3];
@@ -275,10 +283,11 @@ t_sofa csofa_openFile(char* filename) {
     std::vector<double> ups;
     
     C_SOFA_FILE(&file)->GetListenerUp(ups);
+    sofa.listenerUps = NULL;
     if(ups.size()) {
         sofa.listenerUps = new t_point[ups.size()];
-        sofa.numListenerUps = ups.size() / 3;
     }
+    sofa.numListenerUps = ups.size() / 3;
     for(auto i = 0; i < ups.size() / 3; ++i) {
         sofa.listenerUps[i].ID = i;
         sofa.listenerUps[i].pos[0] = ups[i * 3];
@@ -287,10 +296,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetSourceUp(ups);
+    sofa.sourceUps = NULL;
     if(ups.size()) {
         sofa.sourceUps = new t_point[ups.size()];
-        sofa.numSourceUps = ups.size() / 3;
     }
+    sofa.numSourceUps = ups.size() / 3;
     for(auto i = 0; i < ups.size() / 3; ++i) {
         sofa.sourceUps[i].ID = i;
         sofa.sourceUps[i].pos[0] = ups[i * 3];
@@ -299,10 +309,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetReceiverUp(ups);
+    sofa.receiverUps = NULL;
     if(ups.size()) {
         sofa.receiverUps = new t_point[ups.size()];
-        sofa.numReceiverUps = ups.size() / 3;
     }
+    sofa.numReceiverUps = ups.size() / 3;
     for(auto i = 0; i < ups.size() / 3; ++i) {
         sofa.receiverUps[i].ID = i;
         sofa.receiverUps[i].pos[0] = ups[i * 3];
@@ -311,10 +322,11 @@ t_sofa csofa_openFile(char* filename) {
     }
     
     C_SOFA_FILE(&file)->GetEmitterUp(ups);
+    sofa.emitterUps = NULL;
     if(ups.size()) {
         sofa.emitterUps = new t_point[ups.size()];
-        sofa.numEmitterUps = ups.size() / 3;
     }
+    sofa.numEmitterUps = ups.size() / 3;
     for(auto i = 0; i < ups.size() / 3; ++i) {
         sofa.emitterUps[i].ID = i;
         sofa.emitterUps[i].pos[0] = ups[i * 3];
@@ -794,7 +806,7 @@ void csofa_newAttributes(t_sofaAttributes* a) {
         memset(a->values[i], '\0', kMaxValueLength);
         a->valueSizes[i] = kMaxValueLength;
     }
-    memset(a->appVersion, '\0', 16);
+    
     a->maxAttributeNameSize = maxNameSize;
     a->maxAttributeSize = 0; // Set 0 since all characters are null
 }
@@ -808,6 +820,13 @@ void csofa_clearAttributes(t_sofaAttributes* a) {
     delete[] a->values;
     delete[] a->nameSizes;
     delete[] a->valueSizes;
+}
+
+void csofa_setAttributeValue(t_sofaAttributes* a, t_sofaAttributeTypes t, char* value, int size) {
+    int i = (int)t;
+    a->nameSizes[i] = size;
+    a->values[i] = (char*)realloc(a->values[i], sizeof(char) * size);
+    memcpy(a->values[i], value, sizeof(char) * size);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

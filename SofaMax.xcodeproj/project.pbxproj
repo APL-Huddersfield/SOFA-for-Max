@@ -20,6 +20,7 @@
 				2D7ADA562231457E000633F7 /* PBXTargetDependency */,
 				2D846F89223154C400BBB30B /* PBXTargetDependency */,
 				2D85FB03224B0C5D0088B0E7 /* PBXTargetDependency */,
+				2D89B625225CA00F00436294 /* PBXTargetDependency */,
 			);
 			name = "All SOFA Externals";
 			productName = "All SOFA Externals";
@@ -27,6 +28,21 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2D1F41DE225C99D700372519 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
+		2D1F41DF225C99D700372519 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D1F41E0225C99D700372519 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D1F41E1225C99D700372519 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D1F41E5225C99D700372519 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
+		2D1F41E6225C99D700372519 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D1F41E7225C99D700372519 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D1F41E8225C99D700372519 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
+		2D1F41EA225C99D700372519 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
+		2D1F41EB225C99D700372519 /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
+		2D1F41EC225C99D700372519 /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
+		2D1F41ED225C99D700372519 /* libnetcdf_c++4.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6621EDFC2A00A6916E /* libnetcdf_c++4.a */; };
+		2D1F41EE225C99D700372519 /* libnetcdf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6721EDFC2A00A6916E /* libnetcdf.a */; };
+		2D1F41EF225C99D700372519 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
+		2D1F41F0225C99D700372519 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D5116C7224975D300625783 /* SOFA in Resources */ = {isa = PBXBuildFile; fileRef = 2D5116C6224975D300625783 /* SOFA */; };
 		2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D7ADA3B22314548000633F7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
@@ -76,6 +92,7 @@
 		2D85FAF9224B0C3B0088B0E7 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
 		2D85FAFA224B0C3B0088B0E7 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D85FB01224B0C570088B0E7 /* sofa_msbrir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D85FAE4224B0BD90088B0E7 /* sofa_msbrir~.c */; };
+		2D89B623225CA00600436294 /* sofa_poke~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F41DA225C994A00372519 /* sofa_poke~.c */; };
 		2D94739F2229712A004F7983 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D9473A02229712A004F7983 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
 		2D9473A12229712A004F7983 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
@@ -164,6 +181,13 @@
 			remoteGlobalIDString = 2D85FAE6224B0C3B0088B0E7;
 			remoteInfo = "sofa.msbrir~";
 		};
+		2D89B624225CA00F00436294 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D1F41DC225C99D700372519;
+			remoteInfo = "sofa.poke~";
+		};
 		2D9473B9222975C3004F7983 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -195,6 +219,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2D1F41DA225C994A00372519 /* sofa_poke~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_poke~.c"; path = "objects/sofa_poke~.c"; sourceTree = "<group>"; };
+		2D1F41F5225C99D700372519 /* sofa.poke~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.poke~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D1F41F6225C99D700372519 /* sofa.msbrir~ copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "sofa.msbrir~ copy-Info.plist"; path = "/Users/dale/Dev/SofaMaxWin/sofa.msbrir~ copy-Info.plist"; sourceTree = "<absolute>"; };
 		2D5116C6224975D300625783 /* SOFA */ = {isa = PBXFileReference; lastKnownFileType = folder; name = SOFA; path = dep/SOFA; sourceTree = "<group>"; };
 		2D7ADA36223144C4000633F7 /* sofa_genfire~.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = "sofa_genfire~.c"; path = "objects/sofa_genfire~.c"; sourceTree = "<group>"; };
 		2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "sofa.genfire~.mxo"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -230,6 +257,20 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2D1F41E9225C99D700372519 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D1F41EA225C99D700372519 /* libcurl.a in Frameworks */,
+				2D1F41EB225C99D700372519 /* libhdf5_hl.a in Frameworks */,
+				2D1F41EC225C99D700372519 /* libhdf5.a in Frameworks */,
+				2D1F41ED225C99D700372519 /* libnetcdf_c++4.a in Frameworks */,
+				2D1F41EE225C99D700372519 /* libnetcdf.a in Frameworks */,
+				2D1F41EF225C99D700372519 /* libsofa.a in Frameworks */,
+				2D1F41F0225C99D700372519 /* libz.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D7ADA4622314548000633F7 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -340,6 +381,7 @@
 				2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */,
 				19C28FB4FE9D528D11CA2CBB /* Products */,
 				2DE8F0D11F9CB46F00650FB9 /* Frameworks */,
+				2D1F41F6225C99D700372519 /* sofa.msbrir~ copy-Info.plist */,
 			);
 			name = iterator;
 			sourceTree = "<group>";
@@ -354,6 +396,7 @@
 				2D7ADA5222314548000633F7 /* sofa.genfire~.mxo */,
 				2D846F852231544C00BBB30B /* sofa.srdrir~.mxo */,
 				2D85FAFF224B0C3B0088B0E7 /* sofa.msbrir~.mxo */,
+				2D1F41F5225C99D700372519 /* sofa.poke~.mxo */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -384,6 +427,7 @@
 				2D7ADA36223144C4000633F7 /* sofa_genfire~.c */,
 				2D846F692231540000BBB30B /* sofa_srdrir~.c */,
 				2D85FAE4224B0BD90088B0E7 /* sofa_msbrir~.c */,
+				2D1F41DA225C994A00372519 /* sofa_poke~.c */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -405,6 +449,17 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		2D1F41DD225C99D700372519 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D1F41DE225C99D700372519 /* CSofa.hpp in Headers */,
+				2D1F41DF225C99D700372519 /* kdtree.h in Headers */,
+				2D1F41E0225C99D700372519 /* PointTree.h in Headers */,
+				2D1F41E1225C99D700372519 /* sofa_common.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D7ADA3922314548000633F7 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -485,6 +540,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2D1F41DC225C99D700372519 /* sofa.poke~ */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2D1F41F2225C99D700372519 /* Build configuration list for PBXNativeTarget "sofa.poke~" */;
+			buildPhases = (
+				2D1F41DD225C99D700372519 /* Headers */,
+				2D1F41E2225C99D700372519 /* Resources */,
+				2D1F41E3225C99D700372519 /* Sources */,
+				2D1F41E9225C99D700372519 /* Frameworks */,
+				2D1F41F1225C99D700372519 /* Rez */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "sofa.poke~";
+			productName = iterator;
+			productReference = 2D1F41F5225C99D700372519 /* sofa.poke~.mxo */;
+			productType = "com.apple.product-type.bundle";
+		};
 		2D7ADA3822314548000633F7 /* sofa.genfire~ */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D7ADA4F22314548000633F7 /* Build configuration list for PBXNativeTarget "sofa.genfire~" */;
@@ -650,12 +724,20 @@
 				2D7ADA3822314548000633F7 /* sofa.genfire~ */,
 				2D846F6B2231544C00BBB30B /* sofa.srdrir~ */,
 				2D85FAE6224B0C3B0088B0E7 /* sofa.msbrir~ */,
+				2D1F41DC225C99D700372519 /* sofa.poke~ */,
 				2DD9B57A2208AD0E0059570C /* All SOFA Externals */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2D1F41E2225C99D700372519 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D7ADA3E22314548000633F7 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -709,6 +791,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXRezBuildPhase section */
+		2D1F41F1225C99D700372519 /* Rez */ = {
+			isa = PBXRezBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D7ADA4E22314548000633F7 /* Rez */ = {
 			isa = PBXRezBuildPhase;
 			buildActionMask = 2147483647;
@@ -761,6 +850,18 @@
 /* End PBXRezBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2D1F41E3225C99D700372519 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2D1F41E6225C99D700372519 /* PointTree.c in Sources */,
+				2D1F41E7225C99D700372519 /* kdtree.c in Sources */,
+				2D1F41E5225C99D700372519 /* CSofa.cpp in Sources */,
+				2D1F41E8225C99D700372519 /* sofa_common.c in Sources */,
+				2D89B623225CA00600436294 /* sofa_poke~.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2D7ADA4022314548000633F7 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -863,6 +964,11 @@
 			target = 2D85FAE6224B0C3B0088B0E7 /* sofa.msbrir~ */;
 			targetProxy = 2D85FB02224B0C5D0088B0E7 /* PBXContainerItemProxy */;
 		};
+		2D89B625225CA00F00436294 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D1F41DC225C99D700372519 /* sofa.poke~ */;
+			targetProxy = 2D89B624225CA00F00436294 /* PBXContainerItemProxy */;
+		};
 		2D9473BA222975C3004F7983 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2D94739D2229712A004F7983 /* sofa.fir~ */;
@@ -886,6 +992,70 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		2D1F41F3225C99D700372519 /* Development */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "sofa.msbrir~ copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.12;
+			};
+			name = Development;
+		};
+		2D1F41F4225C99D700372519 /* Deployment */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				COPY_PHASE_STRIP = YES;
+				GCC_OPTIMIZATION_LEVEL = s;
+				HEADER_SEARCH_PATHS = (
+					"\"$(C74SUPPORT)/max-includes\"",
+					"\"$(C74SUPPORT)/msp-includes\"",
+					"\"$(C74SUPPORT)/jit-includes\"",
+					/usr/local/include,
+					./dep,
+				);
+				INFOPLIST_FILE = "sofa.msbrir~ copy-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/libraries",
+				);
+				OTHER_LDFLAGS = (
+					"$(C74_SYM_LINKER_FLAGS)",
+					"-framework",
+					MaxAudioAPI,
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx10.12;
+			};
+			name = Deployment;
+		};
 		2D7ADA5022314548000633F7 /* Development */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
@@ -914,7 +1084,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -946,7 +1116,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-genfire-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -978,7 +1148,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1010,7 +1180,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-srdrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1042,7 +1212,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1074,7 +1244,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-msbrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1106,7 +1276,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1138,7 +1308,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-fir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1170,7 +1340,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1202,7 +1372,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-info-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1211,7 +1381,7 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1220,7 +1390,7 @@
 			buildSettings = {
 				DEAD_CODE_STRIPPING = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1252,7 +1422,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Development;
 		};
@@ -1284,7 +1454,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-hrir-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 			};
 			name = Deployment;
 		};
@@ -1332,7 +1502,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 				STRIP_STYLE = all;
 			};
 			name = Development;
@@ -1366,7 +1536,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
-				SDKROOT = macosx10.11;
+				SDKROOT = macosx10.12;
 				STRIP_STYLE = all;
 			};
 			name = Deployment;
@@ -1374,6 +1544,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2D1F41F2225C99D700372519 /* Build configuration list for PBXNativeTarget "sofa.poke~" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D1F41F3225C99D700372519 /* Development */,
+				2D1F41F4225C99D700372519 /* Deployment */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Deployment;
+		};
 		2D7ADA4F22314548000633F7 /* Build configuration list for PBXNativeTarget "sofa.genfire~" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

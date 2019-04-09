@@ -69,14 +69,54 @@ extern "C" {
         SOURCE_UP,
         EMITTER_UP
     }t_upType;
+    
+    typedef enum _sofaAttributeTypes {
+        CONVENTIONS_ATTR_TYPE = 0,
+        VERSION_ATTR_TYPE,
+        SOFA_CONVENTION_ATTR_TYPE,
+        SOFA_CONVENTION_VERSION_ATTR_TYPE,
+        DATA_ATTR_TYPE,
+        ROOM_ATTR_TYPE,
+        TITLE_ATTR_TYPE,
+        DATE_CREATED_ATTR_TYPE,
+        DATE_MODIFIED_ATTR_TYPE,
+        API_NAME_ATTR_TYPE,
+        API_VERSION_ATTR_TYPE,
+        AUTHOR_CONTACT_ATTR_TYPE,
+        ORGANIZATION_ATTR_TYPE,
+        LICENSE_ATTR_TYPE,
+        APPLICATION_NAME_ATTR_TYPE,
+        APPLICATION_VERSION_ATTR_TYPE,
+        COMMENT_ATTR_TYPE,
+        HISTORY_ATTR_TYPE,
+        REFERENCES_ATTR_TYPE,
+        ORIGIN_ATTR_TYPE,
+        
+        ROOM_SHORTNAME_ATTR_TYPE,
+        ROOM_DESCRIPTION_ATTR_TYPE,
+        ROOM_LOCATION_ATTR_TYPE,
+        
+        LISTENER_SHORTNAME_ATTR_TYPE,
+        LISTENER_DESCRIPTION_ATTR_TYPE,
+        
+        SOURCE_SHORTNAME_ATTR_TYPE,
+        SOURCE_DESCRIPTION_ATTR_TYPE,
+        
+        RECEIVER_SHORTNAME_ATTR_TYPE,
+        RECEIVER_DESCRIPTION_ATTR_TYPE,
+        
+        EMITTER_SHORTNAME_ATTR_TYPE,
+        EMITTER_DESCRIPTION_ATTR_TYPE,
+        
+        NUM_ATTR_TYPES,
+    }t_sofaAttributeTypes;
 
     typedef struct _sofaAttributes {
         char** names;
         char** values;
         uint64_t* nameSizes;
         uint64_t* valueSizes;
-        char appVersion[16];
-
+        
         uint64_t numAttributes;
         uint64_t maxAttributeNameSize;
         uint64_t maxAttributeSize;
@@ -140,6 +180,7 @@ extern "C" {
     
     void csofa_newAttributes(t_sofaAttributes* a);
     void csofa_clearAttributes(t_sofaAttributes* a);
+    void csofa_setAttributeValue(t_sofaAttributes* a, t_sofaAttributeTypes t, char* value, int size);
     
 ////////////////////////////////////////////////////////////////////////////////////////////////////
     

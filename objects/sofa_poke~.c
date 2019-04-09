@@ -18,8 +18,6 @@ typedef struct _sofa_poke {
     t_sofa_max* sofa_ob;
     t_symbol* sofa_name;
     bool isBoundToSofa;
-    
-    double* dataIR;
 
     t_buffer_ref* buffRef;
     t_symbol* buffName;
@@ -40,7 +38,7 @@ void sofa_poke_setSofa(t_sofa_poke* x, t_symbol* s);
 void sofa_poke_setBuffer(t_sofa_poke* x, t_symbol* s);
 bool sofa_poke_registerBuffer(t_sofa_poke* x, t_symbol *s);
 
-void sofa_poke_write(t_sofa_poke* x, t_symbol* s);
+void sofa_poke_putMeasurement(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv);
 
 t_max_err sofa_poke_notify(t_sofa_poke* x, t_symbol* s, t_symbol* msg, void* sender, void* data);
 t_max_err sofa_poke_attrSetSofa(t_sofa_poke* x, t_object* attr, long argc, t_atom* argv);
@@ -56,13 +54,12 @@ void ext_main(void *r) {
 
 	c = class_new("sofa.poke~", (method)sofa_poke_new, (method)sofa_poke_free, (long)sizeof(t_sofa_poke), 0L, A_GIMME, 0);
 
-    class_addmethod(c, (method)sofa_poke_setSofa,       "set",          A_SYM,      0);
-    class_addmethod(c, (method)sofa_poke_setBuffer,     "setbuffer",    A_SYM,      0);
-    
-    class_addmethod(c, (method)sofa_poke_write,         "write",        A_SYM,      0);
+    class_addmethod(c, (method)sofa_poke_setSofa,           "set",              A_SYM,      0);
+    class_addmethod(c, (method)sofa_poke_setBuffer,         "setbuffer",        A_SYM,      0);
+    class_addmethod(c, (method)sofa_poke_putMeasurement,    "put",              A_GIMME,    0);
 
-    class_addmethod(c, (method)sofa_poke_notify,        "notify",       A_CANT,     0);
-	class_addmethod(c, (method)sofa_poke_assist,        "assist",       A_CANT,     0);
+    class_addmethod(c, (method)sofa_poke_notify,            "notify",           A_CANT,     0);
+	class_addmethod(c, (method)sofa_poke_assist,            "assist",           A_CANT,     0);
 
     CLASS_ATTR_SYM(c, "sofaobject", 0, t_sofa_poke, sofa_name);
     CLASS_ATTR_ACCESSORS(c, "sofaobject", sofa_poke_attrGetSofa, sofa_poke_attrSetSofa);
@@ -181,8 +178,130 @@ t_max_err sofa_poke_attrGetSofa(t_sofa_poke *x, t_object *attr, long *argc, t_at
     return 0;
 }
 
-void sofa_poke_write(t_sofa_poke* x, t_symbol* s) {
+void sofa_poke_putMeasurement(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv) {
+    if(*x->sofa_ob->fileLoaded == false) {
+        object_error((t_object*)x, "%s: no SOFA data has been loaded / initialised", s->s_name);
+        return;
+    }
     
+    long m = 0;
+    long r = 0;
+    long e = 0;
+    t_symbol* optionalBufferName;
+    bool optionalBufferGiven = false;
+    t_sofaConvention convention = x->sofa_ob->sofa->convention;
+    
+    if(argc < 2) {
+        object_error((t_object*)x, "%s: not enough arguments for adding measurement data", s->s_name);
+        return;
+    }
+    
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: measurement argument should be an integer", s->s_name);
+        return;
+    }
+    m = atom_getlong(argv);
+    argv++;
+    
+    if(!atomIsANumber(argv)) {
+        object_error((t_object*)x, "%s: receiver argument should be an integer", s->s_name);
+        return;
+    }
+    r = atom_getlong(argv);
+    argv++;
+    
+    if(argc > 2) {
+        if(convention == SOFA_GENERAL_FIRE || convention == SOFA_MULTISPEAKER_BRIR) {
+            if(!atomIsANumber(argv)) {
+                object_error((t_object*)x, "%s: for %s convention, the emitter argument should be an integer", s->s_name, sofa_getConventionString(convention));
+                return;
+            }
+            e = atom_getlong(argv);
+            argv++;
+        }
+        if(!atomIsASymbol(argv)) {
+            object_error((t_object*)x, "%s: optional buffer~ name must be a symbol", s->s_name);
+            return;
+        }
+        else {
+            optionalBufferName = atom_getsym(argv);
+            optionalBufferGiven = true;
+        }
+    }
+    
+    if(m < 0 || m >= x->sofa_ob->sofa->M) {
+        object_error((t_object*)x, "%s: measurement number out of range", s->s_name);
+        return;
+    }
+    if(r < 0 || r >= x->sofa_ob->sofa->R) {
+        object_error((t_object*)x, "%s: receiver number out of range", s->s_name);
+        return;
+    }
+    if(e < 0 || e >= x->sofa_ob->sofa->E) {
+        object_error((t_object*)x, "%s: emitter number out of range", s->s_name);
+        return;
+    }
+    
+    // Buffer Operations
+    
+    t_buffer_ref* buffRef = x->buffRef;
+    t_buffer_obj* buffObj;
+    
+    if(optionalBufferGiven) {
+        buffRef = buffer_ref_new((t_object*)x, optionalBufferName);
+        if(buffer_ref_exists(buffRef) == 0) {
+            object_error((t_object*)x, "%s: source buffer \"%s\" does not exist", s->s_name, optionalBufferName->s_name);
+            object_free(buffRef);
+            return;
+        }
+    }
+    else if(buffRef == NULL) {
+        object_error((t_object*)x, "%s: no source buffer has been set", s->s_name);
+        return;
+    }
+    
+    buffObj = buffer_ref_getobject(buffRef);
+    
+    long numBuffChans = buffer_getchannelcount(buffObj);
+    long numBuffFrames = buffer_getframecount(buffObj);
+    
+    if(numBuffFrames >= x->sofa_ob->sofa->N) {
+        object_warn((t_object*)x, "%s: source buffer is too long and will be cropped to fit", s->s_name);
+    }
+    
+    // Do copy
+    
+    float* buffData = buffer_locksamples(buffObj);
+    double* dataIR = (double*)sysmem_newptr(sizeof(double) * x->sofa_ob->sofa->N);
+    long buffIndex = 0;
+    long N = x->sofa_ob->sofa->N;
+    if(buffData) {
+        for(long i = 0; i < N; ++i) {
+            buffIndex = (i * numBuffChans);
+            if(i < numBuffFrames) {
+                dataIR[i] = buffData[buffIndex];
+            }
+            else {
+                dataIR[i] = 0.0;
+            }
+        }
+        buffer_unlocksamples(buffObj);
+    }
+    else {
+        buffer_unlocksamples(buffObj);
+    }
+    
+    if(optionalBufferGiven && buffRef) {
+        object_free(buffRef);
+    }
+    
+    if(convention == SOFA_GENERAL_FIRE || convention == SOFA_MULTISPEAKER_BRIR) {
+        csofa_setMREDataBlock(x->sofa_ob->sofa, m, r, e, dataIR, x->sofa_ob->sofa->N);
+    }
+    else {
+        csofa_setMRDataBlock(x->sofa_ob->sofa, m, r, dataIR, x->sofa_ob->sofa->N);
+    }
+    sysmem_freeptr(dataIR);
 }
 
 void sofa_poke_free(t_sofa_poke *x) {

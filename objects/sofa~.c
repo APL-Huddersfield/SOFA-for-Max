@@ -221,11 +221,20 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
     *x->sofa = csofa_newSofa((t_sofaConvention)convention, M, R, E, N, 44100);
     csofa_newAttributes(&x->sofa->attr);
+    
+    // Application version
     short maxVersion = maxversion();
     short big = (maxVersion >> 8) & 15;
     short mid = (maxVersion >> 4) & 15;
     short small = maxVersion & 15;
-    sprintf(x->sofa->attr.appVersion, "%d.%d.%d", big, mid, small);
+    char appVersion[6];
+    sprintf(appVersion, "%d.%d.%d", big, mid, small);
+    csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE, appVersion, 6);
+    
+    
+    // Convention
+    char* strConvention = sofa_getConventionString(convention);
+    csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE, strConvention, 19);
     
     *x->fileLoaded = true;
 }
