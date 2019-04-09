@@ -124,22 +124,24 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sofa_max_write(t_sofa_max* x, t_symbol* s) {
-    if(*x->fileLoaded) {
-        defer(x, (method)sofa_max_doWrite, s, 0, NULL);
-    }
-    else {
+    if(!*x->fileLoaded) {
         object_error((t_object*)x, "No SOFA data to write");
+        return;
     }
+    defer(x, (method)sofa_max_doWrite, s, 0, NULL);
 }
 
 void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
-    t_fourcc type = 0L;
-    char filename[MAX_PATH_CHARS];
+    t_fourcc type = FOUR_CHAR_CODE('NULL');
+    t_fourcc outtype;
+     
+    char filename[MAX_FILENAME_CHARS];
     char fullpath[MAX_PATH_CHARS];
     short path;
+    strcpy(filename, "untitled.sofa");
     
     if(s == gensym("")) {
-        if(saveasdialog_extended(filename, &path, &type, &type, 1)) {
+        if(saveasdialog_extended(filename, &path, &type, &outtype, -1)) {
             return;
         }
     }
@@ -156,14 +158,6 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
-    
-    /*outFile.addDim("C", 3);
-    outFile.addDim("I", 1);
-    outFile.addDim("M", s->M);
-    outFile.addDim("R", s->R);
-    outFile.addDim("E", s->E);
-    outFile.addDim("N", s->N);*/
-    
     t_sofaConvention convention;
     long M = 0;
     long R = 0;
@@ -225,17 +219,14 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
         csofa_destroySofa(x->sofa);
     }
     
-    /*x->sofa->C = 3;
-    x->sofa->I = 1;
-    x->sofa->M = M;
-    x->sofa->R = R;
-    x->sofa->E = E;
-    x->sofa->N = N;
-    
-    x->sofa->dataIR = (double*)sysmem_newptr(sizeof(double) * M * R * E * N);
-    */
-    
     *x->sofa = csofa_newSofa((t_sofaConvention)convention, M, R, E, N, 44100);
+    csofa_newAttributes(&x->sofa->attr);
+    short maxVersion = maxversion();
+    short big = (maxVersion >> 8) & 15;
+    short mid = (maxVersion >> 4) & 15;
+    short small = maxVersion & 15;
+    sprintf(x->sofa->attr.appVersion, "%d.%d.%d", big, mid, small);
+    
     *x->fileLoaded = true;
 }
 

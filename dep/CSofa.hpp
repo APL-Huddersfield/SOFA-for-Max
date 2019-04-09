@@ -75,6 +75,7 @@ extern "C" {
         char** values;
         uint64_t* nameSizes;
         uint64_t* valueSizes;
+        char appVersion[16];
 
         uint64_t numAttributes;
         uint64_t maxAttributeNameSize;
@@ -112,14 +113,16 @@ extern "C" {
     }t_sofa;
 
     t_sofa csofa_openFile(char* filename);
-    t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate) ;
+    t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate);
     void csofa_destroySofa(t_sofa* sofa);
     
     typedef enum _sofaWriteErr {
         NO_WRITE_ERROR = 0,
+        GENERAL_WRITE_ERROR,
         MISSING_ATTR_ERROR,
     }t_sofaWriteErr;
     
+    bool csofa_sofaFileExists(const char* filename);
     t_sofaWriteErr csofa_writeFile(const t_sofa* sofa, const char* filename);
     bool csofa_hasRequiredAttributes(const t_sofa* s);
 

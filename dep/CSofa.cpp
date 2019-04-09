@@ -338,19 +338,42 @@ t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N
     sofa.N = N;
     sofa.S = 0;
     
+    sofa.listenerPoints = NULL;
     sofa.numListenerPoints = 0;
+    
+    sofa.receiverPoints = NULL;
     sofa.numReceiverPoints = 0;
+    
+    sofa.sourcePoints = NULL;
     sofa.numSourcePoints = 0;
+    
+    sofa.emitterPoints = NULL;
     sofa.numEmitterPoints = 0;
     
+    
+    sofa.listenerViews = NULL;
     sofa.numListenerViews = 0;
+    
+    sofa.receiverViews = NULL;
     sofa.numReceiverViews = 0;
+    
+    sofa.sourceViews = NULL;
     sofa.numSourceViews = 0;
+    
+    sofa.emitterViews = NULL;
     sofa.numEmitterViews = 0;
     
+    
+    sofa.listenerUps = NULL;
     sofa.numListenerUps = 0;
+    
+    sofa.receiverUps = NULL;
     sofa.numReceiverUps = 0;
+    
+    sofa.sourceUps = NULL;
     sofa.numSourceUps = 0;
+    
+    sofa.emitterUps = NULL;
     sofa.numEmitterUps = 0;
     
     long dataIRSize = M * R * E * N;
@@ -361,7 +384,6 @@ t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N
     
     sofa.sampleRate = sampleRate;
     sofa.numBlocks = M * R * E;
-    
     return sofa;
 }
 
@@ -442,7 +464,7 @@ void csofa_setDataIR(const t_sofa* sofa, const netCDF::NcFile& file) {
 }
 
 void csofa_setListenerValues(const t_sofa* sofa, const netCDF::NcFile& file) {
-    {
+    if(sofa->listenerPoints && sofa->numListenerPoints) {
         const std::string varName  = "ListenerPosition";
         const std::string typeName = "double";
         
@@ -463,7 +485,7 @@ void csofa_setListenerValues(const t_sofa* sofa, const netCDF::NcFile& file) {
         var.putVar(listenerPositions.data());
     }
     
-    {
+    if(sofa->listenerViews && sofa->numListenerViews) {
         const std::string varName  = "ListenerView";
         const std::string typeName = "double";
         
@@ -485,29 +507,31 @@ void csofa_setListenerValues(const t_sofa* sofa, const netCDF::NcFile& file) {
 }
 
 void csofa_setReceiverValues(const t_sofa* sofa, const netCDF::NcFile& file) {
-    const std::string varName  = "ReceiverPosition";
-    const std::string typeName = "double";
-    
-    std::vector< std::string > dimNames;
-    dimNames.push_back("R");
-    dimNames.push_back("C");
-    dimNames.push_back("I");
-    
-    const netCDF::NcVar var = file.addVar( varName, typeName, dimNames );
-    
-    var.putAtt("Type", "cartesian");
-    var.putAtt("Units", "metre");
-    std::vector<double> receiverPositions;
-    for(auto i = 0; i < sofa->numReceiverPoints; ++i) {
-        for(auto j = 0; j < 3; ++j) {
-            receiverPositions.push_back(sofa->receiverPoints[i].pos[j]);
+    if(sofa->receiverPoints && sofa->numReceiverPoints) {
+        const std::string varName  = "ReceiverPosition";
+        const std::string typeName = "double";
+        
+        std::vector< std::string > dimNames;
+        dimNames.push_back("R");
+        dimNames.push_back("C");
+        dimNames.push_back("I");
+        
+        const netCDF::NcVar var = file.addVar( varName, typeName, dimNames );
+        
+        var.putAtt("Type", "cartesian");
+        var.putAtt("Units", "metre");
+        std::vector<double> receiverPositions;
+        for(auto i = 0; i < sofa->numReceiverPoints; ++i) {
+            for(auto j = 0; j < 3; ++j) {
+                receiverPositions.push_back(sofa->receiverPoints[i].pos[j]);
+            }
         }
+        var.putVar(receiverPositions.data());
     }
-    var.putVar(receiverPositions.data());
 }
 
 void csofa_setEmitterValues(const t_sofa* sofa, const netCDF::NcFile& file) {
-    {
+    if(sofa->emitterPoints && sofa->numEmitterPoints) {
         const std::string varName  = "EmitterPosition";
         const std::string typeName = "double";
         
@@ -528,7 +552,8 @@ void csofa_setEmitterValues(const t_sofa* sofa, const netCDF::NcFile& file) {
         var.putVar(emitterPositions.data());
     }
     
-    {
+    
+    if(sofa->emitterViews && sofa->numEmitterViews) {
         const std::string varName  = "EmitterView";
         const std::string typeName = "double";
         
@@ -550,37 +575,54 @@ void csofa_setEmitterValues(const t_sofa* sofa, const netCDF::NcFile& file) {
 }
 
 void csofa_setSourceValues(const t_sofa* sofa, const netCDF::NcFile& file) {
-    const std::string varName  = "SourcePosition";
-    const std::string typeName = "double";
-    
-    std::vector< std::string > dimNames;
-    dimNames.push_back("M");
-    dimNames.push_back("C");
-    
-    const netCDF::NcVar var = file.addVar( varName, typeName, dimNames );
-    
-    if(sofa->convention == SOFA_SIMPLE_FREE_FIELD_HRIR) {
-        var.putAtt("Type", "spherical");
-        var.putAtt("Units", "degree, degree, metre");
-    }
-    else {
-        var.putAtt("Type", "cartesian");
-        var.putAtt("Units", "metre");
-    }
-    
-    std::vector<double> sourcePositions;
-    for(auto i = 0; i < sofa->numSourcePoints; ++i) {
-        for(auto j = 0; j < 3; ++j) {
-            sourcePositions.push_back(sofa->sourcePoints[i].pos[j]);
+    if(sofa->sourcePoints && sofa->numSourcePoints) {
+        const std::string varName  = "SourcePosition";
+        const std::string typeName = "double";
+        
+        std::vector< std::string > dimNames;
+        dimNames.push_back("M");
+        dimNames.push_back("C");
+        
+        const netCDF::NcVar var = file.addVar( varName, typeName, dimNames );
+        
+        if(sofa->convention == SOFA_SIMPLE_FREE_FIELD_HRIR) {
+            var.putAtt("Type", "spherical");
+            var.putAtt("Units", "degree, degree, metre");
         }
+        else {
+            var.putAtt("Type", "cartesian");
+            var.putAtt("Units", "metre");
+        }
+        
+        std::vector<double> sourcePositions;
+        for(auto i = 0; i < sofa->numSourcePoints; ++i) {
+            for(auto j = 0; j < 3; ++j) {
+                sourcePositions.push_back(sofa->sourcePoints[i].pos[j]);
+            }
+        }
+        var.putVar(sourcePositions.data());
     }
-    var.putVar(sourcePositions.data());
+}
+
+bool csofa_sofaFileExists(const char* filename) {
+    FILE *file;
+    if((file = fopen(filename, "r"))) {
+        fclose(file);
+        return true;
+    }
+    return false;
 }
 
 t_sofaWriteErr csofa_writeFile(const t_sofa* s, const char* filename) {
     // Preliminary attribute sanity check
     if(!csofa_hasRequiredAttributes(s)) {
         return t_sofaWriteErr::MISSING_ATTR_ERROR;
+    }
+    
+    if(csofa_sofaFileExists(filename)) {
+        if(remove(filename)) {
+            return GENERAL_WRITE_ERROR;
+        }
     }
     
     const netCDF::NcFile::FileMode mode = netCDF::NcFile::newFile;
@@ -618,7 +660,21 @@ t_sofaWriteErr csofa_writeFile(const t_sofa* s, const char* filename) {
             continue;
         }
         
-        const std::string attrValue = std::string(s->attr.values[attrPos]);
+        std::string attrValue;
+        switch(attrType) {
+            case sofa::Attributes::Type::kAPIName:
+                attrValue = "SOFA for Max (libsofa)";
+                break;
+            case sofa::Attributes::Type::kAPIVersion:
+                attrValue = "0.2";
+                break;
+            case sofa::Attributes::Type::kApplicationName:
+                attrValue = "Max";
+                break;
+            default:
+                attrValue = std::string(s->attr.values[attrPos]);
+        }
+        
         /*if(attrValue.empty()) {
             continue;
         }*/
@@ -726,14 +782,19 @@ void csofa_newAttributes(t_sofaAttributes* a) {
         maxNameSize = nameSize > maxNameSize ? nameSize : maxNameSize;
         
         a->names[i] = new char[nameSize + 1];
-        memcpy(a->names, names[i].c_str(), sizeof(char) * nameSize);
-        a->names[i][nameSize] = '\0';
+        memset(a->names[i], '\0', nameSize + 1);
+        
+        for(auto j = 0; j < nameSize; ++j) {
+            a->names[i][j] = names[i][j];
+        }
+        
         a->nameSizes[i] = nameSize;
         
         a->values[i] = new char[kMaxValueLength];
         memset(a->values[i], '\0', kMaxValueLength);
         a->valueSizes[i] = kMaxValueLength;
     }
+    memset(a->appVersion, '\0', 16);
     a->maxAttributeNameSize = maxNameSize;
     a->maxAttributeSize = 0; // Set 0 since all characters are null
 }
