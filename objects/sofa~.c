@@ -36,6 +36,7 @@ bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
 void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data);
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
+t_max_err sofa_max_attrSetAttribute(t_sofa_max* x, void* attr, long argc, t_atom* argv) ;
 
 void *sofa_max_class;
 
@@ -56,6 +57,11 @@ void ext_main(void *r) {
     
 	class_addmethod(c, (method)sofa_max_assist,         "assist",       A_CANT, 0);
 
+    //CLASS_ATTR_ACCESSORS(c, "sofaconvention", sofa_max_attrGetAttribute, NULL);
+    CLASS_ATTR_SYM(c, "sofaconvention", ATTR_SET_OPAQUE_USER, t_sofa_max, convention);
+    CLASS_ATTR_LABEL(c, "sofaconvention", 0, "SOFA Convention");
+    CLASS_ATTR_ACCESSORS(c, "sofaconvention", NULL, sofa_max_attrSetAttribute);
+    
 	class_register(CLASS_BOX, c);
 	sofa_max_class = c;
 }
@@ -234,6 +240,8 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     // Convention
     char* strConvention = sofa_getConventionString(convention);
     csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE, strConvention, 19);
+    t_symbol* symConvention = gensym(strConvention);
+    object_attr_setsym((t_object*)x, gensym("sofaconvention"), symConvention);
     
     // Data type
     csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, "FIR", 3);
@@ -464,6 +472,16 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
                 break;
         }
 	}
+}
+
+t_max_err sofa_max_attrSetAttribute(t_sofa_max* x, void* attr, long argc, t_atom* argv) {
+    t_symbol attrName;
+    object_attr_getnames(<#void *x#>, <#long *argc#>, <#t_symbol ***argv#>)
+    object_attr_getsym(attr, &attrName);
+    if(argc && argv) {
+        x->convention = atom_getsym(argv);
+    }
+    return MAX_ERR_NONE;
 }
 
 void sofa_max_free(t_sofa_max *x) {

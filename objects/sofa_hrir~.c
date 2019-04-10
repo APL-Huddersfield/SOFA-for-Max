@@ -66,7 +66,7 @@ void ext_main(void *r) {
     class_addmethod(c, (method)sofa_hrir_getSize,       "getsize",             A_NOTHING, 0);
     class_addmethod(c, (method)sofa_hrir_getSizeSamps,  "getsizesamps",        A_NOTHING, 0);
 
-    class_addmethod(c, (method)sofa_hrir_set,       "set",                 A_SYM, 0);
+    class_addmethod(c, (method)sofa_hrir_set,           "set",                 A_SYM, 0);
     class_addmethod(c, (method)sofa_hrir_setBuffer,     "setbuffer",           A_SYM, 0);
     class_addmethod(c, (method)sofa_hrir_get,           "get",                 A_GIMME, 0);
     class_addmethod(c, (method)sofa_hrir_getPositions,  "getpositions",        A_SYM, 0);

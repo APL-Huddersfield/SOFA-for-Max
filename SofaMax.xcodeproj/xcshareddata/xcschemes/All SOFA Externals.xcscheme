@@ -45,7 +45,7 @@
       <PathRunnable
          runnableDebuggingMode = "0"
          BundleIdentifier = "com.cycling74.Max"
-         FilePath = "/Applications/Max.app">
+         FilePath = "/Applications/Max 8.app">
       </PathRunnable>
       <MacroExpansion>
          <BuildableReference
