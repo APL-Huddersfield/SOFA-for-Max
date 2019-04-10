@@ -35,6 +35,7 @@ typedef struct _sofa_hrir {
 void *sofa_hrir_new(t_symbol *s, long argc, t_atom *argv);
 void sofa_hrir_free(t_sofa_hrir *x);
 
+void sofa_hrir_set(t_sofa_hrir* x, t_symbol* s);
 void sofa_hrir_setSofa(t_sofa_hrir* x, t_symbol* s);
 void sofa_hrir_setBuffer(t_sofa_hrir* x, t_symbol *s);
 bool sofa_hrir_registerBuffer(t_sofa_hrir* x, t_symbol *s);
@@ -65,7 +66,7 @@ void ext_main(void *r) {
     class_addmethod(c, (method)sofa_hrir_getSize,       "getsize",             A_NOTHING, 0);
     class_addmethod(c, (method)sofa_hrir_getSizeSamps,  "getsizesamps",        A_NOTHING, 0);
 
-    class_addmethod(c, (method)sofa_hrir_setSofa,       "set",                 A_SYM, 0);
+    class_addmethod(c, (method)sofa_hrir_set,       "set",                 A_SYM, 0);
     class_addmethod(c, (method)sofa_hrir_setBuffer,     "setbuffer",           A_SYM, 0);
     class_addmethod(c, (method)sofa_hrir_get,           "get",                 A_GIMME, 0);
     class_addmethod(c, (method)sofa_hrir_getPositions,  "getpositions",        A_SYM, 0);
@@ -82,12 +83,17 @@ void ext_main(void *r) {
 	sofa_hrir_class = c;
 }
 
+void sofa_hrir_set(t_sofa_hrir* x, t_symbol* s) {
+    object_attr_setsym((t_object*)x, gensym("sofaobject"), s);
+}
+
 void sofa_hrir_setSofa(t_sofa_hrir* x, t_symbol* s) {
     t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, s->s_name, "sofa~");
     if(ref != NULL) {
         x->sofa_ob = ref;
         object_subscribe(APL_SOFA_NAMESPACE, s, APL_SOFA_CLASSNAME, x);
         x->isBoundToSofa = true;
+        x->sofa_name = s;
         sofa_hrir_createSourceTree(x);
     }
 }
@@ -406,7 +412,7 @@ t_max_err sofa_hrir_notify(t_sofa_hrir *x, t_symbol *s, t_symbol *msg, void *sen
     if(msg == gensym("globalsymbol_binding")) {
         if(x->sofa_name) {
             if(object_findregistered(APL_SOFA_NAMESPACE, x->sofa_name)) {
-                sofa_hrir_setSofa(x, x->sofa_name);
+                sofa_hrir_set(x, x->sofa_name);
             }
         }
     }
@@ -462,10 +468,15 @@ t_max_err sofa_hrir_attrSetSofa(t_sofa_hrir *x, t_object *attr, long argc, t_ato
 }
 
 t_max_err sofa_hrir_attrGetSofa(t_sofa_hrir *x, t_object *attr, long *argc, t_atom **argv) {
-    char alloc;
-    atom_alloc(argc, argv, &alloc);
+    if(((*argc)&&(*argv)) == false) {
+        *argc = 1;
+        if(!(*argv = (t_atom*)getbytes(sizeof(t_atom) * (*argc)))) {
+            *argc = 0;
+            return MAX_ERR_OUT_OF_MEM;
+        }
+    }
     atom_setsym(*argv, x->sofa_name);
-    return 0;
+    return MAX_ERR_NONE;
 }
 
 void sofa_hrir_free(t_sofa_hrir *x) {
@@ -519,7 +530,7 @@ void *sofa_hrir_new(t_symbol *s, long argc, t_atom *argv) {
         x->isBoundToSofa = false;
         if(sofa_name) {
             x->sofa_name = sofa_name;
-            sofa_hrir_setSofa(x, sofa_name);
+            sofa_hrir_set(x, sofa_name);
         }
         x->buffRef = NULL;
         x->buffName = buff_name;
