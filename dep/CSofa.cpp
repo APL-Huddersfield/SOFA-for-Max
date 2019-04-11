@@ -72,7 +72,7 @@ uint64_t csofa_getMaxAttributeSize(const sofa::File& sofa) {
 void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa) {
     
     sofa::Attributes attr;
-    const uint64_t kMaxValueLength = 512;
+    const uint64_t kMaxValueLength = 2048;
     
     uint64_t numAttributes = attr.kNumAttributes;//csofa_getNumAttributes(sofa);
     uint64_t maxAttributeNameLength = csofa_getMaxAttributeNameSize(sofa);
@@ -795,7 +795,7 @@ double* csofa_getMultiSpeakerBRIR(t_sofa* s, uint64_t M, uint64_t R, uint64_t E)
 void csofa_newAttributes(t_sofaAttributes* a) {
     
     uint64_t numAttributes = sofa::Attributes::kNumAttributes;
-    const uint64_t kMaxValueLength = 512;
+    const uint64_t kMaxValueLength = 2048;
     
     std::vector<std::string> names;
     for(auto i = 0; i < numAttributes; ++i) {

@@ -40,19 +40,22 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
 
 void *sofa_max_class;
 
-static const char* kStrAttr[NUM_ATTR_TYPES] = {"convention", "version", "sofaconvention", "sofaconventionversion",
-                                               "datatype", "roomtype", "title", "datecreated", "datemodified",
-                                               "apiname", "apiversion", "author", "organization", "license",
-                                               "applicationname", "applicationversion", "comment", "history",
-                                               "references", "origin", "roomname", "roomdescription", "roomlocation",
-                                               "listenername", "listenerdescription", "sourcename",
-                                               "sourcedescription", "receivername", "receiverdescription",
-                                               "emittername", "emitterdescription"};
+static const char* kStrAttr[NUM_ATTR_TYPES] = {
+    "convention", "version", "sofaconvention", "sofaconventionversion",
+    "datatype", "roomtype", "title", "datecreated", "datemodified",
+    "apiname", "apiversion", "author", "organization", "license",
+    "applicationname", "applicationversion", "comment", "history",
+    "references", "origin", "roomname", "roomdescription", "roomlocation",
+    "listenername", "listenerdescription", "sourcename",
+    "sourcedescription", "receivername", "receiverdescription",
+    "emittername", "emitterdescription"
+};
 
 void ext_main(void *r) {
 	t_class *c;
 
-	c = class_new("sofa~", (method)sofa_max_new, (method)sofa_max_free, (long)sizeof(t_sofa_max), 0L, A_GIMME, 0);
+	c = class_new("sofa~", (method)sofa_max_new, (method)sofa_max_free, (long)sizeof(t_sofa_max),
+                  0L, A_GIMME, 0);
 
     class_addmethod(c, (method)sofa_max_read,           "read",         A_DEFSYM, 0);
     class_addmethod(c, (method)sofa_max_write,          "write",        A_DEFSYM, 0);
@@ -73,25 +76,30 @@ void ext_main(void *r) {
     CLASS_ATTR_SYM(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, version);
     CLASS_ATTR_LABEL(c, kStrAttr[VERSION_ATTR_TYPE], 0, "Specification Version");
     
-    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, convention);
+    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   convention);
     CLASS_ATTR_LABEL(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], 0, "SOFA Convention");
     
-    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, conventionVersion);
+    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   conventionVersion);
     CLASS_ATTR_LABEL(c,  kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], 0, "SOFA Convention Version");
     
     CLASS_ATTR_SYM(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dataType);
     CLASS_ATTR_LABEL(c, kStrAttr[DATA_ATTR_TYPE], 0, "Data Type");
     
-    CLASS_ATTR_SYM(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dateCreated);
+    CLASS_ATTR_SYM(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   dateCreated);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_CREATED_ATTR_TYPE], 0, "Date Created");
     
-    CLASS_ATTR_SYM(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dateModified);
+    CLASS_ATTR_SYM(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   dateModified);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], 0, "Date Modified");
     
     CLASS_ATTR_SYM(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, apiName);
     CLASS_ATTR_LABEL(c, kStrAttr[API_NAME_ATTR_TYPE], 0, "API Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, apiVersion);
+    CLASS_ATTR_SYM(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   apiVersion);
     CLASS_ATTR_LABEL(c, kStrAttr[API_VERSION_ATTR_TYPE], 0, "API Version");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
@@ -173,7 +181,7 @@ void ext_main(void *r) {
     CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, "Listener Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, listenerShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, listenerDescription);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, "Listener Description");
     
@@ -266,6 +274,7 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
     critical_exit(0);
     
     *x->fileLoaded = true;
+    sofa_max_updateAttributes(x);
     object_notify((t_object*)x, gensym("sofaread"), 0L);
     outlet_bang(x->outlet_finishedLoading);
 }
@@ -345,7 +354,8 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
             return;
         }
         if(convention != SOFA_GENERAL_FIRE && convention != SOFA_MULTISPEAKER_BRIR) {
-            object_warn((t_object*)x, "%s: E dimension only required for GeneralFIRE or MultiSpeakerBRIR conventions", s->s_name);
+            object_warn((t_object*)x, "%s: E dimension only required for GeneralFIRE or MultiSpeakerBRIR conventions",
+                        s->s_name);
         }
         else {
             E = atom_getlong(argv);
@@ -379,12 +389,12 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     csofa_setAttributeValue(&x->sofa->attr, CONVENTIONS_ATTR_TYPE,
                             fileConvention, strlen(fileConvention));
     csofa_setAttributeValue(&x->sofa->attr, VERSION_ATTR_TYPE, version, strlen(version));
-    object_attr_setsym((t_object*)x, gensym("version"), gensym(version));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[VERSION_ATTR_TYPE]), gensym(version));
     
     // Application name
     char appName[] = "Max";
     csofa_setAttributeValue(&x->sofa->attr, APPLICATION_NAME_ATTR_TYPE, appName, strlen(appName));
-    object_attr_setsym((t_object*)x, gensym("appname"), gensym(appName));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[APPLICATION_NAME_ATTR_TYPE]), gensym(appName));
     
     // Application version
     short maxVersion = maxversion();
@@ -395,24 +405,25 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     sprintf(appVersion, "%d.%d.%d", big, mid, small);
     csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE,
                             appVersion, strlen(appVersion));
-    object_attr_setsym((t_object*)x, gensym("appversion"), gensym(appVersion));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[APPLICATION_VERSION_ATTR_TYPE]),
+                       gensym(appVersion));
     
     // SOFA Convention
     char* strConvention = sofa_getConventionString(convention);
     csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE,
                             strConvention, strlen(strConvention));
     t_symbol* symConvention = gensym(strConvention);
-    object_attr_setsym((t_object*)x, gensym("sofaconvention"), symConvention);
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[SOFA_CONVENTION_ATTR_TYPE]), symConvention);
     
     // Title
     char title[] = "Untitled";
     csofa_setAttributeValue(&x->sofa->attr, TITLE_ATTR_TYPE, title, strlen(title));
-    object_attr_setsym((t_object*)x, gensym("title"), gensym(title));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[TITLE_ATTR_TYPE]), gensym(title));
     
     // Data type
     char dataType[] = "FIR";
     csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, dataType, strlen(dataType));
-    object_attr_setsym((t_object*)x, gensym("datatype"), gensym(dataType));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[DATA_ATTR_TYPE]), gensym(dataType));
     
     // Date created
     t_datetime dateTime;
@@ -423,7 +434,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
             dateTime.hour, dateTime.minute, dateTime.second);
     csofa_setAttributeValue(&x->sofa->attr, DATE_CREATED_ATTR_TYPE,
                             strDateTime, strlen(strDateTime));
-    object_attr_setsym((t_object*)x, gensym("datecreated"), gensym(strDateTime));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[DATE_CREATED_ATTR_TYPE]), gensym(strDateTime));
     
     // Date modified
     systime_datetime(&dateTime);
@@ -432,20 +443,20 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
             dateTime.hour, dateTime.minute, dateTime.second);
     csofa_setAttributeValue(&x->sofa->attr, DATE_MODIFIED_ATTR_TYPE,
                             strDateTime, strlen(strDateTime));
-    object_attr_setsym((t_object*)x, gensym("datemodified"), gensym(strDateTime));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[DATE_MODIFIED_ATTR_TYPE]), gensym(strDateTime));
     
     // API Name and Version
     char apiName[] = "SOFA for Max";
     char apiVersion[] = "0.2";
     csofa_setAttributeValue(&x->sofa->attr, API_NAME_ATTR_TYPE, apiName, strlen(apiName));
     csofa_setAttributeValue(&x->sofa->attr, API_VERSION_ATTR_TYPE, apiVersion, strlen(apiVersion));
-    object_attr_setsym((t_object*)x, gensym("apiname"), gensym(apiName));
-    object_attr_setsym((t_object*)x, gensym("apiversion"), gensym(apiVersion));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[API_NAME_ATTR_TYPE]), gensym(apiName));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[API_VERSION_ATTR_TYPE]), gensym(apiVersion));
     
     // License
     char license[] = "Un-licensed";
     csofa_setAttributeValue(&x->sofa->attr, LICENSE_ATTR_TYPE, license, strlen(license));
-    object_attr_setsym((t_object*)x, gensym("license"), gensym(license));
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[LICENSE_ATTR_TYPE]), gensym(license));
 
     *x->fileLoaded = true;
 }
@@ -632,8 +643,12 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
 }
 
 void sofa_max_updateAttributes(t_sofa_max* x) {
+    t_symbol* c;
+    t_symbol* s;
     for(long i = 0; i < NUM_ATTR_TYPES; ++i) {
-        
+        s = gensym(kStrAttr[i]);
+        c = gensym(x->sofa->attr.values[i]);
+        object_attr_setsym((t_object*)x, s, c);
     }
 }
 
@@ -701,7 +716,8 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
         if(argc) {
             if(argv->a_type == A_SYM) {
                 a = atom_getsym(argv);
-                t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name, "sofa~");
+                t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name,
+                                                                      "sofa~");
                 if(ref != NULL) {
                     /*sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
@@ -717,7 +733,8 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                     sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
-                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist", a->s_name);
+                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist",
+                                 a->s_name);
                     return NULL;
                 }
                 else {
