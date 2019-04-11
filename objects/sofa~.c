@@ -36,7 +36,6 @@ bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
 void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data);
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
-t_max_err sofa_max_attrSetAttribute(t_sofa_max* x, void* attr, long argc, t_atom* argv) ;
 
 void *sofa_max_class;
 
@@ -57,10 +56,91 @@ void ext_main(void *r) {
     
 	class_addmethod(c, (method)sofa_max_assist,         "assist",       A_CANT, 0);
 
-    //CLASS_ATTR_ACCESSORS(c, "sofaconvention", sofa_max_attrGetAttribute, NULL);
+    // Read only attributes
+    
+    CLASS_STICKY_ATTR(c, "category", 0, "Read-only Attributes");
+    
+    CLASS_ATTR_SYM(c, "version", ATTR_SET_OPAQUE_USER, t_sofa_max, version);
+    CLASS_ATTR_LABEL(c, "version", 0, "Specification Version");
+    
     CLASS_ATTR_SYM(c, "sofaconvention", ATTR_SET_OPAQUE_USER, t_sofa_max, convention);
     CLASS_ATTR_LABEL(c, "sofaconvention", 0, "SOFA Convention");
-    CLASS_ATTR_ACCESSORS(c, "sofaconvention", NULL, sofa_max_attrSetAttribute);
+    
+    CLASS_ATTR_SYM(c, "sofaconventionversion", ATTR_SET_OPAQUE_USER, t_sofa_max, conventionVersion);
+    CLASS_ATTR_LABEL(c, "sofaconventionversion", 0, "SOFA Convention Version");
+    
+    CLASS_ATTR_SYM(c, "datatype", ATTR_SET_OPAQUE_USER, t_sofa_max, dataType);
+    CLASS_ATTR_LABEL(c, "datatype", 0, "Data Type");
+    
+    CLASS_ATTR_SYM(c, "datecreated", ATTR_SET_OPAQUE_USER, t_sofa_max, dateCreated);
+    CLASS_ATTR_LABEL(c, "datecreated", 0, "Date Created");
+    
+    CLASS_ATTR_SYM(c, "datemodified", ATTR_SET_OPAQUE_USER, t_sofa_max, dateModified);
+    CLASS_ATTR_LABEL(c, "datemodified", 0, "Date Modified");
+    
+    CLASS_ATTR_SYM(c, "apiname", ATTR_SET_OPAQUE_USER, t_sofa_max, apiName);
+    CLASS_ATTR_LABEL(c, "apiname", 0, "API Name");
+    
+    CLASS_ATTR_SYM(c, "apiversion", ATTR_SET_OPAQUE_USER, t_sofa_max, apiVersion);
+    CLASS_ATTR_LABEL(c, "apiversion", 0, "API Version");
+    
+    CLASS_STICKY_ATTR_CLEAR(c, "category");
+    
+    // Required attributes
+    
+    CLASS_STICKY_ATTR(c, "category", 0, "Required Attributes");
+    
+    CLASS_ATTR_SYM(c, "roomtype", 0, t_sofa_max, roomType);
+    CLASS_ATTR_SELFSAVE(c, "roomtype", 0);
+    CLASS_ATTR_LABEL(c, "roomtype", 0, "Room Type");
+    
+    CLASS_ATTR_SYM(c, "title", 0, t_sofa_max, title);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, "title", 0, "Untitled");
+    CLASS_ATTR_LABEL(c, "title", 0, "Title");
+    
+    CLASS_ATTR_SYM(c, "authorcontact", 0, t_sofa_max, authorContact);
+    CLASS_ATTR_SELFSAVE(c, "authorcontact", 0);
+    CLASS_ATTR_LABEL(c, "authorcontact", 0, "Author Contact");
+    
+    CLASS_ATTR_SYM(c, "organization", 0, t_sofa_max, organization);
+    CLASS_ATTR_SELFSAVE(c, "organization", 0);
+    CLASS_ATTR_LABEL(c, "organization", 0, "Organization");
+    
+    CLASS_ATTR_SYM(c, "license", 0, t_sofa_max, license);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, "license", 0, "No License");
+    CLASS_ATTR_LABEL(c, "license", 0, "License");
+    
+    CLASS_STICKY_ATTR_CLEAR(c, "category");
+    
+    // Optional attributes
+    
+    CLASS_STICKY_ATTR(c, "category", 0, "Optional Attributes");
+    
+    CLASS_ATTR_SYM(c, "appname", 0, t_sofa_max, applicationName);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, "appname", 0, "Max");
+    CLASS_ATTR_LABEL(c, "appname", 0, "Application Name");
+    
+    CLASS_ATTR_SYM(c, "appversion", 0, t_sofa_max, applicationVersion);
+    CLASS_ATTR_SELFSAVE(c, "appversion", 0);
+    CLASS_ATTR_LABEL(c, "appversion", 0, "Application Version");
+    
+    CLASS_ATTR_SYM(c, "comment", 0, t_sofa_max, comment);
+    CLASS_ATTR_SELFSAVE(c, "comment", 0);
+    CLASS_ATTR_LABEL(c, "comment", 0, "Comment");
+    
+    CLASS_ATTR_SYM(c, "history", 0, t_sofa_max, history);
+    CLASS_ATTR_SELFSAVE(c, "history", 0);
+    CLASS_ATTR_LABEL(c, "history", 0, "History");
+    
+    CLASS_ATTR_SYM(c, "references", 0, t_sofa_max, references);
+    CLASS_ATTR_SELFSAVE(c, "references", 0);
+    CLASS_ATTR_LABEL(c, "references", 0, "References");
+    
+    CLASS_ATTR_SYM(c, "origin", 0, t_sofa_max, origin);
+    CLASS_ATTR_SELFSAVE(c, "origin", 0);
+    CLASS_ATTR_LABEL(c, "origin", 0, "Origin");
+    
+    CLASS_STICKY_ATTR_CLEAR(c, "category");
     
 	class_register(CLASS_BOX, c);
 	sofa_max_class = c;
@@ -228,6 +308,21 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     *x->sofa = csofa_newSofa((t_sofaConvention)convention, M, R, E, N, 44100);
     csofa_newAttributes(&x->sofa->attr);
     
+    /////////////////////////////////////// Init attributes ////////////////////////////////////////
+    
+    // Convention
+    char fileConvention[] = "SOFA";
+    char version[] = "0.6";
+    csofa_setAttributeValue(&x->sofa->attr, CONVENTIONS_ATTR_TYPE,
+                            fileConvention, strlen(fileConvention));
+    csofa_setAttributeValue(&x->sofa->attr, VERSION_ATTR_TYPE, version, strlen(version));
+    object_attr_setsym((t_object*)x, gensym("version"), gensym(version));
+    
+    // Application name
+    char appName[] = "Max";
+    csofa_setAttributeValue(&x->sofa->attr, APPLICATION_NAME_ATTR_TYPE, appName, strlen(appName));
+    object_attr_setsym((t_object*)x, gensym("appname"), gensym(appName));
+    
     // Application version
     short maxVersion = maxversion();
     short big = (maxVersion >> 8) & 15;
@@ -235,16 +330,26 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     short small = maxVersion & 15;
     char appVersion[6];
     sprintf(appVersion, "%d.%d.%d", big, mid, small);
-    csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE, appVersion, 6);
+    csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE,
+                            appVersion, strlen(appVersion));
+    object_attr_setsym((t_object*)x, gensym("appversion"), gensym(appVersion));
     
-    // Convention
+    // SOFA Convention
     char* strConvention = sofa_getConventionString(convention);
-    csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE, strConvention, 19);
+    csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE,
+                            strConvention, strlen(strConvention));
     t_symbol* symConvention = gensym(strConvention);
     object_attr_setsym((t_object*)x, gensym("sofaconvention"), symConvention);
     
+    // Title
+    char title[] = "Untitled";
+    csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, title, strlen(title));
+    object_attr_setsym((t_object*)x, gensym("datatype"), gensym(title));
+    
     // Data type
-    csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, "FIR", 3);
+    char dataType[] = "FIR";
+    csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, dataType, strlen(dataType));
+    object_attr_setsym((t_object*)x, gensym("datatype"), gensym(dataType));
     
     // Date created
     t_datetime dateTime;
@@ -253,14 +358,31 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     sprintf(strDateTime, "%04d-%02d-%02d %02d:%02d:%02d",
             dateTime.year, dateTime.month, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second);
-    csofa_setAttributeValue(&x->sofa->attr, DATE_CREATED_ATTR_TYPE, strDateTime, 20);
+    csofa_setAttributeValue(&x->sofa->attr, DATE_CREATED_ATTR_TYPE,
+                            strDateTime, strlen(strDateTime));
+    object_attr_setsym((t_object*)x, gensym("datecreated"), gensym(strDateTime));
     
     // Date modified
     systime_datetime(&dateTime);
     sprintf(strDateTime, "%04d-%02d-%02d %02d:%02d:%02d",
             dateTime.year, dateTime.month, dateTime.day,
             dateTime.hour, dateTime.minute, dateTime.second);
-    csofa_setAttributeValue(&x->sofa->attr, DATE_MODIFIED_ATTR_TYPE, strDateTime, 20);
+    csofa_setAttributeValue(&x->sofa->attr, DATE_MODIFIED_ATTR_TYPE,
+                            strDateTime, strlen(strDateTime));
+    object_attr_setsym((t_object*)x, gensym("datemodified"), gensym(strDateTime));
+    
+    // API Name and Version
+    char apiName[] = "SOFA for Max";
+    char apiVersion[] = "0.2";
+    csofa_setAttributeValue(&x->sofa->attr, API_NAME_ATTR_TYPE, apiName, strlen(apiName));
+    csofa_setAttributeValue(&x->sofa->attr, API_VERSION_ATTR_TYPE, apiVersion, strlen(apiVersion));
+    object_attr_setsym((t_object*)x, gensym("apiname"), gensym(apiName));
+    object_attr_setsym((t_object*)x, gensym("apiversion"), gensym(apiVersion));
+    
+    // License
+    char license[] = "Un-licensed";
+    csofa_setAttributeValue(&x->sofa->attr, LICENSE_ATTR_TYPE, license, strlen(license));
+    object_attr_setsym((t_object*)x, gensym("license"), gensym(license));
 
     *x->fileLoaded = true;
 }
@@ -472,16 +594,6 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
                 break;
         }
 	}
-}
-
-t_max_err sofa_max_attrSetAttribute(t_sofa_max* x, void* attr, long argc, t_atom* argv) {
-    t_symbol attrName;
-    object_attr_getnames(<#void *x#>, <#long *argc#>, <#t_symbol ***argv#>)
-    object_attr_getsym(attr, &attrName);
-    if(argc && argv) {
-        x->convention = atom_getsym(argv);
-    }
-    return MAX_ERR_NONE;
 }
 
 void sofa_max_free(t_sofa_max *x) {
