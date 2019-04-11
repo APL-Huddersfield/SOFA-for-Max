@@ -31,6 +31,7 @@ void sofa_max_getDimension(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv);
 void sofa_max_getSize(t_sofa_max* x);
 void sofa_max_getName(t_sofa_max* x);
 void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv);
+void sofa_max_updateAttributes(t_sofa_max* x);
 
 bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
@@ -38,6 +39,15 @@ void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, vo
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
 
 void *sofa_max_class;
+
+static const char* kStrAttr[NUM_ATTR_TYPES] = {"convention", "version", "sofaconvention", "sofaconventionversion",
+                                               "datatype", "roomtype", "title", "datecreated", "datemodified",
+                                               "apiname", "apiversion", "author", "organization", "license",
+                                               "applicationname", "applicationversion", "comment", "history",
+                                               "references", "origin", "roomname", "roomdescription", "roomlocation",
+                                               "listenername", "listenerdescription", "sourcename",
+                                               "sourcedescription", "receivername", "receiverdescription",
+                                               "emittername", "emitterdescription"};
 
 void ext_main(void *r) {
 	t_class *c;
@@ -58,96 +68,149 @@ void ext_main(void *r) {
 
     // Read only attributes
     
-    CLASS_STICKY_ATTR(c, "category", 0, "Read-only Attributes");
+    CLASS_STICKY_CATEGORY(c, 0, "Read-only Global Attributes");
     
-    CLASS_ATTR_SYM(c, "version", ATTR_SET_OPAQUE_USER, t_sofa_max, version);
-    CLASS_ATTR_LABEL(c, "version", 0, "Specification Version");
+    CLASS_ATTR_SYM(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, version);
+    CLASS_ATTR_LABEL(c, kStrAttr[VERSION_ATTR_TYPE], 0, "Specification Version");
     
-    CLASS_ATTR_SYM(c, "sofaconvention", ATTR_SET_OPAQUE_USER, t_sofa_max, convention);
-    CLASS_ATTR_LABEL(c, "sofaconvention", 0, "SOFA Convention");
+    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, convention);
+    CLASS_ATTR_LABEL(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], 0, "SOFA Convention");
     
-    CLASS_ATTR_SYM(c, "sofaconventionversion", ATTR_SET_OPAQUE_USER, t_sofa_max, conventionVersion);
-    CLASS_ATTR_LABEL(c, "sofaconventionversion", 0, "SOFA Convention Version");
+    CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, conventionVersion);
+    CLASS_ATTR_LABEL(c,  kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], 0, "SOFA Convention Version");
     
-    CLASS_ATTR_SYM(c, "datatype", ATTR_SET_OPAQUE_USER, t_sofa_max, dataType);
-    CLASS_ATTR_LABEL(c, "datatype", 0, "Data Type");
+    CLASS_ATTR_SYM(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dataType);
+    CLASS_ATTR_LABEL(c, kStrAttr[DATA_ATTR_TYPE], 0, "Data Type");
     
-    CLASS_ATTR_SYM(c, "datecreated", ATTR_SET_OPAQUE_USER, t_sofa_max, dateCreated);
-    CLASS_ATTR_LABEL(c, "datecreated", 0, "Date Created");
+    CLASS_ATTR_SYM(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dateCreated);
+    CLASS_ATTR_LABEL(c, kStrAttr[DATE_CREATED_ATTR_TYPE], 0, "Date Created");
     
-    CLASS_ATTR_SYM(c, "datemodified", ATTR_SET_OPAQUE_USER, t_sofa_max, dateModified);
-    CLASS_ATTR_LABEL(c, "datemodified", 0, "Date Modified");
+    CLASS_ATTR_SYM(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dateModified);
+    CLASS_ATTR_LABEL(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], 0, "Date Modified");
     
-    CLASS_ATTR_SYM(c, "apiname", ATTR_SET_OPAQUE_USER, t_sofa_max, apiName);
-    CLASS_ATTR_LABEL(c, "apiname", 0, "API Name");
+    CLASS_ATTR_SYM(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, apiName);
+    CLASS_ATTR_LABEL(c, kStrAttr[API_NAME_ATTR_TYPE], 0, "API Name");
     
-    CLASS_ATTR_SYM(c, "apiversion", ATTR_SET_OPAQUE_USER, t_sofa_max, apiVersion);
-    CLASS_ATTR_LABEL(c, "apiversion", 0, "API Version");
+    CLASS_ATTR_SYM(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, apiVersion);
+    CLASS_ATTR_LABEL(c, kStrAttr[API_VERSION_ATTR_TYPE], 0, "API Version");
     
-    CLASS_STICKY_ATTR_CLEAR(c, "category");
+    CLASS_STICKY_CATEGORY_CLEAR(c);
     
     // Required attributes
     
-    CLASS_STICKY_ATTR(c, "category", 0, "Required Attributes");
+    CLASS_STICKY_CATEGORY(c, 0, "Required Global Attributes");
     
-    CLASS_ATTR_SYM(c, "roomtype", 0, t_sofa_max, roomType);
-    CLASS_ATTR_SELFSAVE(c, "roomtype", 0);
-    CLASS_ATTR_LABEL(c, "roomtype", 0, "Room Type");
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_ATTR_TYPE], 0, t_sofa_max, roomType);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ROOM_ATTR_TYPE], 0, "Room Type");
     
-    CLASS_ATTR_SYM(c, "title", 0, t_sofa_max, title);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, "title", 0, "Untitled");
-    CLASS_ATTR_LABEL(c, "title", 0, "Title");
+    CLASS_ATTR_SYM(c, kStrAttr[TITLE_ATTR_TYPE], 0, t_sofa_max, title);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Untitled");
+    CLASS_ATTR_LABEL(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Title");
     
-    CLASS_ATTR_SYM(c, "authorcontact", 0, t_sofa_max, authorContact);
-    CLASS_ATTR_SELFSAVE(c, "authorcontact", 0);
-    CLASS_ATTR_LABEL(c, "authorcontact", 0, "Author Contact");
+    CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max, authorContact);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "Author Contact");
     
-    CLASS_ATTR_SYM(c, "organization", 0, t_sofa_max, organization);
-    CLASS_ATTR_SELFSAVE(c, "organization", 0);
-    CLASS_ATTR_LABEL(c, "organization", 0, "Organization");
+    CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max, organization);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, "Organization");
     
-    CLASS_ATTR_SYM(c, "license", 0, t_sofa_max, license);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, "license", 0, "No License");
-    CLASS_ATTR_LABEL(c, "license", 0, "License");
+    CLASS_ATTR_SYM(c, kStrAttr[LICENSE_ATTR_TYPE], 0, t_sofa_max, license);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "No License");
+    CLASS_ATTR_LABEL(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "License");
     
-    CLASS_STICKY_ATTR_CLEAR(c, "category");
+    CLASS_STICKY_CATEGORY_CLEAR(c);
     
     // Optional attributes
     
-    CLASS_STICKY_ATTR(c, "category", 0, "Optional Attributes");
+    CLASS_STICKY_CATEGORY(c, 0, "Optional Global Attributes");
     
-    CLASS_ATTR_SYM(c, "appname", 0, t_sofa_max, applicationName);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, "appname", 0, "Max");
-    CLASS_ATTR_LABEL(c, "appname", 0, "Application Name");
+    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, t_sofa_max, applicationName);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Max");
+    CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Application Name");
     
-    CLASS_ATTR_SYM(c, "appversion", 0, t_sofa_max, applicationVersion);
-    CLASS_ATTR_SELFSAVE(c, "appversion", 0);
-    CLASS_ATTR_LABEL(c, "appversion", 0, "Application Version");
+    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, t_sofa_max, applicationVersion);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, "Application Version");
     
-    CLASS_ATTR_SYM(c, "comment", 0, t_sofa_max, comment);
-    CLASS_ATTR_SELFSAVE(c, "comment", 0);
-    CLASS_ATTR_LABEL(c, "comment", 0, "Comment");
+    CLASS_ATTR_SYM(c, kStrAttr[COMMENT_ATTR_TYPE], 0, t_sofa_max, comment);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[COMMENT_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[COMMENT_ATTR_TYPE], 0, "Comment");
     
-    CLASS_ATTR_SYM(c, "history", 0, t_sofa_max, history);
-    CLASS_ATTR_SELFSAVE(c, "history", 0);
-    CLASS_ATTR_LABEL(c, "history", 0, "History");
+    CLASS_ATTR_SYM(c, kStrAttr[HISTORY_ATTR_TYPE], 0, t_sofa_max, history);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[HISTORY_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[HISTORY_ATTR_TYPE], 0, "History");
     
-    CLASS_ATTR_SYM(c, "references", 0, t_sofa_max, references);
-    CLASS_ATTR_SELFSAVE(c, "references", 0);
-    CLASS_ATTR_LABEL(c, "references", 0, "References");
+    CLASS_ATTR_SYM(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, t_sofa_max, references);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[REFERENCES_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, "References");
     
-    CLASS_ATTR_SYM(c, "origin", 0, t_sofa_max, origin);
-    CLASS_ATTR_SELFSAVE(c, "origin", 0);
-    CLASS_ATTR_LABEL(c, "origin", 0, "Origin");
+    CLASS_ATTR_SYM(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, t_sofa_max, origin);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ORIGIN_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, "Origin");
     
-    CLASS_STICKY_ATTR_CLEAR(c, "category");
+    CLASS_STICKY_CATEGORY_CLEAR(c);
+    
+    // Object attributes
+    
+    CLASS_STICKY_CATEGORY(c, 0, "SOFA Object Attributes");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, roomShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0, "Room Short Name");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, roomDescription);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0, "Room Description");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0, t_sofa_max, roomLocation);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0, "Room Location");
+    
+    
+    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, listenerShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, "Listener Short Name");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, listenerShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, "Listener Description");
+    
+    
+    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, sourceShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0, "Source Short Name");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, sourceDescription);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0, "Source Description");
+    
+    
+    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, receiverShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0, "Receiver Short Name");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, receiverDescription);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0, "Receiver Description");
+    
+    
+    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, emitterShortName);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0, "Emitter Short Name");
+    
+    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, emitterDescription);
+    CLASS_ATTR_SELFSAVE(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0);
+    CLASS_ATTR_LABEL(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0, "Emitter Description");
+    
+    CLASS_STICKY_CATEGORY_CLEAR(c);
     
 	class_register(CLASS_BOX, c);
 	sofa_max_class = c;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 void sofa_max_read(t_sofa_max* x, t_symbol* s) {
     defer(x, (method)sofa_max_doRead, s, 0, NULL);
@@ -343,8 +406,8 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
     // Title
     char title[] = "Untitled";
-    csofa_setAttributeValue(&x->sofa->attr, DATA_ATTR_TYPE, title, strlen(title));
-    object_attr_setsym((t_object*)x, gensym("datatype"), gensym(title));
+    csofa_setAttributeValue(&x->sofa->attr, TITLE_ATTR_TYPE, title, strlen(title));
+    object_attr_setsym((t_object*)x, gensym("title"), gensym(title));
     
     // Data type
     char dataType[] = "FIR";
@@ -565,6 +628,12 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
 
     if(optionalBufferIsGiven && buffRef) {
         object_free(buffRef);
+    }
+}
+
+void sofa_max_updateAttributes(t_sofa_max* x) {
+    for(long i = 0; i < NUM_ATTR_TYPES; ++i) {
+        
     }
 }
 

@@ -42,6 +42,22 @@ typedef struct _sofa_max {
     t_symbol* references;
     t_symbol* origin;
     
+    t_symbol* roomShortName;
+    t_symbol* roomDescription;
+    t_symbol* roomLocation;
+    
+    t_symbol* listenerShortName;
+    t_symbol* listenerDescription;
+    
+    t_symbol* sourceShortName;
+    t_symbol* sourceDescription;
+    
+    t_symbol* receiverShortName;
+    t_symbol* receiverDescription;
+    
+    t_symbol* emitterShortName;
+    t_symbol* emitterDescription;
+    
     bool* fileLoaded;
     long* count;
     

@@ -71,7 +71,10 @@ uint64_t csofa_getMaxAttributeSize(const sofa::File& sofa) {
 
 void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa) {
     
-    uint64_t numAttributes = csofa_getNumAttributes(sofa);
+    sofa::Attributes attr;
+    const uint64_t kMaxValueLength = 512;
+    
+    uint64_t numAttributes = attr.kNumAttributes;//csofa_getNumAttributes(sofa);
     uint64_t maxAttributeNameLength = csofa_getMaxAttributeNameSize(sofa);
     uint64_t maxAttributeSize = csofa_getMaxAttributeSize(sofa);
     
@@ -83,7 +86,28 @@ void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa)
     a->maxAttributeNameSize= maxAttributeNameLength;
     a->maxAttributeSize = maxAttributeSize;
     
-    for(uint64_t i = 0; i < numAttributes; ++i) {
+    auto strSize = 0;
+    for(auto i = 0; i < numAttributes; ++i) {
+        const std::string attrName = attr.GetName(static_cast<sofa::Attributes::Type>(i));
+        strSize = attrName.size();
+        a->names[i] = new char[strSize + 1];
+        memset(a->names[i], '\0', strSize + 1);
+        if(strSize) {
+            memcpy(a->names[i], attrName.c_str(), sizeof(char) * strSize);
+        }
+        a->nameSizes[i] = strSize;
+        
+        const std::string attrValue = sofa.GetAttributeValueAsString(attrName);
+        strSize = attrValue.size();
+        a->values[i] = new char[kMaxValueLength];
+        memset(a->values[i], '\0', kMaxValueLength);
+        if(strSize) {
+            memcpy(a->values[i], attrValue.c_str(), sizeof(char) * strSize);
+        }
+        a->valueSizes[i] = strSize;
+    }
+
+    /*for(uint64_t i = 0; i < numAttributes; ++i) {
         a->names[i] = new char[maxAttributeNameLength + 1]; // +1 allows for null-termination
         a->values[i] = new char[maxAttributeSize + 1];
     }
@@ -99,7 +123,7 @@ void csofa_getAttributes(t_sofa* s, t_sofaAttributes* a, const sofa::File& sofa)
         a->values[i][attribute.size()] = '\0';
         a->nameSizes[i] = attributeNames[i].size();
         a->valueSizes[i] = attribute.size();
-    }
+    }*/
 }
 
 t_sofa csofa_openFile(char* filename) {
