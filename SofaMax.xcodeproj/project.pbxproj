@@ -20,7 +20,6 @@
 				2D7ADA562231457E000633F7 /* PBXTargetDependency */,
 				2D846F89223154C400BBB30B /* PBXTargetDependency */,
 				2D85FB03224B0C5D0088B0E7 /* PBXTargetDependency */,
-				2D89B625225CA00F00436294 /* PBXTargetDependency */,
 			);
 			name = "All SOFA Externals";
 			productName = "All SOFA Externals";
@@ -166,13 +165,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 2D85FAE6224B0C3B0088B0E7;
 			remoteInfo = "sofa.msbrir~";
-		};
-		2D89B624225CA00F00436294 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 2D1F41DC225C99D700372519;
-			remoteInfo = "sofa.poke~";
 		};
 		2D9473B9222975C3004F7983 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -935,11 +927,6 @@
 			isa = PBXTargetDependency;
 			target = 2D85FAE6224B0C3B0088B0E7 /* sofa.msbrir~ */;
 			targetProxy = 2D85FB02224B0C5D0088B0E7 /* PBXContainerItemProxy */;
-		};
-		2D89B625225CA00F00436294 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 2D1F41DC225C99D700372519 /* sofa.poke~ */;
-			targetProxy = 2D89B624225CA00F00436294 /* PBXContainerItemProxy */;
 		};
 		2D9473BA222975C3004F7983 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
