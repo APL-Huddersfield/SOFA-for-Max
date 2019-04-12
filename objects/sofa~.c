@@ -37,6 +37,7 @@ bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
 void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data);
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
+t_max_err sofa_max_setAttr(t_sofa_max *x, void *attr, long argc, t_atom *argv);
 
 void *sofa_max_class;
 
@@ -118,6 +119,7 @@ void ext_main(void *r) {
     
     CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max, authorContact);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0);
+    CLASS_ATTR_ACCESSORS(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], NULL, sofa_max_setAttr);
     CLASS_ATTR_LABEL(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "Author Contact");
     
     CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max, organization);
@@ -307,10 +309,21 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
         strcpy(filename, s->s_name);
         path = path_getdefault();
     }
+    
     path_toabsolutesystempath(path, filename, fullpath);
     critical_enter(0);
-    csofa_writeFile(x->sofa, fullpath);
+    t_sofaWriteErr err = csofa_writeFile(x->sofa, fullpath);
     critical_exit(0);
+    switch(err) {
+        case MISSING_ATTR_ERROR:
+            object_error((t_object*)x,
+                         "%s: Missing required SOFA attributes. Check these have been filled out in the inspector",
+                         s->s_name);
+            break;
+        case GENERAL_WRITE_ERROR:
+            object_error((t_object*)x, "%s: Unable to write SOFA file");
+            break;
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -410,10 +423,16 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
     // SOFA Convention
     char* strConvention = sofa_getConventionString(convention);
+    char conventionVersion[] = "1.0";
+    t_symbol* symConvention = gensym(strConvention);
+    t_symbol* symConventionVersion = gensym(conventionVersion);
     csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_ATTR_TYPE,
                             strConvention, strlen(strConvention));
-    t_symbol* symConvention = gensym(strConvention);
+    csofa_setAttributeValue(&x->sofa->attr, SOFA_CONVENTION_VERSION_ATTR_TYPE,
+                            conventionVersion, strlen(conventionVersion));
     object_attr_setsym((t_object*)x, gensym(kStrAttr[SOFA_CONVENTION_ATTR_TYPE]), symConvention);
+    object_attr_setsym((t_object*)x, gensym(kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE]),
+                       symConventionVersion);
     
     // Title
     char title[] = "Untitled";
@@ -680,16 +699,20 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
 	}
 }
 
+t_max_err sofa_max_setAttr(t_sofa_max *x, void *attr, long argc, t_atom *argv) {
+    
+}
+
 void sofa_max_free(t_sofa_max *x) {
     if(x->count) {
         if(*x->count) {
             *x->count -= 1;
         }
         if(*x->count < 1) {
-             if(*x->fileLoaded) {
-                 csofa_destroySofa(x->sofa);
-                 *x->fileLoaded = false;
-             }
+            if(*x->fileLoaded) {
+                csofa_destroySofa(x->sofa);
+                *x->fileLoaded = false;
+            }
             
             sysmem_freeptr(x->sofa);
             sysmem_freeptr(x->fileLoaded);

@@ -745,6 +745,7 @@ bool csofa_hasRequiredAttributes(const t_sofa* s) {
         int attrPos = getAttributePos(attName);
         if(attrPos == -1) {
             if(isRequired) {
+                std::cout << "Missing attribute " << attName << std::endl;
                 return false;
             }
             else {
@@ -753,9 +754,10 @@ bool csofa_hasRequiredAttributes(const t_sofa* s) {
         }
         
         const std::string attrValue = std::string(s->attr.values[attrPos]);
-        /*if(attrValue.empty() && isRequired) {
+        if(attrValue.empty() && isRequired) {
+            std::cout << "Attribute " << attName << " is empty" << std::endl;
             return false;
-        }*/
+        }
     }
     return true;
 }
