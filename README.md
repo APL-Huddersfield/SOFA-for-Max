@@ -13,7 +13,7 @@ https://www.hud.ac.uk/apl/resources
 * Add sofa.poke~
 * Fix shared object functionality
 * ~~Create help files~~ Done!
-* Compile and release a windows version
+* ~~Compile and release a windows version~~ Done!
 
 ## Getting Started
 
@@ -27,7 +27,7 @@ The shared sofa~ object functionality is currently disabled. Only one instance o
 
 ### Compatibility
 
-The current version of the code and its associated release is currently only compatible with macOS 10.11 and above. A Windows version is in development and will be available very soon.
+The current version of the code and its associated release is compatible with both macOS and Windows.
 
 ### Prerequisites
 
@@ -36,6 +36,8 @@ This project requires a build of the **[libsofa](https://github.com/sofacoustics
 ### Installing
 
 This source code can be built using either Xcode or Visual Studio. The resulting objects can then be placed in a location within your Max search path e.g. ~/Documents/Max 7/Library/SOFA
+
+Windows Users: You will need to place some extra DLL files in your Max install folder. These are in the "Dependencies" folder of the latest release. Depending on the bit-ness you use, these should be placed in either "C:\Program Files (x86)\Cycling '74\Max" for 32-bit Max, or "C:\Program Files\Cycling '74\Max" for 64-bit Max.
 
 ## License
 
