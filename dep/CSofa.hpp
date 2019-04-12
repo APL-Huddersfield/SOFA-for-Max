@@ -153,7 +153,9 @@ extern "C" {
     }t_sofa;
 
     t_sofa csofa_openFile(char* filename);
-    t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate);
+    t_sofa csofa_newSofa(long M, long R, long E, long N, double sampleRate);
+    void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, long R, long N, double headRadius);
+    
     void csofa_destroySofa(t_sofa* sofa);
     
     typedef enum _sofaWriteErr {

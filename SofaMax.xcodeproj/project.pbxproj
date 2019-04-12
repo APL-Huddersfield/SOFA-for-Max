@@ -30,10 +30,8 @@
 /* Begin PBXBuildFile section */
 		2D1F41DE225C99D700372519 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D1F41DF225C99D700372519 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D1F41E0225C99D700372519 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D1F41E1225C99D700372519 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D1F41E5225C99D700372519 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2D1F41E6225C99D700372519 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D1F41E7225C99D700372519 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2D1F41E8225C99D700372519 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D1F41EA225C99D700372519 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
@@ -46,7 +44,6 @@
 		2D5116C7224975D300625783 /* SOFA in Resources */ = {isa = PBXBuildFile; fileRef = 2D5116C6224975D300625783 /* SOFA */; };
 		2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D7ADA3B22314548000633F7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D7ADA3C22314548000633F7 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D7ADA3D22314548000633F7 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D7ADA4722314548000633F7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
 		2D7ADA4822314548000633F7 /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
@@ -58,14 +55,11 @@
 		2D7ADA5422314562000633F7 /* sofa_genfire~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D7ADA36223144C4000633F7 /* sofa_genfire~.c */; };
 		2D7ADA5722314608000633F7 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
 		2D7ADA5922314620000633F7 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
-		2D7ADA5A22314628000633F7 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D7ADA5B2231462F000633F7 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D846F6D2231544C00BBB30B /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D846F6E2231544C00BBB30B /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D846F6F2231544C00BBB30B /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D846F702231544C00BBB30B /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D846F742231544C00BBB30B /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2D846F752231544C00BBB30B /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D846F762231544C00BBB30B /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2D846F772231544C00BBB30B /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D846F7A2231544C00BBB30B /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
@@ -78,10 +72,8 @@
 		2D846F87223154AE00BBB30B /* sofa_srdrir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D846F692231540000BBB30B /* sofa_srdrir~.c */; };
 		2D85FAE8224B0C3B0088B0E7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D85FAE9224B0C3B0088B0E7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D85FAEA224B0C3B0088B0E7 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D85FAEB224B0C3B0088B0E7 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D85FAEE224B0C3B0088B0E7 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2D85FAEF224B0C3B0088B0E7 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D85FAF0224B0C3B0088B0E7 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2D85FAF1224B0C3B0088B0E7 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D85FAF4224B0C3B0088B0E7 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
@@ -92,12 +84,18 @@
 		2D85FAF9224B0C3B0088B0E7 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
 		2D85FAFA224B0C3B0088B0E7 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D85FB01224B0C570088B0E7 /* sofa_msbrir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D85FAE4224B0BD90088B0E7 /* sofa_msbrir~.c */; };
+		2D88E0D52260E9F500CBF0D1 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
+		2D88E0D62260EA3D00CBF0D1 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D88E0D72260EA7700CBF0D1 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D88E0D82260EA7A00CBF0D1 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
+		2D88E0D92260EA7D00CBF0D1 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
+		2D88E0DA2260EA8700CBF0D1 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
+		2D88E0DB2260EA9A00CBF0D1 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D88E0DC2260EA9E00CBF0D1 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D89B623225CA00600436294 /* sofa_poke~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D1F41DA225C994A00372519 /* sofa_poke~.c */; };
 		2D94739F2229712A004F7983 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D9473A02229712A004F7983 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D9473A12229712A004F7983 /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D9473A62229712A004F7983 /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2D9473A72229712A004F7983 /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D9473A82229712A004F7983 /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2D9473A92229712A004F7983 /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D9473AC2229712A004F7983 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
@@ -109,17 +107,12 @@
 		2D9473B22229712A004F7983 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D9473BB222975D3004F7983 /* sofa_fir~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D94739B222970CE004F7983 /* sofa_fir~.c */; };
 		2D9473BC222976CF004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
-		2D9473BD222976D7004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D9473BE222976DD004F7983 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D9DA36C22280A4800CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D9DA36D22280A5700CE2AFD /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
 		2D9DA36F22280A6C00CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D9DA37222280AAA00CE2AFD /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
-		2D9DA37322280AAA00CE2AFD /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2D9DA37422280AAA00CE2AFD /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2D9DA37922280AAA00CE2AFD /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2D9DA37A22280AAA00CE2AFD /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
-		2D9DA37B22280AAA00CE2AFD /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2D9DA37C22280AAA00CE2AFD /* sofa_common.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA36B222809B500CE2AFD /* sofa_common.c */; };
 		2D9DA37F22280AAA00CE2AFD /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
 		2D9DA38022280AAA00CE2AFD /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
@@ -129,16 +122,9 @@
 		2D9DA38422280AAA00CE2AFD /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
 		2D9DA38522280AAA00CE2AFD /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D9DA38C22280AC300CE2AFD /* sofa_info~.c in Sources */ = {isa = PBXBuildFile; fileRef = 2D9DA366222807EF00CE2AFD /* sofa_info~.c */; };
-		2DD9B55622089E190059570C /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
-		2DD9B55722089E190059570C /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2DD9B55822089E190059570C /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
-		2DD9B55922089E190059570C /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2DD9B5872208B4AC0059570C /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2DD9B5882208B4AC0059570C /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
-		2DD9B5892208B4AC0059570C /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
 		2DD9B58D2208B4AC0059570C /* CSofa.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD6A7821EDFF8100A6916E /* CSofa.cpp */; };
-		2DD9B58E2208B4AC0059570C /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
-		2DD9B58F2208B4AC0059570C /* kdtree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55222089E190059570C /* kdtree.c */; };
 		2DD9B5922208B4AC0059570C /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6321EDFC2A00A6916E /* libcurl.a */; };
 		2DD9B5932208B4AC0059570C /* libhdf5_hl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6421EDFC2A00A6916E /* libhdf5_hl.a */; };
 		2DD9B5942208B4AC0059570C /* libhdf5.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6521EDFC2A00A6916E /* libhdf5.a */; };
@@ -455,7 +441,6 @@
 			files = (
 				2D1F41DE225C99D700372519 /* CSofa.hpp in Headers */,
 				2D1F41DF225C99D700372519 /* kdtree.h in Headers */,
-				2D1F41E0225C99D700372519 /* PointTree.h in Headers */,
 				2D1F41E1225C99D700372519 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -466,7 +451,6 @@
 			files = (
 				2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */,
 				2D7ADA3B22314548000633F7 /* kdtree.h in Headers */,
-				2D7ADA3C22314548000633F7 /* PointTree.h in Headers */,
 				2D7ADA3D22314548000633F7 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,7 +461,6 @@
 			files = (
 				2D846F6D2231544C00BBB30B /* CSofa.hpp in Headers */,
 				2D846F6E2231544C00BBB30B /* kdtree.h in Headers */,
-				2D846F6F2231544C00BBB30B /* PointTree.h in Headers */,
 				2D846F702231544C00BBB30B /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -488,7 +471,6 @@
 			files = (
 				2D85FAE8224B0C3B0088B0E7 /* CSofa.hpp in Headers */,
 				2D85FAE9224B0C3B0088B0E7 /* kdtree.h in Headers */,
-				2D85FAEA224B0C3B0088B0E7 /* PointTree.h in Headers */,
 				2D85FAEB224B0C3B0088B0E7 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,8 +481,7 @@
 			files = (
 				2D94739F2229712A004F7983 /* CSofa.hpp in Headers */,
 				2D9473A02229712A004F7983 /* kdtree.h in Headers */,
-				2D9473A12229712A004F7983 /* PointTree.h in Headers */,
-				2D9473BD222976D7004F7983 /* sofa_common.h in Headers */,
+				2D88E0D52260E9F500CBF0D1 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,8 +490,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D9DA37222280AAA00CE2AFD /* CSofa.hpp in Headers */,
-				2D9DA37322280AAA00CE2AFD /* kdtree.h in Headers */,
-				2D9DA37422280AAA00CE2AFD /* PointTree.h in Headers */,
 				2D9473BC222976CF004F7983 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -519,9 +498,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D88E0DB2260EA9A00CBF0D1 /* PointTree.h in Headers */,
 				2DD9B5872208B4AC0059570C /* CSofa.hpp in Headers */,
 				2DD9B5882208B4AC0059570C /* kdtree.h in Headers */,
-				2DD9B5892208B4AC0059570C /* PointTree.h in Headers */,
 				2D9473BE222976DD004F7983 /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,9 +509,9 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D88E0D82260EA7A00CBF0D1 /* kdtree.h in Headers */,
+				2D88E0D72260EA7700CBF0D1 /* PointTree.h in Headers */,
 				2DFD6A7F21EDFF8100A6916E /* CSofa.hpp in Headers */,
-				2DD9B55722089E190059570C /* kdtree.h in Headers */,
-				2DD9B55922089E190059570C /* PointTree.h in Headers */,
 				2D9DA36D22280A5700CE2AFD /* sofa_common.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -854,7 +833,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D1F41E6225C99D700372519 /* PointTree.c in Sources */,
 				2D1F41E7225C99D700372519 /* kdtree.c in Sources */,
 				2D1F41E5225C99D700372519 /* CSofa.cpp in Sources */,
 				2D1F41E8225C99D700372519 /* sofa_common.c in Sources */,
@@ -866,9 +844,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D7ADA5722314608000633F7 /* CSofa.cpp in Sources */,
-				2D7ADA5A22314628000633F7 /* PointTree.c in Sources */,
 				2D7ADA5922314620000633F7 /* kdtree.c in Sources */,
+				2D7ADA5722314608000633F7 /* CSofa.cpp in Sources */,
 				2D7ADA5B2231462F000633F7 /* sofa_common.c in Sources */,
 				2D7ADA5422314562000633F7 /* sofa_genfire~.c in Sources */,
 			);
@@ -878,9 +855,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D846F742231544C00BBB30B /* CSofa.cpp in Sources */,
-				2D846F752231544C00BBB30B /* PointTree.c in Sources */,
 				2D846F762231544C00BBB30B /* kdtree.c in Sources */,
+				2D846F742231544C00BBB30B /* CSofa.cpp in Sources */,
 				2D846F772231544C00BBB30B /* sofa_common.c in Sources */,
 				2D846F87223154AE00BBB30B /* sofa_srdrir~.c in Sources */,
 			);
@@ -890,11 +866,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2D85FB01224B0C570088B0E7 /* sofa_msbrir~.c in Sources */,
-				2D85FAEE224B0C3B0088B0E7 /* CSofa.cpp in Sources */,
-				2D85FAEF224B0C3B0088B0E7 /* PointTree.c in Sources */,
 				2D85FAF0224B0C3B0088B0E7 /* kdtree.c in Sources */,
+				2D85FAEE224B0C3B0088B0E7 /* CSofa.cpp in Sources */,
 				2D85FAF1224B0C3B0088B0E7 /* sofa_common.c in Sources */,
+				2D85FB01224B0C570088B0E7 /* sofa_msbrir~.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -903,7 +878,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D9473A62229712A004F7983 /* CSofa.cpp in Sources */,
-				2D9473A72229712A004F7983 /* PointTree.c in Sources */,
 				2D9473A82229712A004F7983 /* kdtree.c in Sources */,
 				2D9473A92229712A004F7983 /* sofa_common.c in Sources */,
 				2D9473BB222975D3004F7983 /* sofa_fir~.c in Sources */,
@@ -915,8 +889,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D9DA37922280AAA00CE2AFD /* CSofa.cpp in Sources */,
-				2D9DA37A22280AAA00CE2AFD /* PointTree.c in Sources */,
-				2D9DA37B22280AAA00CE2AFD /* kdtree.c in Sources */,
 				2D9DA37C22280AAA00CE2AFD /* sofa_common.c in Sources */,
 				2D9DA38C22280AC300CE2AFD /* sofa_info~.c in Sources */,
 			);
@@ -926,9 +898,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D88E0DC2260EA9E00CBF0D1 /* PointTree.c in Sources */,
+				2D88E0D62260EA3D00CBF0D1 /* kdtree.c in Sources */,
 				2DD9B58D2208B4AC0059570C /* CSofa.cpp in Sources */,
-				2DD9B58E2208B4AC0059570C /* PointTree.c in Sources */,
-				2DD9B58F2208B4AC0059570C /* kdtree.c in Sources */,
 				2D9DA36F22280A6C00CE2AFD /* sofa_common.c in Sources */,
 				2DD9B59F2208B4DE0059570C /* sofa_hrir~.c in Sources */,
 			);
@@ -938,9 +910,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D88E0DA2260EA8700CBF0D1 /* PointTree.c in Sources */,
+				2D88E0D92260EA7D00CBF0D1 /* kdtree.c in Sources */,
 				2DFD6A7E21EDFF8100A6916E /* CSofa.cpp in Sources */,
-				2DD9B55822089E190059570C /* PointTree.c in Sources */,
-				2DD9B55622089E190059570C /* kdtree.c in Sources */,
 				2D9DA36C22280A4800CE2AFD /* sofa_common.c in Sources */,
 				2DFD6A7621EDFF0800A6916E /* sofa~.c in Sources */,
 			);

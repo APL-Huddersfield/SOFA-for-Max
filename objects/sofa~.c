@@ -31,7 +31,8 @@ void sofa_max_getDimension(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv);
 void sofa_max_getSize(t_sofa_max* x);
 void sofa_max_getName(t_sofa_max* x);
 void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv);
-void sofa_max_updateAttributes(t_sofa_max* x);
+void sofa_max_updateObjectAttributes(t_sofa_max* x);
+void sofa_max_updateSOFAAttributes(t_sofa_max* x);
 
 bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
@@ -74,33 +75,36 @@ void ext_main(void *r) {
     
     CLASS_STICKY_CATEGORY(c, 0, "Read-only Global Attributes");
     
-    CLASS_ATTR_SYM(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, version);
+    CLASS_ATTR_SYM(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   attributes[VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[VERSION_ATTR_TYPE], 0, "Specification Version");
     
     CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
-                   convention);
+                   attributes[SOFA_CONVENTION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], 0, "SOFA Convention");
     
     CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
-                   conventionVersion);
+                   attributes[SOFA_CONVENTION_VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c,  kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], 0, "SOFA Convention Version");
     
-    CLASS_ATTR_SYM(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, dataType);
+    CLASS_ATTR_SYM(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   attributes[DATA_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATA_ATTR_TYPE], 0, "Data Type");
     
     CLASS_ATTR_SYM(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
-                   dateCreated);
+                   attributes[DATE_CREATED_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_CREATED_ATTR_TYPE], 0, "Date Created");
     
     CLASS_ATTR_SYM(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
-                   dateModified);
+                   attributes[DATE_MODIFIED_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], 0, "Date Modified");
     
-    CLASS_ATTR_SYM(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max, apiName);
+    CLASS_ATTR_SYM(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
+                   attributes[API_NAME_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[API_NAME_ATTR_TYPE], 0, "API Name");
     
     CLASS_ATTR_SYM(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
-                   apiVersion);
+                   attributes[API_VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[API_VERSION_ATTR_TYPE], 0, "API Version");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
@@ -109,24 +113,27 @@ void ext_main(void *r) {
     
     CLASS_STICKY_CATEGORY(c, 0, "Required Global Attributes");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ROOM_ATTR_TYPE], 0, t_sofa_max, roomType);
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_ATTR_TYPE], 0, t_sofa_max, attributes[ROOM_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ROOM_ATTR_TYPE], 0, "Room Type");
     
-    CLASS_ATTR_SYM(c, kStrAttr[TITLE_ATTR_TYPE], 0, t_sofa_max, title);
+    CLASS_ATTR_SYM(c, kStrAttr[TITLE_ATTR_TYPE], 0, t_sofa_max, attributes[TITLE_ATTR_TYPE]);
     CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Untitled");
     CLASS_ATTR_LABEL(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Title");
     
-    CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max, authorContact);
+    CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[AUTHOR_CONTACT_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "Author Contact");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max, organization);
+    CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[ORGANIZATION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, "Organization");
     
-    CLASS_ATTR_SYM(c, kStrAttr[LICENSE_ATTR_TYPE], 0, t_sofa_max, license);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "\"No License\"");
+    CLASS_ATTR_SYM(c, kStrAttr[LICENSE_ATTR_TYPE], 0, t_sofa_max, attributes[LICENSE_ATTR_TYPE]);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0,
+                                "\"No License provided, ask the author for permission\"");
     CLASS_ATTR_LABEL(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "License");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
@@ -135,27 +142,32 @@ void ext_main(void *r) {
     
     CLASS_STICKY_CATEGORY(c, 0, "Optional Global Attributes");
     
-    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, t_sofa_max, applicationName);
+    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[APPLICATION_NAME_ATTR_TYPE]);
     CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Max");
     CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Application Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, t_sofa_max, applicationVersion);
+    CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[APPLICATION_VERSION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, "Application Version");
     
-    CLASS_ATTR_SYM(c, kStrAttr[COMMENT_ATTR_TYPE], 0, t_sofa_max, comment);
+    CLASS_ATTR_SYM(c, kStrAttr[COMMENT_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[COMMENT_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[COMMENT_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[COMMENT_ATTR_TYPE], 0, "Comment");
     
-    CLASS_ATTR_SYM(c, kStrAttr[HISTORY_ATTR_TYPE], 0, t_sofa_max, history);
+    CLASS_ATTR_SYM(c, kStrAttr[HISTORY_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[HISTORY_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[HISTORY_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[HISTORY_ATTR_TYPE], 0, "History");
     
-    CLASS_ATTR_SYM(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, t_sofa_max, references);
+    CLASS_ATTR_SYM(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[REFERENCES_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[REFERENCES_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, "References");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, t_sofa_max, origin);
+    CLASS_ATTR_SYM(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, t_sofa_max, attributes[ORIGIN_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ORIGIN_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, "Origin");
     
@@ -165,51 +177,62 @@ void ext_main(void *r) {
     
     CLASS_STICKY_CATEGORY(c, 0, "SOFA Object Attributes");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, roomShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[ROOM_SHORTNAME_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ROOM_SHORTNAME_ATTR_TYPE], 0, "Room Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, roomDescription);
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[ROOM_DESCRIPTION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ROOM_DESCRIPTION_ATTR_TYPE], 0, "Room Description");
     
-    CLASS_ATTR_SYM(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0, t_sofa_max, roomLocation);
+    CLASS_ATTR_SYM(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[ROOM_LOCATION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ROOM_LOCATION_ATTR_TYPE], 0, "Room Location");
     
     
-    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, listenerShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[LISTENER_SHORTNAME_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_SHORTNAME_ATTR_TYPE], 0, "Listener Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, listenerDescription);
+    CLASS_ATTR_SYM(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[LISTENER_DESCRIPTION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[LISTENER_DESCRIPTION_ATTR_TYPE], 0, "Listener Description");
     
     
-    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, sourceShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[SOURCE_SHORTNAME_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[SOURCE_SHORTNAME_ATTR_TYPE], 0, "Source Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, sourceDescription);
+    CLASS_ATTR_SYM(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[SOURCE_DESCRIPTION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[SOURCE_DESCRIPTION_ATTR_TYPE], 0, "Source Description");
     
     
-    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, receiverShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[RECEIVER_SHORTNAME_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[RECEIVER_SHORTNAME_ATTR_TYPE], 0, "Receiver Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, receiverDescription);
+    CLASS_ATTR_SYM(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[RECEIVER_DESCRIPTION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[RECEIVER_DESCRIPTION_ATTR_TYPE], 0, "Receiver Description");
     
     
-    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max, emitterShortName);
+    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[EMITTER_SHORTNAME_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[EMITTER_SHORTNAME_ATTR_TYPE], 0, "Emitter Short Name");
     
-    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max, emitterDescription);
+    CLASS_ATTR_SYM(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0, t_sofa_max,
+                   attributes[EMITTER_DESCRIPTION_ATTR_TYPE]);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[EMITTER_DESCRIPTION_ATTR_TYPE], 0, "Emitter Description");
     
@@ -275,7 +298,7 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
     critical_exit(0);
     
     *x->fileLoaded = true;
-    sofa_max_updateAttributes(x);
+    sofa_max_updateObjectAttributes(x);
     object_notify((t_object*)x, gensym("sofaread"), 0L);
     outlet_bang(x->outlet_finishedLoading);
 }
@@ -283,6 +306,7 @@ void sofa_max_open(t_sofa_max* x, char* filename, short path) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void sofa_max_write(t_sofa_max* x, t_symbol* s) {
+    sofa_max_updateSOFAAttributes(x);
     if(!*x->fileLoaded) {
         object_error((t_object*)x, "No SOFA data to write");
         return;
@@ -392,7 +416,13 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
         csofa_destroySofa(x->sofa);
     }
     
-    *x->sofa = csofa_newSofa((t_sofaConvention)convention, M, R, E, N, 44100);
+    *x->sofa = csofa_newSofa(M, R, E, N, 44100);
+    switch(convention) {
+        case SOFA_SIMPLE_FREE_FIELD_HRIR:
+            break;
+        default:
+            break;
+    }
     csofa_newAttributes(&x->sofa->attr);
     
     /////////////////////////////////////// Init attributes ////////////////////////////////////////
@@ -662,13 +692,26 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
     }
 }
 
-void sofa_max_updateAttributes(t_sofa_max* x) {
+void sofa_max_updateObjectAttributes(t_sofa_max* x) {
     t_symbol* c;
     t_symbol* s;
     for(long i = 0; i < NUM_ATTR_TYPES; ++i) {
         s = gensym(kStrAttr[i]);
         c = gensym(x->sofa->attr.values[i]);
         object_attr_setsym((t_object*)x, s, c);
+    }
+}
+
+void sofa_max_updateSOFAAttributes(t_sofa_max* x) {
+    t_symbol* s;
+    for(long i = 0; i < NUM_ATTR_TYPES; ++i) {
+        s = object_attr_getsym((t_object*)x, gensym(kStrAttr[i]));
+        if(s) {
+            if(s->s_name) {
+                csofa_setAttributeValue(&x->sofa->attr, (t_sofaAttributeTypes)i, s->s_name,
+                                        strlen(s->s_name));
+            }
+        }
     }
 }
 
@@ -714,6 +757,7 @@ void sofa_max_free(t_sofa_max *x) {
             sysmem_freeptr(x->sofa);
             sysmem_freeptr(x->fileLoaded);
             sysmem_freeptr(x->count);
+            
             globalsymbol_unbind((t_object*)x, x->name->s_name, 0);
             object_unregister(x);
         }
@@ -771,6 +815,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
             globalsymbol_bind((t_object*)x, a->s_name, 0);
         }
         x->name = a;
+        
         x->outlet_finishedLoading = bangout((t_object *)x);
         x->outlet_dump = outlet_new((t_object*)x, NULL);
     }

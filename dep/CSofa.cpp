@@ -363,9 +363,9 @@ t_sofa csofa_openFile(char* filename) {
     return sofa;
 }
 
-t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N, double sampleRate) {
+t_sofa csofa_newSofa(long M, long R, long E, long N, double sampleRate) {
     t_sofa sofa;
-    sofa.convention = convention;
+    sofa.convention = SOFA_UNKNOWN_TYPE;
     sofa.I = 1;
     sofa.C = 3;
     sofa.M = M;
@@ -376,39 +376,29 @@ t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N
     
     sofa.listenerPoints = NULL;
     sofa.numListenerPoints = 0;
-    
-    sofa.receiverPoints = NULL;
-    sofa.numReceiverPoints = 0;
-    
-    sofa.sourcePoints = NULL;
-    sofa.numSourcePoints = 0;
-    
-    sofa.emitterPoints = NULL;
-    sofa.numEmitterPoints = 0;
-    
-    
     sofa.listenerViews = NULL;
     sofa.numListenerViews = 0;
-    
-    sofa.receiverViews = NULL;
-    sofa.numReceiverViews = 0;
-    
-    sofa.sourceViews = NULL;
-    sofa.numSourceViews = 0;
-    
-    sofa.emitterViews = NULL;
-    sofa.numEmitterViews = 0;
-    
-    
     sofa.listenerUps = NULL;
     sofa.numListenerUps = 0;
-    
+
+    sofa.receiverPoints = NULL;
+    sofa.numReceiverPoints = 0;
+    sofa.receiverViews = NULL;
+    sofa.numReceiverViews = 0;
     sofa.receiverUps = NULL;
     sofa.numReceiverUps = 0;
     
+    sofa.sourcePoints = NULL;
+    sofa.numSourcePoints = 0;
+    sofa.sourceViews = NULL;
+    sofa.numSourceViews = 0;
     sofa.sourceUps = NULL;
     sofa.numSourceUps = 0;
     
+    sofa.emitterPoints = NULL;
+    sofa.numEmitterPoints = 0;
+    sofa.emitterViews = NULL;
+    sofa.numEmitterViews = 0;
     sofa.emitterUps = NULL;
     sofa.numEmitterUps = 0;
     
@@ -421,6 +411,44 @@ t_sofa csofa_newSofa(t_sofaConvention convention, long M, long R, long E, long N
     sofa.sampleRate = sampleRate;
     sofa.numBlocks = M * R * E;
     return sofa;
+}
+
+void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, long R, long N, double headRadius) {
+    auto newPoint = [=](uint64_t ID, double x, double y, double z) {
+        t_point newPoint;
+        newPoint.ID = ID;
+        newPoint.pos[0] = x;
+        newPoint.pos[1] = y;
+        newPoint.pos[2] = z;
+        return newPoint;
+    };
+    
+    sofa->numListenerPoints = 1;
+    sofa->numListenerViews = 1;
+    sofa->numListenerUps = 1;
+    sofa->numReceiverPoints = 2;
+    sofa->numSourcePoints = M;
+    sofa->numEmitterPoints = 1;
+    
+    sofa->listenerPoints = new t_point[sofa->numListenerPoints];
+    sofa->listenerViews = new t_point[sofa->numListenerViews];
+    sofa->listenerUps= new t_point[sofa->numListenerUps];
+    sofa->receiverPoints = new t_point[sofa->numReceiverPoints];
+    sofa->sourcePoints = new t_point[sofa->numSourcePoints];
+    sofa->emitterPoints = new t_point[sofa->numEmitterPoints];
+    
+    sofa->listenerPoints[0] = newPoint(0, 0, 0, 0);
+    sofa->listenerViews[0] = newPoint(0, 1, 0, 0);
+    sofa->listenerUps[0] = newPoint(0, 0, 0, 1);
+    
+    sofa->receiverPoints[0] = newPoint(0, 0, -headRadius, 0);
+    sofa->receiverPoints[1] = newPoint(1, 0, headRadius, 0);
+    
+    for(auto i = 0; i < M; ++i) {
+        sofa->sourcePoints[i] = newPoint(i, 0, 0, 1);
+    }
+    
+    sofa->emitterPoints[0] = newPoint(0, 0, 0, 0);
 }
 
 void csofa_destroySofa(t_sofa* sofaFile) {
@@ -851,8 +879,12 @@ void csofa_clearAttributes(t_sofaAttributes* a) {
 void csofa_setAttributeValue(t_sofaAttributes* a, t_sofaAttributeTypes t, char* value, int size) {
     int i = (int)t;
     a->nameSizes[i] = size;
-    a->values[i] = (char*)realloc(a->values[i], sizeof(char) * size);
-    memcpy(a->values[i], value, sizeof(char) * size);
+    if(size) {
+        delete[] a->values[i];
+        a->values[i] = new char[size + 1];
+        memcpy(a->values[i], value, sizeof(char) * size);
+        a->values[i][size] = '\0';
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -20,43 +20,7 @@ typedef struct _sofa_max {
     t_object ob;
     t_symbol* name;
     t_sofa* sofa;
-    
-    // Attributes
-    t_symbol* version;
-    t_symbol* convention;
-    t_symbol* conventionVersion;
-    t_symbol* dataType;
-    t_symbol* roomType;
-    t_symbol* title;
-    t_symbol* dateCreated;
-    t_symbol* dateModified;
-    t_symbol* apiName;
-    t_symbol* apiVersion;
-    t_symbol* authorContact;
-    t_symbol* organization;
-    t_symbol* license;
-    t_symbol* applicationName;
-    t_symbol* applicationVersion;
-    t_symbol* comment;
-    t_symbol* history;
-    t_symbol* references;
-    t_symbol* origin;
-    
-    t_symbol* roomShortName;
-    t_symbol* roomDescription;
-    t_symbol* roomLocation;
-    
-    t_symbol* listenerShortName;
-    t_symbol* listenerDescription;
-    
-    t_symbol* sourceShortName;
-    t_symbol* sourceDescription;
-    
-    t_symbol* receiverShortName;
-    t_symbol* receiverDescription;
-    
-    t_symbol* emitterShortName;
-    t_symbol* emitterDescription;
+    t_symbol* attributes[NUM_ATTR_TYPES];
     
     bool* fileLoaded;
     long* count;
