@@ -445,9 +445,9 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     short maxVersion = maxversion();
     short big = (maxVersion >> 8) & 15;
     short mid = (maxVersion >> 4) & 15;
-    short small = maxVersion & 15;
+    short sub = maxVersion & 15;
     char appVersion[6];
-    sprintf(appVersion, "%d.%d.%d", big, mid, small);
+    sprintf(appVersion, "%d.%d.%d", big, mid, sub);
     csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE,
                             appVersion, strlen(appVersion));
     object_attr_setsym((t_object*)x, gensym(kStrAttr[APPLICATION_VERSION_ATTR_TYPE]),
