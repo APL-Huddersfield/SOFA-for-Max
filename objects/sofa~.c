@@ -119,7 +119,6 @@ void ext_main(void *r) {
     
     CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max, authorContact);
     CLASS_ATTR_SELFSAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0);
-    CLASS_ATTR_ACCESSORS(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], NULL, sofa_max_setAttr);
     CLASS_ATTR_LABEL(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "Author Contact");
     
     CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max, organization);
@@ -127,7 +126,7 @@ void ext_main(void *r) {
     CLASS_ATTR_LABEL(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, "Organization");
     
     CLASS_ATTR_SYM(c, kStrAttr[LICENSE_ATTR_TYPE], 0, t_sofa_max, license);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "No License");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "\"No License\"");
     CLASS_ATTR_LABEL(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "License");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
@@ -322,6 +321,8 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
             break;
         case GENERAL_WRITE_ERROR:
             object_error((t_object*)x, "%s: Unable to write SOFA file");
+            break;
+        default:
             break;
     }
 }
@@ -697,10 +698,6 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
                 break;
         }
 	}
-}
-
-t_max_err sofa_max_setAttr(t_sofa_max *x, void *attr, long argc, t_atom *argv) {
-    
 }
 
 void sofa_max_free(t_sofa_max *x) {
