@@ -413,7 +413,61 @@ t_sofa csofa_newSofa(long M, long R, long E, long N, double sampleRate) {
     return sofa;
 }
 
-void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, long R, long N, double headRadius) {
+void csofa_newFIR(t_sofa* sofa, t_sofaConvention convention) {
+    auto newPoint = [=](uint64_t ID, double x, double y, double z) {
+        t_point newPoint;
+        newPoint.ID = ID;
+        newPoint.pos[0] = x;
+        newPoint.pos[1] = y;
+        newPoint.pos[2] = z;
+        return newPoint;
+    };
+    
+    sofa->numListenerPoints = 1;
+    sofa->numListenerViews = 1;
+    sofa->numListenerUps = 1;
+    sofa->numReceiverPoints = 1;
+    sofa->numReceiverViews = 1;
+    sofa->numReceiverUps = 1;
+    sofa->numSourcePoints = 1;
+    sofa->numSourceViews = 1;
+    sofa->numSourceUps = 1;
+    sofa->numEmitterPoints = 1;
+    sofa->numEmitterViews = 1;
+    sofa->numEmitterUps = 1;
+    
+    sofa->listenerPoints = new t_point[sofa->numListenerPoints];
+    sofa->listenerViews = new t_point[sofa->numListenerViews];
+    sofa->listenerUps= new t_point[sofa->numListenerUps];
+    sofa->receiverPoints = new t_point[sofa->numReceiverPoints];
+    sofa->receiverViews = new t_point[sofa->numReceiverViews];
+    sofa->receiverUps= new t_point[sofa->numReceiverUps];
+    sofa->sourcePoints = new t_point[sofa->numSourcePoints];
+    sofa->sourceViews = new t_point[sofa->numSourceViews];
+    sofa->sourceUps= new t_point[sofa->numSourceUps];
+    sofa->emitterPoints = new t_point[sofa->numEmitterPoints];
+    sofa->emitterViews = new t_point[sofa->numEmitterViews];
+    sofa->emitterUps= new t_point[sofa->numEmitterUps];
+    
+    sofa->listenerPoints[0] = newPoint(0, 0, 0, 0);
+    sofa->listenerViews[0] = newPoint(0, 1, 0, 0);
+    sofa->listenerUps[0] = newPoint(0, 0, 0, 1);
+    
+    sofa->receiverPoints[0] = newPoint(0, 0, 0, 0);
+    sofa->receiverViews[0] = newPoint(0, 1, 0, 0);
+    sofa->receiverUps[0] = newPoint(0, 0, 0, 1);
+    
+    sofa->sourcePoints[0] = newPoint(0, 0, 0, 0);
+    sofa->sourceViews[0] = newPoint(0, 1, 0, 0);
+    sofa->sourceUps[0] = newPoint(0, 0, 0, 1);
+    
+    sofa->emitterPoints[0] = newPoint(0, 0, 0, 0);
+    sofa->emitterViews[0] = newPoint(0, 1, 0, 0);
+    sofa->emitterUps[0] = newPoint(0, 0, 0, 1);
+}
+
+
+void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, double headRadius) {
     auto newPoint = [=](uint64_t ID, double x, double y, double z) {
         t_point newPoint;
         newPoint.ID = ID;

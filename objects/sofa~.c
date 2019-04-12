@@ -419,9 +419,10 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     *x->sofa = csofa_newSofa(M, R, E, N, 44100);
     switch(convention) {
         case SOFA_SIMPLE_FREE_FIELD_HRIR:
+            csofa_newSimpleFreeFieldHRIR(x->sofa, M, 0.17);
             break;
         default:
-            break;
+            csofa_newFIR(x->sofa, convention);
     }
     csofa_newAttributes(&x->sofa->attr);
     

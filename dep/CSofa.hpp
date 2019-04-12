@@ -154,7 +154,8 @@ extern "C" {
 
     t_sofa csofa_openFile(char* filename);
     t_sofa csofa_newSofa(long M, long R, long E, long N, double sampleRate);
-    void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, long R, long N, double headRadius);
+    void csofa_newFIR(t_sofa* sofa, t_sofaConvention convention);
+    void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, double headRadius);
     
     void csofa_destroySofa(t_sofa* sofa);
     
