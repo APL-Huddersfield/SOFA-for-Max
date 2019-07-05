@@ -1,15 +1,17 @@
 .DS_Store
-Build/*
-externals/*
-release/*
+Source/Build/*
+Source/externals/*
+Source/release/*
 **/*.lib
+**/*.zip
+
 
 *.pdf
 *.a
 #*.vcxproj
 
-dep/SOFA/src/*
-!dep/SOFA/src/Sofa.h
+Source/dep/SOFA/src/*
+!Source/dep/SOFA/src/Sofa.h
 
-SofaMax.xcodeproj/project.xcworkspace/xcuserdata/*
-SofaMax.xcodeproj/xcuserdata/*
+Source/SofaMax.xcodeproj/project.xcworkspace/xcuserdata/*
+Source/SofaMax.xcodeproj/xcuserdata/*
