@@ -19,7 +19,7 @@ Emails: d.s.johnson2@hud.ac.uk, h.lee@hud.ac.uk
 
 ## Usage
 
-You can either download a ready built version of the object collection from the releases [page](https://github.com/APL-Huddersfield/SOFA-for-Max/releases) and placed within your Max search path (e.g ./Max 7/Library/ ), or build this repository from source.
+You can either use the existing objects in the 'Max Objects' folder, or download a ready built version of the object collection from the releases [page](https://github.com/APL-Huddersfield/SOFA-for-Max/releases) and place within your Max search path (e.g ./Max 7/Library/ ). If you wish, you can also build this repository from source.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
