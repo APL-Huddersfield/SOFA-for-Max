@@ -7,9 +7,9 @@
 //
 
 #include "CSofa.hpp"
-#include "./SOFA/src/sofa.h"
-#include "./SOFA/src/ncDim.h"
-#include "./SOFA/src/ncVar.h"
+#include "SOFA/src/SOFA.h"
+#include "SOFA/src/ncDim.h"
+#include "SOFA/src/ncVar.h"
 #include <iostream>
 #include <vector>
 
