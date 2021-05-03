@@ -682,6 +682,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 089C166AFE841209C02AAC07 /* iterator */;
@@ -1341,6 +1342,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.12;
+				VALID_ARCHS = x86_64;
 			};
 			name = Development;
 		};
@@ -1350,6 +1352,7 @@
 				DEAD_CODE_STRIPPING = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx10.12;
+				VALID_ARCHS = x86_64;
 			};
 			name = Deployment;
 		};
@@ -1421,7 +1424,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
 			buildSettings = {
-				SDKROOT = macosx;
+				ARCHS = "$(ARCHS_STANDARD)";
+				SDKROOT = macosx10.12;
+				VALID_ARCHS = x86_64;
 			};
 			name = Development;
 		};
@@ -1429,7 +1434,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2DFD6A5F21EDFBC000A6916E /* sofamax.xcconfig */;
 			buildSettings = {
-				SDKROOT = macosx;
+				ARCHS = "$(ARCHS_STANDARD)";
+				SDKROOT = macosx10.12;
+				VALID_ARCHS = x86_64;
 			};
 			name = Deployment;
 		};
