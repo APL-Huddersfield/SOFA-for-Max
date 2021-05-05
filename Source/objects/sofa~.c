@@ -42,17 +42,6 @@ t_max_err sofa_max_setAttr(t_sofa_max *x, void *attr, long argc, t_atom *argv);
 
 void *sofa_max_class;
 
-static const char* kStrAttr[NUM_ATTR_TYPES] = {
-    "convention", "version", "sofaconvention", "sofaconventionversion",
-    "datatype", "roomtype", "title", "datecreated", "datemodified",
-    "apiname", "apiversion", "author", "organization", "license",
-    "applicationname", "applicationversion", "comment", "history",
-    "references", "origin", "roomname", "roomdescription", "roomlocation",
-    "listenername", "listenerdescription", "sourcename",
-    "sourcedescription", "receivername", "receiverdescription",
-    "emittername", "emitterdescription"
-};
-
 void ext_main(void *r) {
 	t_class *c;
 
@@ -753,11 +742,25 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
 }
 
 t_max_err sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data) {
-    t_symbol* attrname;
-    if (msg == gensym("attr_modified")) {
-        attrname = (t_symbol*)object_method((t_object*)data, gensym("getname"));
-        object_post((t_object*)x, "changed attr name %s", attrname->s_name);
+    t_symbol* attrname = NULL;
+    t_symbol* attrval = NULL;
+    long attrid = 0;
+    t_object* object;
+    if (sender == x) {
+        return 0;
     }
+
+    if (msg == gensym("attr_modified")) {
+        object = (t_object*)data;
+        attrname = (t_symbol*)object_method((t_object*)data, gensym("getname"));
+        attrval = sofa_getAttributeValueByName((t_sofa_max*)sender, attrname, &attrid);
+        if (attrname && attrval) {
+            x->attributes[attrid] = gensym(((t_sofa_max*)sender)->attributes[attrid]->s_name);
+            object_post((t_object*)x, "%s: %s", attrname->s_name, attrval->s_name);
+        }
+        
+    }
+
     return 0;
 }
 
@@ -815,6 +818,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                          *x->count += 1;
                     }
                     object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
+                    
                    // object_attr_setsym(<#void *x#>, <#t_symbol *s#>, <#t_symbol *c#>)
 //                    sysmem_freeptr(x->sofa);
 //                    sysmem_freeptr(x->fileLoaded);
