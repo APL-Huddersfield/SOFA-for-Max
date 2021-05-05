@@ -36,7 +36,7 @@ void sofa_max_updateSOFAAttributes(t_sofa_max* x);
 
 bool sofa_max_isFileLoaded(t_sofa_max* x, t_symbol* s);
 
-void sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data);
+t_max_err sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data);
 void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s);
 t_max_err sofa_max_setAttr(t_sofa_max *x, void *attr, long argc, t_atom *argv);
 
@@ -70,6 +70,7 @@ void ext_main(void *r) {
     class_addmethod(c, (method)sofa_max_get,            "get",          A_GIMME, 0);
     
 	class_addmethod(c, (method)sofa_max_assist,         "assist",       A_CANT, 0);
+    class_addmethod(c, (method)sofa_max_notify,         "notify",       A_CANT, 0);
 
     // Read only attributes
     
@@ -78,34 +79,42 @@ void ext_main(void *r) {
     CLASS_ATTR_SYM(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[VERSION_ATTR_TYPE], 0, "Specification Version");
+    CLASS_ATTR_SAVE(c, kStrAttr[VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[SOFA_CONVENTION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], 0, "SOFA Convention");
+    CLASS_ATTR_SAVE(c, kStrAttr[SOFA_CONVENTION_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[SOFA_CONVENTION_VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c,  kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], 0, "SOFA Convention Version");
+    CLASS_ATTR_SAVE(c, kStrAttr[SOFA_CONVENTION_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[DATA_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATA_ATTR_TYPE], 0, "Data Type");
+    CLASS_ATTR_SAVE(c, kStrAttr[DATA_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[DATE_CREATED_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_CREATED_ATTR_TYPE], 0, "Date Created");
+    CLASS_ATTR_SAVE(c, kStrAttr[DATE_CREATED_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[DATE_MODIFIED_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], 0, "Date Modified");
+    CLASS_ATTR_SAVE(c, kStrAttr[DATE_MODIFIED_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[API_NAME_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[API_NAME_ATTR_TYPE], 0, "API Name");
+    CLASS_ATTR_SAVE(c, kStrAttr[API_NAME_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_ATTR_SYM(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER, t_sofa_max,
                    attributes[API_VERSION_ATTR_TYPE]);
     CLASS_ATTR_LABEL(c, kStrAttr[API_VERSION_ATTR_TYPE], 0, "API Version");
+    CLASS_ATTR_SAVE(c, kStrAttr[API_VERSION_ATTR_TYPE], ATTR_SET_OPAQUE_USER);
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
     
@@ -114,27 +123,26 @@ void ext_main(void *r) {
     CLASS_STICKY_CATEGORY(c, 0, "Required Global Attributes");
     
     CLASS_ATTR_SYM(c, kStrAttr[ROOM_ATTR_TYPE], 0, t_sofa_max, attributes[ROOM_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[ROOM_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ROOM_ATTR_TYPE], 0, "Room Type");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[ROOM_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[TITLE_ATTR_TYPE], 0, t_sofa_max, attributes[TITLE_ATTR_TYPE]);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Untitled");
     CLASS_ATTR_LABEL(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Title");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[TITLE_ATTR_TYPE], 0, "Untitled");
     
     CLASS_ATTR_SYM(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, t_sofa_max,
                    attributes[AUTHOR_CONTACT_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "Author Contact");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[AUTHOR_CONTACT_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, t_sofa_max,
                    attributes[ORGANIZATION_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, "Organization");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[ORGANIZATION_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[LICENSE_ATTR_TYPE], 0, t_sofa_max, attributes[LICENSE_ATTR_TYPE]);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0,
-                                "\"No License provided, ask the author for permission\"");
     CLASS_ATTR_LABEL(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "License");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[LICENSE_ATTR_TYPE], 0, "\"No License provided, ask the author for permission\"");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
     
@@ -144,32 +152,32 @@ void ext_main(void *r) {
     
     CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, t_sofa_max,
                    attributes[APPLICATION_NAME_ATTR_TYPE]);
-    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Max");
     CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Application Name");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[APPLICATION_NAME_ATTR_TYPE], 0, "Max");
     
     CLASS_ATTR_SYM(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, t_sofa_max,
                    attributes[APPLICATION_VERSION_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, "Application Version");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[APPLICATION_VERSION_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[COMMENT_ATTR_TYPE], 0, t_sofa_max,
                    attributes[COMMENT_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[COMMENT_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[COMMENT_ATTR_TYPE], 0, "Comment");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[COMMENT_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[HISTORY_ATTR_TYPE], 0, t_sofa_max,
                    attributes[HISTORY_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[HISTORY_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[HISTORY_ATTR_TYPE], 0, "History");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[HISTORY_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, t_sofa_max,
                    attributes[REFERENCES_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[REFERENCES_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, "References");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[REFERENCES_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_ATTR_SYM(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, t_sofa_max, attributes[ORIGIN_ATTR_TYPE]);
-    CLASS_ATTR_SELFSAVE(c, kStrAttr[ORIGIN_ATTR_TYPE], 0);
     CLASS_ATTR_LABEL(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, "Origin");
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, kStrAttr[ORIGIN_ATTR_TYPE], 0, "<unknown>");
     
     CLASS_STICKY_CATEGORY_CLEAR(c);
     
@@ -446,7 +454,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     short big = (maxVersion >> 8) & 15;
     short mid = (maxVersion >> 4) & 15;
     short sub = maxVersion & 15;
-    char appVersion[6];
+    char appVersion[8];
     sprintf(appVersion, "%d.%d.%d", big, mid, sub);
     csofa_setAttributeValue(&x->sofa->attr, APPLICATION_VERSION_ATTR_TYPE,
                             appVersion, strlen(appVersion));
@@ -744,6 +752,15 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
 	}
 }
 
+t_max_err sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data) {
+    t_symbol* attrname;
+    if (msg == gensym("attr_modified")) {
+        attrname = (t_symbol*)object_method((t_object*)data, gensym("getname"));
+        object_post((t_object*)x, "changed attr name %s", attrname->s_name);
+    }
+    return 0;
+}
+
 void sofa_max_free(t_sofa_max *x) {
     if(x->count) {
         if(*x->count) {
@@ -767,9 +784,10 @@ void sofa_max_free(t_sofa_max *x) {
 
 void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
     t_sofa_max *x = NULL;
-    t_symbol* a;
+    t_symbol* a = NULL;
 
     if((x = (t_sofa_max *)object_alloc((t_class*)sofa_max_class))) {
+        // By default, create UUID for this object if no name is given
         a = symbol_unique();
         
         x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));
@@ -783,8 +801,9 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                 a = atom_getsym(argv);
                 t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name,
                                                                       "sofa~");
+                // TODO : This is where sofa~ object name count can be handled
                 if(ref != NULL) {
-                    /*sysmem_freeptr(x->sofa);
+                    sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
                     sysmem_freeptr(x->count);
 
@@ -794,27 +813,38 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                     x->count = ref->count;
                     if(x->count) {
                          *x->count += 1;
-                    }*/
-                    sysmem_freeptr(x->sofa);
-                    sysmem_freeptr(x->fileLoaded);
-                    sysmem_freeptr(x->count);
-                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist",
-                                 a->s_name);
-                    return NULL;
+                    }
+                    object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
+                   // object_attr_setsym(<#void *x#>, <#t_symbol *s#>, <#t_symbol *c#>)
+//                    sysmem_freeptr(x->sofa);
+//                    sysmem_freeptr(x->fileLoaded);
+//                    sysmem_freeptr(x->count);
+//                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist",
+//                                 a->s_name);
+//                    return NULL;
                 }
                 else {
-                    //a->s_thing = (t_object*)x;
+                    a->s_thing = (t_object*)x;
                     
-                    object_register(APL_SOFA_NAMESPACE, a, x);
+                    object_register(APL_SOFA_NAMESPACE, a, (t_object*)x);
+                    object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
                     globalsymbol_bind((t_object*)x, a->s_name, 0);
                 }
             }
         }
         else {
-            //a->s_thing = (t_object*)x;
-            object_register(APL_SOFA_NAMESPACE, a, x);
+            a->s_thing = (t_object*)x;
+            object_register(APL_SOFA_NAMESPACE, a, (t_object*)x);
+            object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
             globalsymbol_bind((t_object*)x, a->s_name, 0);
         }
+        printf("%ld %s object(s) exist\n", *x->count, a->s_name);
+        
+        t_symbol* classname = object_classname((t_object*)x);
+        if (classname) {
+            printf("This is a %s\n", classname->s_name);
+        }
+        
         x->name = a;
         
         x->outlet_finishedLoading = bangout((t_object *)x);

@@ -70,7 +70,7 @@ void ext_main(void *r) {
 
     CLASS_ATTR_SYM(c, "sofaobject", 0, t_sofa_info, sofa_name);
     CLASS_ATTR_ACCESSORS(c, "sofaobject", sofa_info_attrGetSofa, sofa_info_attrSetSofa);
-    CLASS_ATTR_SELFSAVE(c, "sofaobject", 0);
+    CLASS_ATTR_DEFAULTNAME_SAVE(c, "sofaobject", 0, "not set");
     CLASS_ATTR_LABEL(c, "sofaobject", 0, "sofa~ object");
 
 	class_register(CLASS_BOX, c);
@@ -127,12 +127,13 @@ void sofa_info_output(t_sofa_info* x) {
 }
 
 void sofa_info_setSofa(t_sofa_info* x, t_symbol* s) {
-    t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, s->s_name, "sofa~");
-    if(ref != NULL) {
-        x->sofa_ob = ref;
-        object_subscribe(APL_SOFA_NAMESPACE, s, APL_SOFA_CLASSNAME, x);
-        x->isBoundToSofa = true;
-    }
+//    t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, s->s_name, "sofa~");
+//    if(ref != NULL) {
+//        x->sofa_ob = ref;
+//        object_subscribe(APL_SOFA_NAMESPACE, s, APL_SOFA_CLASSNAME, x);
+//        x->isBoundToSofa = true;
+//    }
+    object_attr_setsym((t_object*)x, gensym("sofaobject"), s);
 }
 
 void sofa_info_dumpAttributes(t_sofa_info* x) {
@@ -193,10 +194,22 @@ t_max_err sofa_info_notify(t_sofa_info *x, t_symbol *s, t_symbol *msg, void *sen
 }
 
 t_max_err sofa_info_attrSetSofa(t_sofa_info *x, t_object *attr, long argc, t_atom *argv) {
-    if(argc) {
+//    if(argc) {
+//        t_symbol* a = atom_getsym(argv);
+//        sofa_info_setSofa(x, a);
+//    }
+    
+    if (argc) {
         t_symbol* a = atom_getsym(argv);
-        sofa_info_setSofa(x, a);
+        x->sofa_name = a;
+        t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name, "sofa~");
+        if(ref != NULL) {
+            x->sofa_ob = ref;
+            object_subscribe(APL_SOFA_NAMESPACE, a, APL_SOFA_CLASSNAME, x);
+            x->isBoundToSofa = true;
+        }
     }
+    
     return 0;
 }
 

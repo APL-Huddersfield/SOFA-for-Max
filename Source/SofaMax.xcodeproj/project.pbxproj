@@ -675,6 +675,9 @@
 						CreatedOnToolsVersion = 8.2.1;
 						ProvisioningStyle = Automatic;
 					};
+					2FBBEAD608F335360078DB84 = {
+						ProvisioningStyle = Automatic;
+					};
 				};
 			};
 			buildConfigurationList = 2FBBEACF08F335010078DB84 /* Build configuration list for PBXProject "SofaMax" */;
@@ -1446,7 +1449,10 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				HEADER_SEARCH_PATHS = (
 					"\"$(C74SUPPORT)/max-includes\"",
@@ -1468,6 +1474,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx10.12;
 				STRIP_STYLE = all;
 			};
@@ -1479,8 +1486,11 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = YES;
 				DEAD_CODE_STRIPPING = YES;
+				DEVELOPMENT_TEAM = "";
 				GCC_OPTIMIZATION_LEVEL = 3;
 				HEADER_SEARCH_PATHS = (
 					"\"$(C74SUPPORT)/max-includes\"",
@@ -1502,6 +1512,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "APL.sofa-";
 				PRODUCT_NAME = "sofa~";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx10.12;
 				STRIP_STYLE = all;
 			};
