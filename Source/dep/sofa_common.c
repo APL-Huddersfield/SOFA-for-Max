@@ -143,6 +143,21 @@ void sofa_dumpViews(t_sofa_max* x, void* outlet, t_symbol* s, t_symbol* p) {
     }
 }
 
+t_symbol* sofa_getAttributeValueByName(t_sofa_max* x, t_symbol* name, long* attrid) {
+    t_symbol* val = NULL;
+    long i = 0;
+    if (x && name) {
+        do {
+            if (strcmp(name->s_name, kStrAttr[i]) == 0) {
+                val = x->attributes[i];
+                *attrid = i;
+            }
+            ++i;
+        } while(val == NULL && i < NUM_ATTR_TYPES);
+    }
+    return val;
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool atomIsANumber(t_atom* a) {
