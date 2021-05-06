@@ -209,7 +209,9 @@ extern "C" {
         SOFA_VAR_RECEIVER,
         SOFA_VAR_SOURCE,
         SOFA_VAR_EMITTER,
-        SOFA_NUM_VAR_TYPES
+
+        SOFA_NUM_VAR_TYPES,
+        SOFA_VAR_UNKNOWN
     }t_sofaVarType;
     
     bool csofa_setPosition(t_sofa* s, t_sofaVarType varType, uint64_t i, t_point* point);

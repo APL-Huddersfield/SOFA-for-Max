@@ -414,6 +414,8 @@ t_sofa csofa_newSofa(long M, long R, long E, long N, double sampleRate) {
 }
 
 void csofa_newFIR(t_sofa* sofa, t_sofaConvention convention) {
+    sofa->convention = SOFA_GENERAL_FIR;
+
     auto newPoint = [=](uint64_t ID, double x, double y, double z) {
         t_point newPoint;
         newPoint.ID = ID;
@@ -468,6 +470,8 @@ void csofa_newFIR(t_sofa* sofa, t_sofaConvention convention) {
 
 
 void csofa_newSimpleFreeFieldHRIR(t_sofa* sofa, long M, double headRadius) {
+    sofa->convention = SOFA_SIMPLE_FREE_FIELD_HRIR;
+    
     auto newPoint = [=](uint64_t ID, double x, double y, double z) {
         t_point newPoint;
         newPoint.ID = ID;
