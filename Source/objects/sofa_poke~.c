@@ -39,6 +39,7 @@ void sofa_poke_setBuffer(t_sofa_poke* x, t_symbol* s);
 bool sofa_poke_registerBuffer(t_sofa_poke* x, t_symbol *s);
 
 void sofa_poke_putMeasurement(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv);
+void sofa_poke_setPosition(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv);
 
 t_max_err sofa_poke_notify(t_sofa_poke* x, t_symbol* s, t_symbol* msg, void* sender, void* data);
 t_max_err sofa_poke_attrSetSofa(t_sofa_poke* x, t_object* attr, long argc, t_atom* argv);
@@ -57,6 +58,7 @@ void ext_main(void *r) {
     class_addmethod(c, (method)sofa_poke_setSofa,           "set",              A_SYM,      0);
     class_addmethod(c, (method)sofa_poke_setBuffer,         "setbuffer",        A_SYM,      0);
     class_addmethod(c, (method)sofa_poke_putMeasurement,    "put",              A_GIMME,    0);
+    class_addmethod(c, (method)sofa_poke_setPosition,       "position",         A_GIMME,    0);
 
     class_addmethod(c, (method)sofa_poke_notify,            "notify",           A_CANT,     0);
 	class_addmethod(c, (method)sofa_poke_assist,            "assist",           A_CANT,     0);
@@ -302,6 +304,88 @@ void sofa_poke_putMeasurement(t_sofa_poke* x, t_symbol* s, long argc, t_atom* ar
         csofa_setMRDataBlock(x->sofa_ob->sofa, m, r, dataIR, x->sofa_ob->sofa->N);
     }
     sysmem_freeptr(dataIR);
+}
+
+void sofa_poke_setPosition(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv) {
+    t_symbol* var;
+    long id = 0;
+    if(*x->sofa_ob->fileLoaded == false) {
+        object_error((t_object*)x, "%s: no SOFA data has been loaded / initialised", s->s_name);
+        return;
+    }
+    
+    /* Args list: <position type>, <position ID>, <component 0>, <component 1>, <component 2> */
+    long numRequiredArguments = 2;
+    switch(x->sofa_ob->sofa->convention) {
+        case SOFA_SIMPLE_FREE_FIELD_HRIR:
+            numRequiredArguments = 4;
+            break;
+        default:
+            break;
+    }
+    
+    if (argc < numRequiredArguments) {
+        object_error((t_object*)x,
+                     "%s: not enough arguments to set position. Expected at least %ld arguments",
+                     s->s_name, numRequiredArguments);
+        return;
+    }
+
+    /* Get and validate position var type */
+    long varTypeId = 0;
+    t_sofaVarType varType = SOFA_UNKNOWN_TYPE;
+    if (argv->a_type == A_SYM) {
+        var = atom_getsym(argv);
+        varType = sofa_hashVarTypeFromName(var);
+    }
+    else if (argv->a_type == A_LONG) {
+        varTypeId = atom_getlong(argv);
+        if (varTypeId < 0) {
+            varTypeId = 0;
+        }
+        if (varTypeId < (long)SOFA_NUM_VAR_TYPES) {
+            varType = (t_sofaConvention)varTypeId;
+        }
+    }
+    
+    if (varType == SOFA_UNKNOWN_TYPE) {
+        object_error((t_object*)x, "%s: requested invalid position type", var);
+        return;
+    }
+    argv++;
+
+    /* Get and validate measurment ID*/
+    if (argv->a_type != A_LONG) {
+        return;
+    }
+    id = atom_getlong(argv);
+
+    if ((t_sofaVarType)varType == SOFA_VAR_SOURCE) {
+        if (id >= x->sofa_ob->sofa->M) {
+            object_error((t_object*)x, "%s: requested measurement ID is out of range", s->s_name);
+            return;
+        }
+    }
+    argv++;
+    
+    /* Get co-ordinates */
+    // TODO: Extract and validate components from args.
+    double components[3] = {0.0, 0.0, 0.0};
+    
+    /* Construct point based on convention type */
+    t_point p;
+    switch (x->sofa_ob->sofa->convention) {
+        case SOFA_SIMPLE_FREE_FIELD_HRIR:
+            p = makeSphericalPoint(id, components[0], components[1]);
+            break;
+        default:
+            p = make2DCartesianPoint(id, 0.0, 0.0);
+    }
+    
+    /* Set the requested measurement position */
+    if (csofa_setPosition(x->sofa_ob->sofa, (t_sofaVarType)varType, id, &p) == false) {
+        object_error((t_object*)x, "%s: error setting position");
+    }
 }
 
 void sofa_poke_free(t_sofa_poke *x) {

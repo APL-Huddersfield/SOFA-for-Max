@@ -20,6 +20,7 @@
 				2D7ADA562231457E000633F7 /* PBXTargetDependency */,
 				2D846F89223154C400BBB30B /* PBXTargetDependency */,
 				2D85FB03224B0C5D0088B0E7 /* PBXTargetDependency */,
+				2D52E9B0264345BD00A4BF6A /* PBXTargetDependency */,
 			);
 			name = "All SOFA Externals";
 			productName = "All SOFA Externals";
@@ -41,6 +42,8 @@
 		2D1F41EF225C99D700372519 /* libsofa.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6821EDFC2A00A6916E /* libsofa.a */; };
 		2D1F41F0225C99D700372519 /* libz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DFD6A6921EDFC2A00A6916E /* libz.a */; };
 		2D5116C7224975D300625783 /* SOFA in Resources */ = {isa = PBXBuildFile; fileRef = 2D5116C6224975D300625783 /* SOFA */; };
+		2D52E9B12643544400A4BF6A /* PointTree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55522089E190059570C /* PointTree.h */; };
+		2D52E9B22643545600A4BF6A /* PointTree.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DD9B55422089E190059570C /* PointTree.c */; };
 		2D7ADA3A22314548000633F7 /* CSofa.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 2DFD6A7921EDFF8100A6916E /* CSofa.hpp */; };
 		2D7ADA3B22314548000633F7 /* kdtree.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B55322089E190059570C /* kdtree.h */; };
 		2D7ADA3D22314548000633F7 /* sofa_common.h in Headers */ = {isa = PBXBuildFile; fileRef = 2DD9B5A22208B5190059570C /* sofa_common.h */; };
@@ -145,6 +148,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2D52E9AF264345BD00A4BF6A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2D1F41DC225C99D700372519;
+			remoteInfo = "sofa.poke~";
+		};
 		2D7ADA552231457E000633F7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 089C1669FE841209C02AAC07 /* Project object */;
@@ -431,6 +441,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D52E9B12643544400A4BF6A /* PointTree.h in Headers */,
 				2D1F41DE225C99D700372519 /* CSofa.hpp in Headers */,
 				2D1F41DF225C99D700372519 /* kdtree.h in Headers */,
 				2D1F41E1225C99D700372519 /* sofa_common.h in Headers */,
@@ -829,6 +840,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2D52E9B22643545600A4BF6A /* PointTree.c in Sources */,
 				2D1F41E7225C99D700372519 /* kdtree.c in Sources */,
 				2D1F41E5225C99D700372519 /* CSofa.cpp in Sources */,
 				2D1F41E8225C99D700372519 /* sofa_common.c in Sources */,
@@ -917,6 +929,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2D52E9B0264345BD00A4BF6A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2D1F41DC225C99D700372519 /* sofa.poke~ */;
+			targetProxy = 2D52E9AF264345BD00A4BF6A /* PBXContainerItemProxy */;
+		};
 		2D7ADA562231457E000633F7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2D7ADA3822314548000633F7 /* sofa.genfire~ */;
