@@ -315,19 +315,19 @@ void sofa_poke_setPosition(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv)
     }
     
     /* Args list: <position type>, <position ID>, <component 0>, <component 1>, <component 2> */
-    long numRequiredArguments = 2;
+    long minNumArgs = 2;
     switch(x->sofa_ob->sofa->convention) {
         case SOFA_SIMPLE_FREE_FIELD_HRIR:
-            numRequiredArguments = 4;
+            minNumArgs = 4;
             break;
         default:
             break;
     }
     
-    if (argc < numRequiredArguments) {
+    if (argc < minNumArgs) {
         object_error((t_object*)x,
                      "%s: not enough arguments to set position. Expected at least %ld arguments",
-                     s->s_name, numRequiredArguments);
+                     s->s_name, minNumArgs);
         return;
     }
 
@@ -370,7 +370,24 @@ void sofa_poke_setPosition(t_sofa_poke* x, t_symbol* s, long argc, t_atom* argv)
     
     /* Get co-ordinates */
     // TODO: Extract and validate components from args.
-    double components[3] = {0.0, 0.0, 0.0};
+    double components[3] = {0.0, 0.0, 1.0};
+    long numComponentArgs = argc - 2;
+    long minNumComponents = 2;
+    
+    for (long i = 0; i < numComponentArgs; ++i) {
+        if ((argv + i)->a_type != A_LONG) {
+            object_error((t_object*)x, "%s: co-ordinate component %ld is not a number",
+                         s->s_name, i);
+            return;
+        }
+    }
+
+    if (x->sofa_ob->sofa->convention == SOFA_SIMPLE_FREE_FIELD_HRIR) {
+        minNumComponents = 2;
+        if (numComponentArgs < minNumComponents) {
+            
+        }
+    }
     
     /* Construct point based on convention type */
     t_point p;
