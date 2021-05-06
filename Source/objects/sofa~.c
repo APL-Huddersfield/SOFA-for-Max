@@ -258,7 +258,6 @@ void sofa_max_doRead(t_sofa_max* x, t_symbol* s) {
     }
     else {
         strcpy(filename, s->s_name);
-        object_post((t_object*)x, "%s", filename);
 
         if(locatefile_extended(filename, &path, &outtype, &filetype, 0)) {
             object_error((t_object*)x, "%s: file not found", s->s_name);
@@ -329,15 +328,17 @@ void sofa_max_doWrite(t_sofa_max* x, t_symbol* s) {
         strcpy(filename, s->s_name);
         path = path_getdefault();
     }
-    
+
+    /* Attempt to write SOFA file to disk. */
     path_toabsolutesystempath(path, filename, fullpath);
     critical_enter(0);
     t_sofaWriteErr err = csofa_writeFile(x->sofa, fullpath);
     critical_exit(0);
+
     switch(err) {
         case MISSING_ATTR_ERROR:
             object_error((t_object*)x,
-                         "%s: Missing required SOFA attributes. Check these have been filled out in the inspector",
+                         "%s: Missing required SOFA attributes. Please check that these have been filled out in the inspector",
                          s->s_name);
             break;
         case GENERAL_WRITE_ERROR:
@@ -413,6 +414,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
         csofa_destroySofa(x->sofa);
     }
     
+    // TODO: Have option to set sample rate
     *x->sofa = csofa_newSofa(M, R, E, N, 44100);
     switch(convention) {
         case SOFA_SIMPLE_FREE_FIELD_HRIR:
@@ -427,7 +429,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
     // Convention
     char fileConvention[] = "SOFA";
-    char version[] = "0.6";
+    char version[] = "0.6"; // TODO: Are we on the latest SOFA convention version?
     csofa_setAttributeValue(&x->sofa->attr, CONVENTIONS_ATTR_TYPE,
                             fileConvention, strlen(fileConvention));
     csofa_setAttributeValue(&x->sofa->attr, VERSION_ATTR_TYPE, version, strlen(version));
@@ -451,7 +453,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
                        gensym(appVersion));
     
     // SOFA Convention
-    char* strConvention = sofa_getConventionString(convention);
+    const char* strConvention = sofa_getConventionString(convention);
     char conventionVersion[] = "1.0";
     t_symbol* symConvention = gensym(strConvention);
     t_symbol* symConventionVersion = gensym(conventionVersion);
@@ -495,7 +497,7 @@ void sofa_max_create(t_sofa_max* x, t_symbol* s, long argc, t_atom* argv) {
     
     // API Name and Version
     char apiName[] = "SOFA for Max";
-    char apiVersion[] = "0.2";
+    char apiVersion[] = "0.4";
     csofa_setAttributeValue(&x->sofa->attr, API_NAME_ATTR_TYPE, apiName, strlen(apiName));
     csofa_setAttributeValue(&x->sofa->attr, API_VERSION_ATTR_TYPE, apiVersion, strlen(apiVersion));
     object_attr_setsym((t_object*)x, gensym(kStrAttr[API_NAME_ATTR_TYPE]), gensym(apiName));
@@ -652,6 +654,7 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
         }
     }
 
+    /* Is the destination buffer long enough to hold all the IR data? */
     if(numBuffFrames < x->sofa->N) {
         object_error((t_object*)x, "%s: destination buffer is too short", s->s_name);
         if(optionalBufferIsGiven && buffRef) {
@@ -660,7 +663,7 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
         return;
     }
 
-    // Do extraction
+    /* Attempt to extract IR data from the SOFA structure. */
     double* d = csofa_getDataIR(x->sofa, dataBlock);
     if(d == NULL) {
         object_error((t_object*)x, "%s: data extraction was unsuccesful", s->s_name);
@@ -670,6 +673,7 @@ void sofa_max_get(t_sofa_max* x, t_symbol* s, long argc, t_atom *argv) {
         return;
     }
 
+    /* Copy the extracted IR data to the destination buffer. */
     float* buffData = buffer_locksamples(buffObj);
     long buffIndex = 0;
     long N = x->sofa->N;
@@ -741,6 +745,9 @@ void sofa_max_assist(t_sofa_max *x, void *b, long m, long a, char *s) {
 	}
 }
 
+/** This is called whenever the attributes of any of the objects within the same namespace as
+ this are modified.
+ */
 t_max_err sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sender, void *data) {
     t_symbol* attrname = NULL;
     t_symbol* attrval = NULL;
@@ -753,12 +760,13 @@ t_max_err sofa_max_notify(t_sofa_max *x, t_symbol *s, t_symbol *msg, void *sende
     if (msg == gensym("attr_modified")) {
         object = (t_object*)data;
         attrname = (t_symbol*)object_method((t_object*)data, gensym("getname"));
+        
+        /* Get the attribute value from sender by name. There must a cleaner way, perhaps with a
+           "get attribute" function. */
         attrval = sofa_getAttributeValueByName((t_sofa_max*)sender, attrname, &attrid);
         if (attrname && attrval) {
             x->attributes[attrid] = gensym(((t_sofa_max*)sender)->attributes[attrid]->s_name);
-            object_post((t_object*)x, "%s: %s", attrname->s_name, attrval->s_name);
         }
-        
     }
 
     return 0;
@@ -769,6 +777,8 @@ void sofa_max_free(t_sofa_max *x) {
         if(*x->count) {
             *x->count -= 1;
         }
+        
+        /* If this is the last instance, destroy any allocated data. */
         if(*x->count < 1) {
             if(*x->fileLoaded) {
                 csofa_destroySofa(x->sofa);
@@ -779,6 +789,7 @@ void sofa_max_free(t_sofa_max *x) {
             sysmem_freeptr(x->fileLoaded);
             sysmem_freeptr(x->count);
             
+            /* Unregister and notify client objects that this object will cease to exist. */
             globalsymbol_unbind((t_object*)x, x->name->s_name, 0);
             object_unregister(x);
         }
@@ -790,7 +801,7 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
     t_symbol* a = NULL;
 
     if((x = (t_sofa_max *)object_alloc((t_class*)sofa_max_class))) {
-        // By default, create UUID for this object if no name is given
+        /* By default, create UUID for this object if no name is given. */
         a = symbol_unique();
         
         x->sofa = (t_sofa*)sysmem_newptr(sizeof(t_sofa));
@@ -804,7 +815,8 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                 a = atom_getsym(argv);
                 t_sofa_max* ref = (t_sofa_max*)globalsymbol_reference((t_object*)x, a->s_name,
                                                                       "sofa~");
-                // TODO : This is where sofa~ object name count can be handled
+                
+                /* If a sofa~ object with the same name exists, point to its contents instead. */
                 if(ref != NULL) {
                     sysmem_freeptr(x->sofa);
                     sysmem_freeptr(x->fileLoaded);
@@ -818,18 +830,10 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
                          *x->count += 1;
                     }
                     object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
-                    
-                   // object_attr_setsym(<#void *x#>, <#t_symbol *s#>, <#t_symbol *c#>)
-//                    sysmem_freeptr(x->sofa);
-//                    sysmem_freeptr(x->fileLoaded);
-//                    sysmem_freeptr(x->count);
-//                    object_error((t_object*)x, "Only 1 sofa~ named %s can currently exist",
-//                                 a->s_name);
-//                    return NULL;
                 }
                 else {
+                    /* This is the first sofa~ object with this particular name. */
                     a->s_thing = (t_object*)x;
-                    
                     object_register(APL_SOFA_NAMESPACE, a, (t_object*)x);
                     object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
                     globalsymbol_bind((t_object*)x, a->s_name, 0);
@@ -841,12 +845,6 @@ void *sofa_max_new(t_symbol *s, long argc, t_atom *argv) {
             object_register(APL_SOFA_NAMESPACE, a, (t_object*)x);
             object_attach(APL_SOFA_NAMESPACE, a, (t_object*)x);
             globalsymbol_bind((t_object*)x, a->s_name, 0);
-        }
-        printf("%ld %s object(s) exist\n", *x->count, a->s_name);
-        
-        t_symbol* classname = object_classname((t_object*)x);
-        if (classname) {
-            printf("This is a %s\n", classname->s_name);
         }
         
         x->name = a;
