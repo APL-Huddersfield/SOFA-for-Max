@@ -8,17 +8,30 @@
 
 #include "sofa_common.h"
 
-char* sofa_getConventionString(t_sofaConvention convention) {
-    char* strConvention;
-    switch(convention) {
-        case SOFA_GENERAL_FIR: strConvention = "GeneralFIR"; break;
-        case SOFA_SIMPLE_FREE_FIELD_HRIR: strConvention = "SimpleFreeFieldHRIR"; break;
-        case SOFA_GENERAL_FIRE: strConvention = "GeneralFIRE"; break;
-        case SOFA_SINGLE_ROOM_DRIR: strConvention = "SingleRoomDRIR"; break;
-        case SOFA_MULTISPEAKER_BRIR: strConvention = "MultiSpeakerBRIR"; break;
-        default: strConvention = "unknown";
+const char* sofa_getConventionString(t_sofaConvention convention) {
+//    switch(convention) {
+//        case SOFA_GENERAL_FIR: strConvention = "GeneralFIR"; break;
+//        case SOFA_SIMPLE_FREE_FIELD_HRIR: strConvention = "SimpleFreeFieldHRIR"; break;
+//        case SOFA_GENERAL_FIRE: strConvention = "GeneralFIRE"; break;
+//        case SOFA_SINGLE_ROOM_DRIR: strConvention = "SingleRoomDRIR"; break;
+//        case SOFA_MULTISPEAKER_BRIR: strConvention = "MultiSpeakerBRIR"; break;
+//        default: strConvention = "unknown";
+//    }
+    if (convention < SOFA_NUM_CONVENTIONS) {
+        return kStrConventions[(long)convention];
     }
-    return strConvention;
+    return "unknown";
+}
+
+t_sofaConvention sofa_getConventionFromString(char* str) {
+    t_sofaConvention convention = SOFA_UNKNOWN_TYPE;
+    long i;
+    for(i = 0; i < SOFA_NUM_CONVENTIONS; ++i) {
+        if (strcmp(str, kStrConventions[i]) == 0) {
+            convention = (t_sofaConvention)i;
+        }
+    }
+    return convention;
 }
 
 bool isSofaFileOpen(t_object* ob, t_sofa_max* x, t_symbol* s) {
@@ -29,34 +42,34 @@ bool isSofaFileOpen(t_object* ob, t_sofa_max* x, t_symbol* s) {
     return true;
 }
 
-long sofa_hashAttributeType(t_symbol* s) {
+t_sofaVarType sofa_hashVarTypeFromName(t_symbol* s) {
     if(s == gensym("listener")) {
-        return 1;
+        return SOFA_VAR_LISTENER;
     }
     if(s == gensym("receiver")) {
-        return 2;
+        return SOFA_VAR_RECEIVER;
     }
     if(s == gensym("source")) {
-        return 3;
+        return SOFA_VAR_SOURCE;
     }
     if(s == gensym("emitter")) {
-        return 4;
+        return SOFA_VAR_EMITTER;
     }
-    return 0;
+    return SOFA_VAR_UNKNOWN;
 }
 
 void sofa_getPositions(t_sofa_max* x, void* outlet, t_symbol* s) {
     t_symbol* mess = gensym("getpositions");
-    if(sofa_hashAttributeType(s)) {
+    if(sofa_hashVarTypeFromName(s) == SOFA_VAR_UNKNOWN) {
+        object_error((t_object*)x, "%s: requested invalid position type", mess);
+        return;
+    }
+    else {
         long dim = 3;
         if(x->sofa->convention == SOFA_SIMPLE_FREE_FIELD_HRIR) {
             dim = 2;
         }
         sofa_dumpPositions(x, outlet, mess, s, dim);
-    }
-    else {
-        object_error((t_object*)x, "%s: requested invalid position type", mess);
-        return;
     }
 }
 
@@ -65,28 +78,31 @@ void sofa_dumpPositions(t_sofa_max* x, void* outlet, t_symbol* s, t_symbol* p, l
     uint64_t numPoints = 0;
     t_point* points;
     t_symbol* mess;
-    switch(sofa_hashAttributeType(p)) {
-        case LISTENER_POSITION:
+    switch(sofa_hashVarTypeFromName(p)) {
+        case SOFA_VAR_LISTENER:
             numPoints = x->sofa->numListenerPoints;
             points = x->sofa->listenerPoints;
             mess = gensym("listenerpos");
             break;
-        case RECEIVER_POSITION:
+        case SOFA_VAR_RECEIVER:
             numPoints = x->sofa->numReceiverPoints;
             points = x->sofa->receiverPoints;
             mess = gensym("receiverpos");
             break;
-        case SOURCE_POSITION:
+        case SOFA_VAR_SOURCE:
             numPoints = x->sofa->numSourcePoints;
             points = x->sofa->sourcePoints;
             mess = gensym("sourcepos");
             break;
-        case EMITTER_POSITION:
+        case SOFA_VAR_EMITTER:
             numPoints = x->sofa->numEmitterPoints;
             points = x->sofa->emitterPoints;
             mess = gensym("emitterpos");
             break;
+        default:
+            return;
     }
+
     for(long i = 0; i < numPoints; ++i) {
         atom_setlong(&argv[0], points[i].ID);
         for(long d = 0; d < dim; ++d) {
@@ -98,12 +114,12 @@ void sofa_dumpPositions(t_sofa_max* x, void* outlet, t_symbol* s, t_symbol* p, l
 
 void sofa_getViews(t_sofa_max* x, void* outlet, t_symbol* s) {
     t_symbol* mess = gensym("getviews");
-    if(sofa_hashAttributeType(s)) {
-        sofa_dumpViews(x, outlet, mess, s);
-    }
-    else {
+    if(sofa_hashVarTypeFromName(s) == SOFA_VAR_UNKNOWN) {
         object_error((t_object*)x, "%s: requested invalid view type", mess);
         return;
+    }
+    else {
+        sofa_dumpViews(x, outlet, mess, s);
     }
 }
 
@@ -112,28 +128,31 @@ void sofa_dumpViews(t_sofa_max* x, void* outlet, t_symbol* s, t_symbol* p) {
     uint64_t numPoints = 0;
     t_point* points;
     t_symbol* mess;
-    switch(sofa_hashAttributeType(p)) {
-        case LISTENER_POSITION:
+    switch(sofa_hashVarTypeFromName(p)) {
+        case SOFA_VAR_LISTENER:
             numPoints = x->sofa->numListenerPoints;
             points = x->sofa->listenerPoints;
             mess = gensym("listenerview");
             break;
-        case RECEIVER_POSITION:
+        case SOFA_VAR_RECEIVER:
             numPoints = x->sofa->numReceiverPoints;
             points = x->sofa->receiverPoints;
             mess = gensym("receiverview");
             break;
-        case SOURCE_POSITION:
+        case SOFA_VAR_SOURCE:
             numPoints = x->sofa->numSourcePoints;
             points = x->sofa->sourcePoints;
             mess = gensym("sourceview");
             break;
-        case EMITTER_POSITION:
+        case SOFA_VAR_EMITTER:
             numPoints = x->sofa->numEmitterPoints;
             points = x->sofa->emitterPoints;
             mess = gensym("emitterview");
             break;
+        default:
+            return;
     }
+
     for(long i = 0; i < numPoints; ++i) {
         atom_setlong(&argv[0], points[i].ID);
         for(long d = 0; d < 3; ++d) {
